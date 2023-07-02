@@ -1,0 +1,10 @@
+@mixin set-inner-width($width: 1040px) {
+  max-width: $width;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    background-color: black;
+  }
+}

@@ -1,0 +1,22 @@
+.primary_btn {
+  border: 1px solid $accent;
+  background-color: transparent;
+  color: $accent;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    background-color: $accent-hover;
+  }
+
+  &.filled {
+    background-color: $accent;
+    color: $dark-navy;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+}

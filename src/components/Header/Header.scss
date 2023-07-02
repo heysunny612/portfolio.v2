@@ -1,0 +1,32 @@
+header {
+  background-color: $navy;
+
+  .header_container {
+    @include set-inner-width;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    .header_logo {
+      font-size: 50px;
+    }
+
+    .header_nav {
+      a {
+        margin: 0 30px;
+        transition: $transition;
+        &:hover,
+        &.active {
+          color: $lightest-slate;
+        }
+      }
+    }
+
+    .header_btns {
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+}
