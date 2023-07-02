@@ -1,0 +1,74 @@
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+
+  .project_card {
+    padding: 15px;
+    position: relative;
+    background-color: $light-navy;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      transform: translateY(-2%);
+      scale: 1.02;
+      h3 {
+        color: $accent !important;
+      }
+    }
+
+    .thum {
+      overflow: hidden;
+      img {
+        transition: $transition;
+        width: 100%;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h3 {
+        margin: 15px 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: $lightest-slate;
+        transition: $transition;
+      }
+    }
+
+    .skills {
+      display: flex;
+      li {
+        font-size: 14px;
+        margin-right: 15px;
+      }
+    }
+
+    .links {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      display: flex;
+
+      a {
+        display: block;
+        padding: 5px;
+        border-radius: 50%;
+        background-color: $dark-navy;
+        color: $white;
+        margin-left: 10px;
+        transition: $transition;
+
+        &:hover {
+          scale: 1.1;
+          color: $accent;
+        }
+      }
+    }
+  }
+}

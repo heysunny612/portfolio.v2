@@ -1,6 +1,13 @@
+//공통
 @import './_mixins.scss';
 @import './_variables.scss';
 @import './_reset.scss';
+@import './common.scss';
 
+//컴포넌트
 @import '../components/Header/Header.scss';
 @import '../components/Button/Button.scss';
+@import '../components/Projects/Projects.scss';
+
+//페이지
+@import '../pages/Home/Home.scss';

@@ -1,0 +1,30 @@
+.common_inner {
+  @include set-inner-width;
+}
+
+.common_h2 {
+  text-align: center;
+  position: relative;
+  margin-bottom: 50px;
+  span {
+    position: relative;
+    z-index: 1;
+    padding: 0 50px;
+    background-color: $dark-navy;
+    color: $light-slate;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 1px;
+
+    display: block;
+    background-color: $lightest-navy;
+    border-bottom: 1px solid $dark-slate;
+  }
+}

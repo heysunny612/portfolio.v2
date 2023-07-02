@@ -5,7 +5,7 @@ import { BiLogoAngular } from 'react-icons/bi';
 export default function Header() {
   return (
     <header>
-      <div className='header_container'>
+      <div className='header_container common_inner'>
         <h1 className='header_logo'>
           <Link to='/'>
             <BiLogoAngular />

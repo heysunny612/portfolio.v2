@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
-import Home from './pages/Home';
+import Home from './pages/Home/Home';
 import About from './pages/About';
 import Portfolio from './pages/Portfolio';
 import Blog from './pages/Blog';

@@ -134,3 +134,13 @@ a {
   text-decoration: none;
   font-family: inherit;
 }
+
+body {
+  background-color: $dark-navy;
+}
+
+button {
+  background-color: transparent;
+  border: 0 none;
+  color: inherit;
+}

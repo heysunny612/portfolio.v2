@@ -1,8 +1,8 @@
 header {
-  background-color: $navy;
+  background-color: $dark-navy;
+  box-shadow: 0px 2px 4px $navy-shadow;
 
   .header_container {
-    @include set-inner-width;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,6 +16,7 @@ header {
       a {
         margin: 0 30px;
         transition: $transition;
+        color: $light-slate;
         &:hover,
         &.active {
           color: $lightest-slate;
