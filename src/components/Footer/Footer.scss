@@ -1,0 +1,30 @@
+footer {
+  padding: 25px 0;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+      font-size: 15px;
+      span {
+        color: $accent;
+      }
+    }
+
+    .footer_links {
+      a {
+        margin-left: 15px;
+        svg {
+          transition: $transition;
+        }
+        &:hover {
+          color: $accent;
+          svg {
+            scale: 1.2;
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,12 +6,14 @@
   text-align: center;
   position: relative;
   margin-bottom: 50px;
+  font-size: 17px;
+
   span {
     position: relative;
     z-index: 1;
     padding: 0 50px;
-    background-color: $dark-navy;
     color: $light-slate;
+    text-transform: uppercase;
   }
 
   &::before {

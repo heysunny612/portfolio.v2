@@ -1,11 +1,23 @@
 .main {
   .banner-container {
     height: 600px;
-    background-color: $lightest-navy;
+    background-color: $light-navy;
     box-shadow: 0px 2px 4px $navy-shadow;
   }
 
   .works-container {
     padding: 60px 0;
+    position: relative;
+
+    .btn_view_all {
+      margin-top: 50px;
+      text-align: center;
+    }
+  }
+
+  .comment_container {
+    padding: 60px 0;
+    height: 400px;
+    background-color: $navy;
   }
 }

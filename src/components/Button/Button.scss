@@ -6,6 +6,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: $transition;
+  font-size: 14px;
 
   &:hover {
     background-color: $accent-hover;
@@ -18,5 +19,10 @@
     &:hover {
       filter: brightness(0.9);
     }
+  }
+
+  &.large {
+    padding: 20px 25px;
+    font-size: 15px;
   }
 }
