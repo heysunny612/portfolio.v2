@@ -1,0 +1,52 @@
+.review_container {
+  .review_row {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    height: 175px;
+  }
+
+  .review_row > div {
+    display: flex;
+
+    .review_card {
+      box-shadow: 5px 5px 0px 0px $navy-shadow;
+      background-color: $lightest-navy;
+      min-width: 300px;
+      height: 130px;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-right: 28px;
+      padding: 20px;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $dark-slate;
+      }
+
+      .review_comment {
+        font-size: 18px;
+        line-height: 1.5;
+        color: $lightest-slate;
+      }
+    }
+
+    .card_bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 1px solid $accent;
+      }
+    }
+  }
+}
