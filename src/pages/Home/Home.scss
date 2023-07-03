@@ -1,11 +1,167 @@
-.main {
-  .banner-container {
-    height: 600px;
-    background-color: $light-navy;
-    box-shadow: 0px 2px 4px $navy-shadow;
+@keyframes animate {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.5;
+    border-radius: 0;
   }
 
-  .works-container {
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+
+.main {
+  .banner_container {
+    position: relative;
+    height: 600px;
+    background-color: $light-navy;
+
+    // 배너 배경
+    .banner_bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      .icons {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        li {
+          position: absolute;
+          display: block;
+          animation: animate 25s linear infinite;
+          bottom: -150px;
+
+          &:nth-child(1) {
+            left: 25%;
+            font-size: 80px;
+            animation-delay: 0s;
+          }
+
+          &:nth-child(2) {
+            left: 10%;
+            font-size: 40px;
+            animation-delay: 2s;
+            animation-duration: 12s;
+          }
+
+          &:nth-child(3) {
+            left: 50%;
+            font-size: 35px;
+            animation-delay: 4s;
+          }
+
+          &:nth-child(4) {
+            left: 40%;
+            font-size: 60px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+          }
+
+          &:nth-child(5) {
+            left: 65%;
+            font-size: 35px;
+            animation-delay: 0s;
+          }
+
+          &:nth-child(6) {
+            left: 75%;
+            font-size: 70px;
+            animation-delay: 3s;
+          }
+
+          &:nth-child(7) {
+            left: 35%;
+            font-size: 80px;
+            animation-delay: 7s;
+          }
+
+          &:nth-child(8) {
+            left: 50%;
+            font-size: 25px;
+            animation-delay: 15s;
+            animation-duration: 45s;
+          }
+
+          &:nth-child(9) {
+            left: 20%;
+            font-size: 30px;
+            animation-delay: 2s;
+            animation-duration: 35s;
+          }
+
+          &:nth-child(10) {
+            left: 85%;
+            font-size: 60px;
+            animation-delay: 0s;
+            animation-duration: 11s;
+          }
+        }
+      }
+    }
+
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      gap: 100px;
+    }
+
+    //배너텍스트
+    .banner_text {
+      flex: 1 1 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .ani_text {
+        color: $accent;
+        font-size: 40px;
+      }
+      span {
+        color: $accent;
+      }
+
+      h2 {
+        margin-bottom: 30px;
+        font-size: 40px;
+        font-weight: bold;
+        line-height: 1.2;
+      }
+
+      p {
+        line-height: 1.5;
+      }
+
+      .banner_buttons {
+        margin-top: 50px;
+        button {
+          margin-right: 20px;
+        }
+      }
+    }
+
+    //배너아바타
+    .banner_avatar {
+      flex: 1 1 0;
+      height: 100%;
+      position: relative;
+    }
+  }
+
+  //메인 프로젝트
+  .works_container {
     padding: 60px 0;
     position: relative;
 
@@ -15,6 +171,7 @@
     }
   }
 
+  //메인 코멘트
   .comment_container {
     padding: 60px 0;
     background-color: $navy;
