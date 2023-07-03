@@ -33,42 +33,28 @@ const typeAni = [
   2000,
 ];
 
+const bgIcons = [
+  <SiJavascript />,
+  <FaReact />,
+  <SiTypescript />,
+  <SiHtml5 />,
+  <SiCss3 />,
+  <FaSass />,
+  <SiReactquery />,
+  <BsSuitHeartFill />,
+  <SiReactrouter />,
+  <BsGoogle />,
+];
+
 export default function Home() {
   return (
     <main className='main'>
       <section className='banner_container'>
         <div className='banner_bg'>
           <ul className='icons'>
-            <li>
-              <SiJavascript />
-            </li>
-            <li>
-              <FaReact />
-            </li>
-            <li>
-              <SiTypescript />
-            </li>
-            <li>
-              <SiHtml5 />
-            </li>
-            <li>
-              <SiCss3 />
-            </li>
-            <li>
-              <FaSass />
-            </li>
-            <li>
-              <SiReactquery />
-            </li>
-            <li>
-              <BsSuitHeartFill />
-            </li>
-            <li>
-              <SiReactrouter />
-            </li>
-            <li>
-              <BsGoogle />
-            </li>
+            {bgIcons.map((icon, idx) => (
+              <li key={idx}>{icon}</li>
+            ))}
           </ul>
         </div>
         <div className='common_inner'>
@@ -125,7 +111,7 @@ export default function Home() {
             whileInView='show'
           >
             <Canvas
-              camera={{ position: [0, 0, 7], fov: 10 }}
+              camera={{ position: [0, 0, 10], fov: 5 }}
               style={{
                 width: '100%',
                 height: '100%',
@@ -134,7 +120,7 @@ export default function Home() {
               <ambientLight intensity={1.25} />
               <ambientLight intensity={0.1} />
               <directionalLight intensity={0.4} />
-              <Avatar position={[0.025, -1.2, 0]} />
+              <Avatar position={[0, -1.3, 0]} />
               <OrbitControls />
             </Canvas>
           </motion.div>

@@ -118,7 +118,9 @@
 
     //배너텍스트
     .banner_text {
-      flex: 1 1 0;
+      position: relative;
+      z-index: 10;
+      flex: 1 1 37%;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -128,6 +130,7 @@
       .ani_text {
         color: $accent;
         font-size: 40px;
+        font-family: 'Shadows Into Light', 'Noto Sans KR', sans-serif;
       }
       span {
         color: $accent;
@@ -154,7 +157,7 @@
 
     //배너아바타
     .banner_avatar {
-      flex: 1 1 0;
+      flex: 1 1 auto;
       height: 100%;
       position: relative;
     }

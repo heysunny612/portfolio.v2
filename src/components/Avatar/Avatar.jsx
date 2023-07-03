@@ -2,8 +2,9 @@ import { useGLTF } from '@react-three/drei';
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF('/src/components/Avatar/avatar.glb');
+
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} rotation={[0.2, -0.3, 0]}>
       <primitive object={nodes.Hips} />
       <skinnedMesh
         geometry={nodes.Wolf3D_Body.geometry}

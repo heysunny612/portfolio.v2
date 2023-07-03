@@ -1,9 +1,38 @@
 .review_container {
   .review_row {
     display: flex;
+    position: relative;
     width: 100%;
     overflow: hidden;
     height: 175px;
+    box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
+
+    &::before,
+    &::after {
+      content: ' ';
+      position: absolute;
+      z-index: 9;
+      width: 350px;
+      height: 100%;
+    }
+    &::before {
+      top: 0;
+      left: 0;
+      background: linear-gradient(
+        to right,
+        rgba(10, 25, 47, 1) 0%,
+        rgba(10, 25, 47, 0) 100%
+      );
+    }
+    &::after {
+      top: 0;
+      right: 0;
+      background: linear-gradient(
+        to left,
+        rgba(10, 25, 47, 1) 0%,
+        rgba(10, 25, 47, 0) 100%
+      );
+    }
   }
 
   .review_row > div {

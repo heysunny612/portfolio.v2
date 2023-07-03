@@ -1,4 +1,5 @@
 header {
+  padding: 10px 0;
   background-color: $dark-navy;
   box-shadow: 0px 2px 4px $navy-shadow;
 
@@ -8,19 +9,71 @@ header {
     align-items: center;
     padding: 10px;
 
+    .nav_effect {
+      position: absolute;
+    }
+
     .header_logo {
-      font-size: 50px;
+      position: relative;
+      font-size: 14px;
+
+      .logo_text {
+        position: relative;
+        left: 4px;
+        display: inline-block;
+        z-index: 8;
+        text-align: right;
+        font-weight: bold;
+        color: $white;
+        letter-spacing: 2px;
+        line-height: 1.1;
+        font-size: 18px;
+        font-family: 'Agdasima', sans-serif;
+
+        b {
+          position: relative;
+          top: 4px;
+          left: 1px;
+          color: $navy;
+          padding-right: 5px;
+          letter-spacing: 1px;
+          font-family: inherit;
+        }
+      }
+      .logo_icon {
+        position: absolute;
+        top: -5px;
+        left: 0;
+        font-size: 45px;
+        color: $accent;
+      }
+      .nav_effect {
+        top: -5px;
+        left: 0;
+        font-size: 45px;
+        color: $accent;
+      }
     }
 
     .header_nav {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1 1 auto;
       a {
         margin: 0 30px;
         transition: $transition;
         color: $light-slate;
+        position: relative;
         &:hover,
         &.active {
-          color: $lightest-slate;
+          color: $white;
         }
+      }
+
+      .nav_effect {
+        top: 0px;
+        left: -20px;
+        color: $accent;
       }
     }
 

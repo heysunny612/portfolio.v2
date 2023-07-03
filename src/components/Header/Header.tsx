@@ -1,21 +1,53 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Button from '../Button/Button';
-import { BiLogoAngular } from 'react-icons/bi';
+import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+import { BsSuitHeartFill } from 'react-icons/bs';
+
+const nav = [
+  { title: 'About', path: '/about' },
+  { title: 'Portfolio', path: '/portfolio' },
+  { title: 'Blog', path: '/blog' },
+  { title: 'Contact', path: '/contact' },
+];
 
 export default function Header() {
+  const location = useLocation();
   return (
     <header>
       <div className='header_container common_inner'>
         <h1 className='header_logo'>
           <Link to='/'>
-            <BiLogoAngular />
+            <span className='logo_text'>
+              <b>CODE</b> LOVER <br /> SUNNY
+            </span>
+            <div className='logo_icon'>
+              <BsSuitHeartFill />
+            </div>
+            {location.pathname === '/' ? (
+              <motion.div layoutId='line' className='nav_effect'>
+                <BsSuitHeartFill />
+              </motion.div>
+            ) : null}
           </Link>
         </h1>
         <nav className='header_nav'>
-          <Link to='about'>About</Link>
-          <Link to='portfolio'>Portfolio</Link>
-          <Link to='blog'>Blog</Link>
-          <Link to='contact'>Contact</Link>
+          {nav.map(({ title, path }, idx) => (
+            <NavLink
+              key={idx}
+              to={path}
+              className={({ isActive }: { isActive: boolean }): string =>
+                isActive ? 'active' : ''
+              }
+            >
+              {title}
+              {location.pathname === path ? (
+                <motion.div layoutId='line' className='nav_effect'>
+                  <BsSuitHeartFill />
+                </motion.div>
+              ) : null}
+            </NavLink>
+          ))}
         </nav>
         <div className='header_btns'>
           <Button>Login</Button>
