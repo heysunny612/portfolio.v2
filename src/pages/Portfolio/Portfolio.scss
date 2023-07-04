@@ -1,3 +1,4 @@
+//포트폴리오 서브페이지
 .portfolio_container {
   .tech_tags {
     margin-bottom: 70px;
@@ -40,6 +41,166 @@
     }
     .filter_btn {
       text-align: center;
+    }
+  }
+}
+
+// 포트폴리오 디테일
+.detail_container {
+  .detail_images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 70px;
+
+    li {
+      max-height: 300px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .detail_info {
+    > div {
+      display: flex;
+      padding: 20px;
+      align-items: center;
+      border-bottom: 1px solid $lightest-navy;
+      line-height: 1.7;
+
+      h4 {
+        flex-shrink: 0;
+        width: 200px;
+        color: $accent;
+      }
+
+      &:last-child {
+        border-bottom: 0 none;
+      }
+
+      &.detail_desc {
+        ul {
+          list-style-type: square; /* 원형 마커 */
+          position: relative;
+          left: 20px;
+        }
+      }
+
+      &.detail_skills {
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+
+          li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            width: 100px;
+            height: 100px;
+            background-color: $lightest-navy;
+            border-radius: 10px;
+            font-size: 13px;
+
+            span {
+              display: block;
+              font-size: 40px;
+              color: $accent;
+            }
+          }
+        }
+      }
+
+      &.detail_deploy {
+        p {
+          display: flex;
+          align-items: center;
+          span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: $lightest-navy;
+            font-size: 30px;
+            border-radius: 50%;
+            color: $accent;
+            margin-right: 15px;
+          }
+
+          a {
+            background-image: linear-gradient(
+              to right,
+              $accent,
+              $accent 50%,
+              $slate 50%
+            );
+            background-size: 200% 100%;
+            background-position: -100%;
+            display: inline-block;
+            padding: 5px 0;
+            position: relative;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -moz-background-clip: text;
+            -moz-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease-in-out;
+          }
+
+          a:before {
+            content: '';
+            background: $accent;
+            display: block;
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            transition: all 0.3s ease-in-out;
+          }
+
+          a:hover {
+            background-position: 0;
+          }
+
+          a:hover::before {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .detail_btns {
+    button {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 60px;
+      display: flex;
+
+      &:hover {
+        color: $white;
+      }
+
+      cursor: pointer;
+
+      svg {
+        color: inherit;
+      }
+
+      &.prev {
+        left: 10px;
+      }
+      &.next {
+        right: 10px;
+      }
     }
   }
 }

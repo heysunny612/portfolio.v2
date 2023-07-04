@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { IProject } from '../../interfaces/Project';
 import {
   BsLink45Deg,
@@ -11,10 +12,17 @@ interface IProjectProps {
 }
 
 export default function ProjectCard({ project }: IProjectProps) {
+  const navigate = useNavigate();
   return (
-    <li className='project_card' role='button'>
+    <li
+      className='project_card'
+      role='button'
+      onClick={() =>
+        navigate(`/portfolio/${project.id}`, { state: { project } })
+      }
+    >
       <div className='thum'>
-        <img src={project.thumbnail} alt='' />
+        <img src={project.thumbnail} alt={project.title} />
       </div>
       <div className='info'>
         <h3>{project.title}</h3>

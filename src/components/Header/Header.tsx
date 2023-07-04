@@ -8,11 +8,13 @@ const nav = [
   { title: 'About', path: '/about' },
   { title: 'Portfolio', path: '/portfolio' },
   { title: 'Blog', path: '/blog' },
+  { title: 'Ask me', path: '/qna' },
   { title: 'Contact', path: '/contact' },
 ];
 
 export default function Header() {
   const location = useLocation();
+
   return (
     <header>
       <div className='header_container common_inner'>
@@ -41,7 +43,7 @@ export default function Header() {
               }
             >
               {title}
-              {location.pathname === path ? (
+              {location.pathname.includes(path) ? (
                 <motion.div layoutId='line' className='nav_effect'>
                   <BsSuitHeartFill />
                 </motion.div>

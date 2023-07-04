@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import Button from '../../components/Button/Button';
-import PageHeader from '../../components/PageHeader/PageHeader';
 import Projects from '../../components/Projects/Projects';
+import SubLayout from '../../components/UI/SubLayout';
 
 const tags = [
   'Firebase',
@@ -25,9 +25,8 @@ export default function Portfolio() {
   };
 
   return (
-    <section className='portfolio_container'>
-      <PageHeader title='portfolio' />
-      <div className='common_inner sub_pages'>
+    <SubLayout className='portfolio_container' subTitle='portfolio'>
+      <>
         <h3 className='common_h3'>Tech Tags</h3>
         <form className='tech_tags'>
           <div className='tags'>
@@ -50,7 +49,7 @@ export default function Portfolio() {
         </form>
         <h3 className='common_h3'>Projects</h3>
         <Projects />
-      </div>
-    </section>
+      </>
+    </SubLayout>
   );
 }

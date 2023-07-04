@@ -6,6 +6,8 @@ import About from './pages/About/About';
 import Portfolio from './pages/Portfolio/Portfolio';
 import Blog from './pages/Blog/Blog';
 import Contact from './pages/Contact/Contact';
+import PortfolioDetail from './pages/Portfolio/PortfolioDetail';
+import QnA from './pages/QnA/QnA';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -17,8 +19,10 @@ export default function Router() {
         { index: true, element: <Home /> },
         { path: 'about', element: <About /> },
         { path: 'portfolio', element: <Portfolio /> },
+        { path: 'portfolio/:id', element: <PortfolioDetail /> },
         { path: 'blog', element: <Blog /> },
         { path: 'contact', element: <Contact /> },
+        { path: 'qna', element: <QnA /> },
       ],
     },
   ]);
