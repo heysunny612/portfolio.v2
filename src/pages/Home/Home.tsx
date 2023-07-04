@@ -17,6 +17,7 @@ import {
 } from 'react-icons/si';
 import { FaReact, FaSass } from 'react-icons/fa';
 import { BsSuitHeartFill, BsGoogle } from 'react-icons/bs';
+import SendEmail from '../../components/SendEmail/SendEmail';
 
 const typeAni = [
   '안녕하세요',
@@ -129,7 +130,7 @@ export default function Home() {
       <section className='works_container'>
         <div className='common_inner'>
           <h2 className='common_h2'>
-            <b>N</b>oteworthy Projects
+            Some of my latest work
             <span>최근 작업한 프로젝트</span>
           </h2>
           <Projects />
@@ -140,10 +141,19 @@ export default function Home() {
       </section>
       <section className='comment_container'>
         <h2 className='common_h2'>
-          <b>W</b>hat people are saying
+          What people are saying
           <span>프로젝트에 달린 댓글들</span>
         </h2>
         <Review />
+      </section>
+      <section className='contact_container'>
+        <div className='common_inner'>
+          <h2 className='common_h2'>
+            Get In Touch
+            <span>heysunny612@gamil.com로 메일 전송</span>
+          </h2>
+          <SendEmail />
+        </div>
       </section>
     </main>
   );

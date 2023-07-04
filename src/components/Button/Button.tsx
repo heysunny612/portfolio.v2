@@ -1,5 +1,5 @@
 interface IButtonPros {
-  children: string;
+  children: string | JSX.Element;
   filled?: boolean;
   large?: boolean;
 }

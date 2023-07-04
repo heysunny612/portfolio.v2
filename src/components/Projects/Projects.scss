@@ -9,6 +9,7 @@
     background-color: $light-navy;
     cursor: pointer;
     transition: $transition;
+    border-radius: 10px;
 
     &:hover {
       transform: translateY(-2%);

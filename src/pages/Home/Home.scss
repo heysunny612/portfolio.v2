@@ -163,9 +163,14 @@
     }
   }
 
+  .works_container,
+  .comment_container,
+  .contact_container {
+    padding: 80px 0;
+  }
+
   //메인 프로젝트
   .works_container {
-    padding: 60px 0;
     position: relative;
 
     .btn_view_all {
@@ -176,7 +181,10 @@
 
   //메인 코멘트
   .comment_container {
-    padding: 60px 0;
     background-color: $navy;
+  }
+
+  //메인 컨택트
+  .contact_container {
   }
 }
