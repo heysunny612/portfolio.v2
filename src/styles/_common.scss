@@ -26,13 +26,20 @@
   margin-bottom: 50px;
   position: relative;
 
+  span {
+    position: relative;
+    top: 5px;
+    margin-left: 15px;
+    font-size: 13px;
+  }
+
   &::after {
     content: '';
     display: block;
     position: absolute;
     bottom: -10px;
     left: 0;
-    width: 30%;
+    width: 40%;
     height: 1px;
     background-color: $lightest-navy;
   }

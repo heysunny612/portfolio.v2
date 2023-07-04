@@ -6,6 +6,7 @@ import { BiLogoFirebase, BiLogoNetlify, BiLogoGithub } from 'react-icons/bi';
 import { SiReactquery, SiTypescript } from 'react-icons/si';
 import { BsSuitHeartFill } from 'react-icons/bs';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
+import Comments from '../../components/Comments/Comments';
 
 export default function PortfolioDetail() {
   interface IStateProp {
@@ -25,7 +26,14 @@ export default function PortfolioDetail() {
   return (
     <SubLayout className='detail_container' subTitle='portfolio'>
       <>
-        <h3 className='common_h3'>{project.title}</h3>
+        <div className='btn_heart'>
+          <BsSuitHeartFill />
+        </div>
+
+        <h3 className='common_h3'>
+          {project.title}
+          <span>맘에 드신다면 오른쪽에 있는 하트를 눌러주세요❤️</span>
+        </h3>
         <ul className='detail_images'>
           {project.images.map((image, idx) => (
             <li key={idx}>
@@ -78,6 +86,10 @@ export default function PortfolioDetail() {
             </p>
           </div>
         </div>
+        <h3 className='common_h3'>
+          Comments (0) <span>첫 댓글의 주인공이 되어보세요!</span>
+        </h3>
+        <Comments />
         <div className='detail_btns'>
           <button className='prev'>
             <MdArrowBackIos />

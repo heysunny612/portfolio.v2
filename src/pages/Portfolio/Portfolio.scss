@@ -47,6 +47,22 @@
 
 // 포트폴리오 디테일
 .detail_container {
+  .btn_heart {
+    position: absolute;
+    font-size: 50px;
+    top: 30px;
+    right: 30px;
+    display: block;
+    cursor: pointer;
+    z-index: 70;
+    text-align: right;
+    transition: $transition;
+    &:hover {
+      transform: scale(1.2);
+      color: $accent;
+    }
+  }
+
   .detail_images {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -64,6 +80,7 @@
   }
 
   .detail_info {
+    margin-bottom: 70px;
     > div {
       display: flex;
       padding: 20px;
