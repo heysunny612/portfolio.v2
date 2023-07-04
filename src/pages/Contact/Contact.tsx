@@ -8,7 +8,7 @@ import Button from '../../components/Button/Button';
 export default function Contact() {
   return (
     <section className='contact_container'>
-      <PageHeader />
+      <PageHeader title='contact' />
       <div className='common_inner sub_pages'>
         <h3 className='common_h3'>Send me an Email</h3>
         <SendEmail />

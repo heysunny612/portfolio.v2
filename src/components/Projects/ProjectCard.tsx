@@ -1,5 +1,10 @@
 import { IProject } from '../../interfaces/Project';
-import { BsLink45Deg, BsGithub } from 'react-icons/bs';
+import {
+  BsLink45Deg,
+  BsGithub,
+  BsSuitHeart,
+  BsSuitHeartFill,
+} from 'react-icons/bs';
 
 interface IProjectProps {
   project: IProject;
@@ -15,7 +20,7 @@ export default function ProjectCard({ project }: IProjectProps) {
         <h3>{project.title}</h3>
         <ul className='skills'>
           {project.skills.map((skill, idx) => (
-            <li key={idx}>{skill}</li>
+            <li key={idx}>#{skill}</li>
           ))}
         </ul>
       </div>
@@ -26,6 +31,9 @@ export default function ProjectCard({ project }: IProjectProps) {
         <a href='/'>
           <BsLink45Deg />
         </a>
+        <button>
+          <BsSuitHeart />
+        </button>
       </div>
     </li>
   );

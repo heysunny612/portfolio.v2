@@ -1,7 +1,11 @@
-export default function PageHeader() {
+interface IPageHeaderPros {
+  title: string;
+}
+
+export default function PageHeader({ title }: IPageHeaderPros) {
   return (
     <article className='page_header'>
-      <h2>CONTACT</h2>
+      <h2>{title}</h2>
     </article>
   );
 }

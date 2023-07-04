@@ -18,6 +18,7 @@ import {
 import { FaReact, FaSass } from 'react-icons/fa';
 import { BsSuitHeartFill, BsGoogle } from 'react-icons/bs';
 import SendEmail from '../../components/SendEmail/SendEmail';
+import { useNavigate } from 'react-router-dom';
 
 const typeAni = [
   '안녕하세요',
@@ -48,6 +49,7 @@ const bgIcons = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <main className='main'>
       <section className='banner_container'>
@@ -99,10 +101,12 @@ export default function Home() {
               initial='hidden'
               whileInView='show'
             >
-              <Button filled large>
+              <Button filled large onClick={() => navigate('/portfolio')}>
                 See my Portfolio
               </Button>
-              <Button large>Contact Me</Button>
+              <Button large onClick={() => navigate('/contact')}>
+                Contact Me
+              </Button>
             </motion.div>
           </div>
           <motion.div
@@ -135,7 +139,9 @@ export default function Home() {
           </h2>
           <Projects />
           <div className='btn_view_all'>
-            <Button large>View All Projects</Button>
+            <Button large onClick={() => navigate('/portfolio')}>
+              View All Projects
+            </Button>
           </div>
         </div>
       </section>
