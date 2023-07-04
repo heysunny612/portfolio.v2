@@ -6,18 +6,36 @@ export default function SendEmail() {
       <div className='input_area'>
         <div>
           <label>
-            <span>이름 또는 회사명</span>
-            <input type='text' />
+            <span className='label_text'>이름 또는 회사명</span>
+            <div className='input'>
+              <input type='text' />
+              <span className='line1'></span>
+              <span className='line2'></span>
+              <span className='line3'></span>
+              <span className='line4'></span>
+            </div>
           </label>
           <label>
-            <span>이메일</span>
-            <input type='text' />
+            <span className='label_text'>이메일</span>
+            <div className='input'>
+              <input type='text' />
+              <span className='line1'></span>
+              <span className='line2'></span>
+              <span className='line3'></span>
+              <span className='line4'></span>
+            </div>
           </label>
         </div>
         <div>
           <label>
-            <span>메시지</span>
-            <textarea name='' id=''></textarea>
+            <span className='label_text'>메시지</span>
+            <div className='input'>
+              <textarea name='' id=''></textarea>
+              <span className='line1'></span>
+              <span className='line2'></span>
+              <span className='line3'></span>
+              <span className='line4'></span>
+            </div>
           </label>
         </div>
       </div>
