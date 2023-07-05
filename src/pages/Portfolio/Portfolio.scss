@@ -1,5 +1,6 @@
 //포트폴리오 서브페이지
 .portfolio_container {
+  //사용기술
   .tech_tags {
     margin-bottom: 70px;
 
@@ -194,6 +195,39 @@
       }
     }
   }
+
+  //댓글보기, 목록보기 버튼
+  .detail_bottom_btns {
+    display: flex;
+    justify-content: space-between;
+    .bottom_btns {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      background-color: $lightest-navy;
+      color: $accent;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 15px;
+      border: 1px solid transparent;
+
+      &.active {
+        border-color: $accent;
+      }
+      span {
+        margin: 0 10px;
+      }
+      svg {
+        font-size: 18px;
+      }
+    }
+  }
+
+  //이전,다음 글 보기버튼
   .detail_btns {
     button {
       position: fixed;
@@ -205,13 +239,9 @@
       &:hover {
         color: $white;
       }
-
-      cursor: pointer;
-
       svg {
         color: inherit;
       }
-
       &.prev {
         left: 10px;
       }
@@ -219,5 +249,9 @@
         right: 10px;
       }
     }
+  }
+
+  .detail_comments {
+    margin-top: 50px;
   }
 }

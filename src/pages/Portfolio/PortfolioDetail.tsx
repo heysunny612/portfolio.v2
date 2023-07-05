@@ -1,20 +1,25 @@
-import { useLocation } from 'react-router-dom';
-import SubLayout from '../../components/UI/SubLayout';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { IProject } from '../../interfaces/Project';
 import { FaReact, FaSass } from 'react-icons/fa';
 import { BiLogoFirebase, BiLogoNetlify, BiLogoGithub } from 'react-icons/bi';
 import { SiReactquery, SiTypescript } from 'react-icons/si';
 import { BsSuitHeartFill } from 'react-icons/bs';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
+import { AiOutlineUnorderedList } from 'react-icons/ai';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import Comments from '../../components/Comments/Comments';
-
+import SubLayout from '../../components/UI/SubLayout';
+interface IStateProp {
+  project: IProject;
+}
 export default function PortfolioDetail() {
-  interface IStateProp {
-    project: IProject;
-  }
+  const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as IStateProp;
   const { project } = state;
+  const [toggle, setToggle] = useState(false);
+  const handleToggle = () => setToggle((toggle) => !toggle);
   const tagIcons: { [key: string]: JSX.Element } = {
     react: <FaReact />,
     sass: <FaSass />,
@@ -29,7 +34,6 @@ export default function PortfolioDetail() {
         <div className='btn_heart'>
           <BsSuitHeartFill />
         </div>
-
         <h3 className='common_h3'>
           {project.title}
           <span>맘에 드신다면 오른쪽에 있는 하트를 눌러주세요❤️</span>
@@ -86,10 +90,25 @@ export default function PortfolioDetail() {
             </p>
           </div>
         </div>
-        <h3 className='common_h3'>
-          Comments (0) <span>첫 댓글의 주인공이 되어보세요!</span>
-        </h3>
-        <Comments />
+        <div className='detail_bottom_btns'>
+          <div className='bottom_btns'>
+            <button>
+              <BsSuitHeartFill />
+              <span>좋아요 128</span>
+            </button>
+            <button
+              onClick={handleToggle}
+              className={`${toggle ? 'active' : ''}`}
+            >
+              {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              <span>댓글 보기 15</span>
+            </button>
+          </div>
+          <button onClick={() => navigate(-1)}>
+            <AiOutlineUnorderedList />
+            <span>목록 보기</span>
+          </button>
+        </div>
         <div className='detail_btns'>
           <button className='prev'>
             <MdArrowBackIos />
@@ -98,6 +117,14 @@ export default function PortfolioDetail() {
             <MdArrowForwardIos />
           </button>
         </div>
+        {toggle && (
+          <div className='detail_comments'>
+            <h3 className='common_h3'>
+              Comments <span>첫 댓글의 주인공이 되어보세요!</span>
+            </h3>
+            <Comments />
+          </div>
+        )}
       </>
     </SubLayout>
   );
