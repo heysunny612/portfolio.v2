@@ -1,0 +1,84 @@
+.auth_container {
+  display: flex;
+
+  //메뉴
+  .auth_menu {
+    width: 200px;
+    margin-right: 30px;
+    flex-shrink: 0;
+    li {
+      position: relative;
+      color: $lightest-slate;
+      &.active {
+        color: $navy;
+      }
+
+      a {
+        position: relative;
+        z-index: 98;
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 15px;
+        color: inherit;
+      }
+      .authMenu_effect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 40px;
+        width: 100%;
+        background-color: $accent;
+      }
+    }
+  }
+
+  .auth_contents {
+    flex-grow: 1;
+    padding: 0 50px;
+    border-left: 1px solid $lightest-navy;
+
+    //로그인&계정만들기
+    .login_form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+
+      form {
+        width: 50%;
+        b {
+          color: $accent;
+        }
+        .input {
+          margin-bottom: 30px;
+        }
+        .btn_login {
+          text-align: center;
+        }
+      }
+    }
+    //소셜로그인
+    .login_social {
+      display: flex;
+      justify-content: center;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 20px;
+        width: 80px;
+        height: 80px;
+        background-color: $white;
+        font-size: 60px;
+        border-radius: 50%;
+        border: 3px solid $accent;
+        transition: $transition;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}

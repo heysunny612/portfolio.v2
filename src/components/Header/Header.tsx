@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
@@ -14,6 +14,7 @@ const nav = [
 
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <header>
@@ -52,7 +53,7 @@ export default function Header() {
           ))}
         </nav>
         <div className='header_btns'>
-          <Button>Login</Button>
+          <Button onClick={() => navigate('/auth/login')}>Login</Button>
           <Button filled>Resume</Button>
         </div>
       </div>

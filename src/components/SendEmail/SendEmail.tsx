@@ -5,7 +5,7 @@ export default function SendEmail() {
     <form className='contact_form'>
       <div className='input_area'>
         <div>
-          <label>
+          <label className='common_label'>
             <span className='label_text'>이름 또는 회사명</span>
             <div className='input'>
               <input type='text' />
@@ -15,7 +15,7 @@ export default function SendEmail() {
               <span className='line4'></span>
             </div>
           </label>
-          <label>
+          <label className='common_label'>
             <span className='label_text'>이메일</span>
             <div className='input'>
               <input type='text' />
@@ -27,7 +27,7 @@ export default function SendEmail() {
           </label>
         </div>
         <div>
-          <label>
+          <label className='common_label'>
             <span className='label_text'>메시지</span>
             <div className='input'>
               <textarea name='' id=''></textarea>
