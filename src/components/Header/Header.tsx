@@ -8,7 +8,7 @@ const nav = [
   { title: 'About', path: '/about' },
   { title: 'Portfolio', path: '/portfolio' },
   { title: 'Blog', path: '/blog' },
-  { title: 'Ask me', path: '/qna' },
+  { title: 'Ask me', path: '/askme' },
   { title: 'Contact', path: '/contact' },
 ];
 

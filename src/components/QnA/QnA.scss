@@ -1,0 +1,102 @@
+.qna_list {
+  width: 100%;
+
+  .qna_card {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid $dark-slate;
+    padding: 20px;
+
+    .qan_info {
+      display: flex;
+      position: relative;
+      align-items: flex-start;
+      justify-content: space-between;
+      .badge {
+        flex-shrink: 0;
+        padding: 5px 10px 7px;
+        display: inline-block;
+        font-size: 12px;
+        background-color: transparent;
+        letter-spacing: -0.5px;
+        border: 1px solid $accent;
+        color: $accent;
+
+        &.completed {
+          background-color: $accent;
+          border: 1px solid transparent;
+          color: $navy;
+        }
+      }
+
+      .title {
+        flex-grow: 1;
+        margin-bottom: 20px;
+        padding-left: 10px;
+        line-height: 1.2;
+        font-size: 18px;
+        color: $lightest-slate;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .toggle {
+        margin-left: 20px;
+        flex-shrink: 0;
+        font-size: 30px;
+        cursor: pointer;
+      }
+    }
+
+    .qna_writer {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      .date {
+        margin-left: 30px;
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -15px;
+          width: 1px;
+          height: 15px;
+          background-color: $dark-slate;
+        }
+      }
+      .qna_buttons {
+        margin-left: 10px;
+        button {
+          margin: 0 5px;
+          padding: 5px;
+          border: 1px solid $dark-slate;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .qna_answer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: $dark-slate;
+    color: $white;
+    line-height: 1.5;
+  }
+}
+
+.qna_list_bottom {
+  margin-top: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .btn_write {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

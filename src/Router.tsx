@@ -7,7 +7,7 @@ import Portfolio from './pages/Portfolio/Portfolio';
 import Blog from './pages/Blog/Blog';
 import Contact from './pages/Contact/Contact';
 import PortfolioDetail from './pages/Portfolio/PortfolioDetail';
-import QnA from './pages/QnA/QnA';
+import AskMe from './pages/AskMe/AskMe';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -17,12 +17,13 @@ export default function Router() {
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
-        { path: 'about', element: <About /> },
-        { path: 'portfolio', element: <Portfolio /> },
-        { path: 'portfolio/:id', element: <PortfolioDetail /> },
-        { path: 'blog', element: <Blog /> },
-        { path: 'contact', element: <Contact /> },
-        { path: 'qna', element: <QnA /> },
+        { path: '/about', element: <About /> },
+        { path: '/portfolio', element: <Portfolio /> },
+        { path: '/portfolio/:id', element: <PortfolioDetail /> },
+        { path: '/blog', element: <Blog /> },
+        { path: '/contact', element: <Contact /> },
+        { path: '/askme', element: <AskMe /> },
+        { path: '/askme/write', element: <AskMe /> },
       ],
     },
   ]);
