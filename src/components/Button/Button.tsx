@@ -1,4 +1,5 @@
 interface IButtonPros {
+  type?: 'button' | 'submit' | 'reset';
   children: string | JSX.Element;
   filled?: boolean;
   large?: boolean;
@@ -6,6 +7,7 @@ interface IButtonPros {
 }
 
 export default function Button({
+  type,
   children,
   filled,
   large,
@@ -16,6 +18,7 @@ export default function Button({
       className={`primary_btn ${filled ? 'filled' : null}
       ${large ? 'large' : null}`}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>

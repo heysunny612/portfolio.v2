@@ -3,6 +3,7 @@ import { IQnA } from '../../interfaces/QnA';
 import Button from '../Button/Button';
 import QnACard from './QnACard';
 import AddQnA from './AddQnA';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const qna: IQnA[] = [
   {
@@ -52,7 +53,19 @@ export default function QnA() {
           <Button onClick={() => navigate('write')}>질문하기</Button>
         </div>
       </div>
-      {pathname === '/askme/write' ? <AddQnA /> : null}
+      <AnimatePresence>
+        {pathname === '/askme/write' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className=''
+          >
+            <AddQnA />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

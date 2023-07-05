@@ -1,3 +1,4 @@
+//QnA 리스트
 .qna_list {
   width: 100%;
 
@@ -98,5 +99,56 @@
     position: absolute;
     top: 0;
     right: 0;
+  }
+}
+
+//QnA 작성
+.qna_add_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba($color: $lightest-navy, $alpha: 0.5);
+  z-index: 89;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .qna_add {
+    position: relative;
+    background-color: $dark-navy;
+    padding: 50px;
+    .qna_input {
+      input {
+        width: 550px;
+        padding: 10px;
+        background-color: $white;
+        outline: none;
+        border: 3px solid $accent;
+        font-size: 16px;
+      }
+    }
+    .qna_buttons {
+      margin-top: 50px;
+      button {
+        margin: 0 5px;
+      }
+    }
+  }
+
+  .qna_add_close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 35px;
+    height: 35px;
+    border: 1px solid $accent;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
   }
 }
