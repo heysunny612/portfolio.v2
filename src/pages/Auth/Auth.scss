@@ -50,11 +50,18 @@
           color: $accent;
         }
         .input {
-          margin-bottom: 30px;
+          margin-bottom: 40px;
         }
         .btn_login {
           text-align: center;
         }
+      }
+
+      .join_info {
+        position: relative;
+        top: -30px;
+        font-size: 12px;
+        color: $light-slate;
       }
     }
     //소셜로그인

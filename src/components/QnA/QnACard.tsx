@@ -22,20 +22,18 @@ const answerVars: Variants = {
 };
 
 export default function QnACard({ qna }: IQnACardProps) {
-  const [toggle, setToggle] = useState(false);
-  const handleToggle = () => setToggle((toggle) => !toggle);
+  const [isToggle, setToggle] = useState(false);
+  const toggleQnA = () => setToggle((prevToggle) => !prevToggle);
   return (
     <li className='qna_card'>
-      <div className='qan_info' role='button' onClick={handleToggle}>
+      <div className='qan_info' role='button' onClick={toggleQnA}>
         <span className={`badge ${qna.reply ? 'completed' : ''}`}>
           {qna.reply ? '답변완료' : '답변대기중'}
         </span>
-        <h4 className='title' role='button'>
-          {qna.title}
-        </h4>
+        <h4 className='title'>{qna.title}</h4>
         {qna.reply && (
           <div className='toggle'>
-            {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            {isToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </div>
         )}
       </div>
@@ -49,7 +47,7 @@ export default function QnACard({ qna }: IQnACardProps) {
       </div>
       {qna.reply && (
         <AnimatePresence>
-          {toggle ? (
+          {isToggle ? (
             <motion.div
               className='qna_answer'
               variants={answerVars}

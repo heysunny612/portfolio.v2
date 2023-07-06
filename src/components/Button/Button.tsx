@@ -1,13 +1,13 @@
 interface IButtonPros {
   type?: 'button' | 'submit' | 'reset';
-  children: string | JSX.Element;
+  children: React.ReactNode;
   filled?: boolean;
   large?: boolean;
   onClick?: () => void;
 }
 
 export default function Button({
-  type,
+  type = 'button',
   children,
   filled,
   large,

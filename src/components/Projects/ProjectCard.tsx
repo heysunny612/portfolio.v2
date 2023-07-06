@@ -33,10 +33,10 @@ export default function ProjectCard({ project }: IProjectProps) {
         </ul>
       </div>
       <div className='links'>
-        <a href='/'>
+        <a href={project.repository} target='_blank' rel='noopener noreferrer'>
           <BsGithub />
         </a>
-        <a href='/'>
+        <a href={project.deploy} target='_blank' rel='noopener noreferrer'>
           <BsLink45Deg />
         </a>
         <button>

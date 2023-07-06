@@ -1,5 +1,3 @@
-import PageHeader from '../PageHeader/PageHeader';
-
 interface ISubLayoutProps {
   className?: string;
   subTitle: string;
@@ -13,7 +11,9 @@ export default function SubLayout({
 }: ISubLayoutProps) {
   return (
     <section className={className}>
-      <PageHeader title={subTitle} />
+      <div className='page_header'>
+        <h2>{subTitle}</h2>
+      </div>
       <div className='common_inner sub_pages'>{children}</div>
     </section>
   );

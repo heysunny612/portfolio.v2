@@ -1,0 +1,40 @@
+.blog_list {
+  li {
+    display: flex;
+    gap: 30px;
+    padding: 10px 0;
+    border-bottom: 1px solid $dark-slate;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $dark-navy;
+      img {
+        transform: scale(1.1);
+      }
+    }
+
+    .thumb_area {
+      flex: 1 1 1;
+      overflow: hidden;
+      img {
+        width: 350px;
+        height: 200px;
+        object-fit: cover;
+        transition: $transition;
+      }
+    }
+    .text_area {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .category {
+        color: $accent;
+        font-size: 18px;
+      }
+      h4 {
+        font-size: 24px;
+      }
+    }
+  }
+}

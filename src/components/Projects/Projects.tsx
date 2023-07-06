@@ -1,7 +1,7 @@
 import { IProject } from '../../interfaces/Project';
 import ProjectCard from './ProjectCard';
 
-const projects: IProject[] = [
+const ProjectList: IProject[] = [
   {
     id: 1,
     title: 'PERSONAL PORTFOLIO',
@@ -118,7 +118,7 @@ const projects: IProject[] = [
 export default function Projects() {
   return (
     <ul className='projects'>
-      {projects.map((project) => (
+      {ProjectList.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
     </ul>

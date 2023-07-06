@@ -1,10 +1,9 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
 import { BsSuitHeartFill } from 'react-icons/bs';
 
-const nav = [
+const navItems = [
   { title: 'About', path: '/about' },
   { title: 'Portfolio', path: '/portfolio' },
   { title: 'Blog', path: '/blog' },
@@ -27,15 +26,15 @@ export default function Header() {
             <div className='logo_icon'>
               <BsSuitHeartFill />
             </div>
-            {location.pathname === '/' ? (
+            {location.pathname === '/' && (
               <motion.div layoutId='line' className='nav_effect'>
                 <BsSuitHeartFill />
               </motion.div>
-            ) : null}
+            )}
           </Link>
         </h1>
         <nav className='header_nav'>
-          {nav.map(({ title, path }, idx) => (
+          {navItems.map(({ title, path }, idx) => (
             <NavLink
               key={idx}
               to={path}

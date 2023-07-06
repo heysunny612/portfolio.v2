@@ -1,7 +1,5 @@
-import React from 'react';
-
 interface IProfileProps {
-  inline: boolean;
+  inline?: boolean;
 }
 
 export default function Profile({ inline }: IProfileProps) {

@@ -1,0 +1,72 @@
+.slider_container {
+  margin-bottom: 100px;
+  padding: 0 50px;
+
+  .slider_box {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    padding: 0 10px;
+
+    &:hover {
+      .title_area {
+        background-color: rgba($color: $dark-navy, $alpha: 0.4);
+        border-color: $accent;
+        h4,
+        a {
+          transform: translateY(-15px);
+        }
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: $transition;
+    }
+
+    .title_area {
+      background-color: rgba($color: $dark-navy, $alpha: 0.2);
+      position: absolute;
+      top: 0;
+      left: 10px;
+      bottom: 0;
+      width: calc(100% - 20px);
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      padding: 20px;
+      flex-direction: column;
+      transition: $transition;
+      border: 2px solid transparent;
+      h4 {
+        color: $lightest-slate;
+        font-size: 22px;
+        transition: inherit;
+      }
+      a {
+        margin-top: 10px;
+        color: $accent;
+        font-size: 14px;
+        transition: inherit;
+        svg {
+          position: relative;
+          top: 3px;
+        }
+      }
+    }
+  }
+}
+
+.slick-prev {
+  left: -40px;
+}
+.slick-next:before,
+.slick-prev:before {
+  font-size: 38px;
+  color: $accent;
+}
+.slick-disabled {
+  display: none !important;
+}

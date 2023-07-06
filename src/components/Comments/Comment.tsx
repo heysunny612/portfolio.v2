@@ -1,7 +1,11 @@
 import Profile from '../Profile/Profile';
-import AddComment from './AddComment';
+import { IComment } from '../../interfaces/Comments';
 
-export default function Comment({ comment }) {
+interface ICommentProps {
+  comment: IComment;
+}
+
+export default function Comment({ comment }: ICommentProps) {
   return (
     <li>
       <Profile />
@@ -14,28 +18,24 @@ export default function Comment({ comment }) {
       </div>
       {/* <AddComment /> */}
       <ul className='reply_list'>
-        <li>
-          <Profile />
-          <p className='text'>감사합니다!ㅎ</p>
-          <p className='date'>{comment.createAt}</p>
-          <button>답글</button>
-          <div className='buttons'>
-            <button>수정</button>
-            <button>삭제</button>
-          </div>
-          {/* <AddComment /> */}
-        </li>
-        <li>
-          <Profile />
-          <p className='text'>감사합니다!ㅎ</p>
-          <p className='date'>{comment.createAt}</p>
-          <button>답글</button>
-          <div className='buttons'>
-            <button>수정</button>
-            <button>삭제</button>
-          </div>
-        </li>
+        <Reply comment={comment} />
+        <Reply comment={comment} />
       </ul>
+    </li>
+  );
+}
+
+function Reply({ comment }: ICommentProps) {
+  return (
+    <li>
+      <Profile />
+      <p className='text'>{comment.reply}</p>
+      <p className='date'>{comment.createAt}</p>
+      <button>답글</button>
+      <div className='buttons'>
+        <button>수정</button>
+        <button>삭제</button>
+      </div>
     </li>
   );
 }
