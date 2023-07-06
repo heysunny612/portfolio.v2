@@ -1,42 +1,22 @@
 import Button from '../Button/Button';
+import InputLayout from '../UI/InputLayout';
 
 export default function SendEmail() {
   return (
     <form className='contact_form'>
       <div className='input_area'>
         <div>
-          <label className='common_label'>
-            <span className='label_text'>이름 또는 회사명</span>
-            <div className='input'>
-              <input type='text' />
-              <span className='line1'></span>
-              <span className='line2'></span>
-              <span className='line3'></span>
-              <span className='line4'></span>
-            </div>
-          </label>
-          <label className='common_label'>
-            <span className='label_text'>이메일</span>
-            <div className='input'>
-              <input type='text' />
-              <span className='line1'></span>
-              <span className='line2'></span>
-              <span className='line3'></span>
-              <span className='line4'></span>
-            </div>
-          </label>
+          <InputLayout title='이름 또는 회사명'>
+            <input type='email' />
+          </InputLayout>
+          <InputLayout title='이메일'>
+            <input type='email' />
+          </InputLayout>
         </div>
         <div>
-          <label className='common_label'>
-            <span className='label_text'>메시지</span>
-            <div className='input'>
-              <textarea name='' id=''></textarea>
-              <span className='line1'></span>
-              <span className='line2'></span>
-              <span className='line3'></span>
-              <span className='line4'></span>
-            </div>
-          </label>
+          <InputLayout title='이메일'>
+            <textarea name='' id=''></textarea>
+          </InputLayout>
         </div>
       </div>
       <div className='contact_btn'>
