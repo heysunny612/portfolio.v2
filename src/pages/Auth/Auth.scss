@@ -38,6 +38,13 @@
     padding: 0 50px;
     border-left: 1px solid $lightest-navy;
 
+    .error_message {
+      padding: 10px;
+      border: 1px solid #ff0000;
+      margin-bottom: 30px;
+      line-height: 1.2;
+    }
+
     //로그인&계정만들기
     .login_form {
       display: flex;
@@ -45,7 +52,7 @@
       margin-bottom: 80px;
 
       form {
-        width: 50%;
+        width: 55%;
         b {
           color: $accent;
         }
@@ -60,31 +67,9 @@
       .join_info {
         position: relative;
         top: -30px;
-        font-size: 12px;
+        font-size: 13px;
+        line-height: 1.2;
         color: $light-slate;
-      }
-    }
-    //소셜로그인
-    .login_social {
-      display: flex;
-      justify-content: center;
-
-      button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 20px;
-        width: 80px;
-        height: 80px;
-        background-color: $white;
-        font-size: 60px;
-        border-radius: 50%;
-        border: 3px solid $accent;
-        transition: $transition;
-
-        &:hover {
-          transform: scale(1.1);
-        }
       }
     }
   }

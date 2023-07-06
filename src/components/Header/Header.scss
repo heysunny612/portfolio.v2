@@ -8,6 +8,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    position: relative;
 
     .nav_effect {
       position: absolute;
@@ -78,6 +79,64 @@ header {
     }
 
     .header_btns {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: $slate;
+        font-size: 40px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 50%;
+        }
+
+        ul.user_menu {
+          position: absolute;
+          top: 65px;
+          bottom: 0;
+          font-size: 15px;
+          background-color: $white;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          display: flex;
+          flex-direction: column;
+          height: 70px;
+          background-color: $white;
+          z-index: 8;
+
+          &::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: $white;
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+          }
+
+          li {
+            position: relative;
+            z-index: 1;
+            color: $dark-navy;
+            line-height: 35px;
+            height: 35px;
+            padding: 0 25px;
+
+            &:hover {
+              background-color: $lightest-slate;
+            }
+          }
+        }
+      }
       button {
         margin-left: 10px;
       }

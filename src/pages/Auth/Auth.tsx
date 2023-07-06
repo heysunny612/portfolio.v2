@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import SubLayout from '../../components/UI/SubLayout';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useUserContext } from '../../context/UserContext';
 
 const authMenu = [
   { path: '/auth/login', title: '로그인', isAuth: false },
@@ -13,9 +13,10 @@ const authMenu = [
 ];
 
 export default function Auth() {
-  const [user, setUser] = useState(false);
+  const user = useUserContext()?.user;
+  const isUser = user ? true : false;
   const { pathname } = useLocation();
-  const filteredMenu = authMenu.filter((menu) => menu.isAuth === user);
+  const filteredMenu = authMenu.filter((menu) => menu.isAuth === isUser);
 
   return (
     <SubLayout subTitle={user ? 'mypage' : 'login'}>
@@ -35,7 +36,6 @@ export default function Auth() {
         </ul>
         <div className='auth_contents'>
           <Outlet />
-          <button onClick={() => setUser((prev) => !prev)}>임시버튼</button>
         </div>
       </div>
     </SubLayout>

@@ -11,6 +11,8 @@ import AskMe from './pages/AskMe/AskMe';
 import Login from './pages/Auth/Login';
 import Auth from './pages/Auth/Auth';
 import Mypage from './pages/Auth/Mypage';
+import ProtectedRoute from './pages/ProtectedRoute';
+import Join from './pages/Auth/Join';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -32,20 +34,36 @@ export default function Router() {
           element: <Auth />,
           children: [
             {
-              path: '/auth/:action',
+              path: '/auth/login',
               element: <Login />,
             },
             {
+              path: '/auth/join',
+              element: <Join />,
+            },
+            {
               path: '/auth/mypage',
-              element: <Mypage />,
+              element: (
+                <ProtectedRoute>
+                  <Mypage />
+                </ProtectedRoute>
+              ),
             },
             {
               path: '/auth/myheart',
-              element: <Mypage />,
+              element: (
+                <ProtectedRoute>
+                  <Mypage />
+                </ProtectedRoute>
+              ),
             },
             {
               path: '/auth/mycomments',
-              element: <Mypage />,
+              element: (
+                <ProtectedRoute>
+                  <Mypage />
+                </ProtectedRoute>
+              ),
             },
           ],
         },

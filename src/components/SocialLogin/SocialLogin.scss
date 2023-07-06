@@ -1,0 +1,35 @@
+//소셜로그인
+.login_social {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  > p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  > div {
+    margin: 0 auto;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 20px;
+      width: 80px;
+      height: 80px;
+      background-color: $white;
+      font-size: 60px;
+      border-radius: 50%;
+      border: 3px solid $accent;
+      transition: $transition;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
