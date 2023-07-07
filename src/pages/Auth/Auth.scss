@@ -1,6 +1,6 @@
+//auth 관련페이지 레이아웃
 .auth_container {
   display: flex;
-
   //메뉴
   .auth_menu {
     width: 200px;
@@ -32,7 +32,7 @@
       }
     }
   }
-
+  //컨텐츠
   .auth_contents {
     flex-grow: 1;
     padding: 0 50px;
@@ -44,33 +44,74 @@
       margin-bottom: 30px;
       line-height: 1.2;
     }
+  }
+}
 
-    //로그인&계정만들기
-    .login_form {
+//로그인&계정만들기
+.login_form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+
+  form {
+    width: 55%;
+    b {
+      color: $accent;
+    }
+    .input {
+      margin-bottom: 40px;
+    }
+    .btn_login {
+      text-align: center;
+    }
+  }
+
+  .join_info {
+    position: relative;
+    top: -30px;
+    font-size: 13px;
+    line-height: 1.2;
+    color: $light-slate;
+  }
+}
+
+//프로필 수정
+.edit_profile {
+  display: flex;
+  gap: 50px;
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    font-size: 200px;
+    background-color: $lightest-slate;
+    flex-shrink: 0;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+  .input {
+    width: 100%;
+    div.nickname_area {
       display: flex;
-      justify-content: center;
-      margin-bottom: 80px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
 
-      form {
-        width: 55%;
-        b {
-          color: $accent;
-        }
-        .input {
-          margin-bottom: 40px;
-        }
-        .btn_login {
-          text-align: center;
-        }
+      label {
+        margin-top: 30px;
+        flex: 1 1 auto;
       }
-
-      .join_info {
-        position: relative;
-        top: -30px;
-        font-size: 13px;
-        line-height: 1.2;
-        color: $light-slate;
-      }
+    }
+    .btn_save {
+      margin-top: 50px;
+      text-align: right;
     }
   }
 }

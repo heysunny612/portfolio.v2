@@ -1,6 +1,6 @@
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { socialLogin } from '../../api/firebase';
+import { socialLogin } from '../../api/firebase/auth';
 import { useState } from 'react';
 
 export default function SocialLogin() {

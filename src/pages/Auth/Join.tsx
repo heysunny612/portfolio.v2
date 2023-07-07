@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import InputLayout from '../../components/UI/InputLayout';
-import { set, useForm } from 'react-hook-form';
-import { joinWithEmail } from '../../api/firebase';
+import { useForm } from 'react-hook-form';
+import { authState, joinWithEmail } from '../../api/firebase/auth';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
@@ -12,22 +12,34 @@ interface IUserData {
   password: string;
   passwordCheck: string;
   company?: string;
+  nickname?: string;
 }
 
 export default function Join() {
   const { register, handleSubmit, setFocus } = useForm<IUserData>();
   const [error, setError] = useState('');
-
-  const onVaild = ({ email, password, passwordCheck, company }: IUserData) => {
-    if (password === passwordCheck) {
-      joinWithEmail({ email, password, company, setError });
-    } else {
-      setError('입력하신 두개의 비밀번호가 일치하지 않습니다.');
-      setFocus('password');
-    }
-  };
-  const user = useUserContext()?.user;
+  const { user, setUser } = useUserContext() ?? {};
   const navigate = useNavigate();
+
+  const onVaild = async ({
+    email,
+    password,
+    passwordCheck,
+    company,
+    nickname,
+  }: IUserData) => {
+    if (password !== passwordCheck) {
+      setError('입력하신 두 개의 비밀번호가 일치하지 않습니다.');
+      setFocus('password');
+      return;
+    }
+    await joinWithEmail({ email, password, company, nickname, setError });
+    authState((updatedUser) => {
+      if (setUser) {
+        setUser(updatedUser);
+      }
+    });
+  };
 
   //로그인시 페이지 전환
   useEffect(() => {
@@ -47,6 +59,12 @@ export default function Join() {
           <InputLayout title='이메일' required>
             <input type='email' {...register('email', { required: true })} />
           </InputLayout>
+          <InputLayout title='닉네임'>
+            <input type='text' {...register('nickname')} />
+          </InputLayout>
+          <p className='join_info'>
+            닉네임을 입력하지 않으시면, 이메일로 설정됩니다.
+          </p>
           <InputLayout title='회사명'>
             <input type='text' {...register('company')} />
           </InputLayout>

@@ -10,6 +10,7 @@ const authMenu = [
   { path: '/auth/mypage', title: '마이페이지', isAuth: true },
   { path: '/auth/myheart', title: '마이하트', isAuth: true },
   { path: '/auth/mycomments', title: '마이댓글', isAuth: true },
+  { path: '/auth/exit', title: '계정삭제', isAuth: true },
 ];
 
 export default function Auth() {

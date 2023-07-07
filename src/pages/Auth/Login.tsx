@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { loginWithEmail } from '../../api/firebase';
+import { loginWithEmail } from '../../api/firebase/auth';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';

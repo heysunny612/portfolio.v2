@@ -5,11 +5,12 @@ import {
   useEffect,
   ReactNode,
 } from 'react';
-import { authState } from '../api/firebase';
-import { IUser } from '../interfaces/User';
+import { authState } from '../api/firebase/auth';
+import { IExtendedUser } from '../interfaces/User';
 
 interface UserContextProps {
-  user: IUser | null;
+  user: IExtendedUser | null;
+  setUser: React.Dispatch<React.SetStateAction<IExtendedUser | null>>;
 }
 const UserContext = createContext<UserContextProps | null>(null);
 
@@ -18,11 +19,15 @@ export default function UserContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IExtendedUser | null>(null);
+  useEffect(() => {
+    authState(setUser);
+  }, []);
 
-  useEffect(() => authState(setUser), []);
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
   );
 }
 export const useUserContext = (): UserContextProps | null =>

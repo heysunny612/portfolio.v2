@@ -149,3 +149,7 @@ button {
 * {
   box-sizing: border-box;
 }
+
+input[readonly] {
+  cursor: not-allowed;
+}

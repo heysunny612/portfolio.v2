@@ -5,7 +5,7 @@ import { BsSuitHeartFill } from 'react-icons/bs';
 import { useUserContext } from '../../context/UserContext';
 import { FaUserCircle } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { logout } from '../../api/firebase';
+import { logout } from '../../api/firebase/auth';
 
 const navItems = [
   { title: 'About', path: '/about' },
