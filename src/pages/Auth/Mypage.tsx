@@ -15,6 +15,7 @@ interface IUpdateData {
 export default function Mypage() {
   const { user, setUser } = useUserContext() ?? {};
   const { register, handleSubmit, setValue } = useForm<IUpdateData>();
+  const [isNotEdit, setIsNotEdit] = useState('');
   const [isEditName, setIsEditName] = useState('');
   const [isEditCompany, setIsEditCompany] = useState('');
   const onValid = async (data: IUpdateData) => {
@@ -25,7 +26,10 @@ export default function Mypage() {
       user?.company?.companyName === data.company ||
       user?.company?.companyName?.trim() === data.company.trim();
 
-    if (isNicknameUnchanged && isCompanyUnchanged) {
+    if (
+      (!user?.company && isNicknameUnchanged) ||
+      (user?.company && isNicknameUnchanged && isCompanyUnchanged)
+    ) {
       setIsEditName('수정된 내용이 없습니다.');
       setTimeout(() => setIsEditName(''), 3000);
       return;
@@ -36,19 +40,20 @@ export default function Mypage() {
         await editProfile(data.nickname);
         setIsEditName(`닉네임이 ${data.nickname}로 정상적으로 변경되었습니다.`);
         // 업데이트된 유저 setUser에 할당
-        authState((updatedUser) => {
-          if (setUser) {
-            setUser(updatedUser);
-          }
-        });
       }
 
-      if (!isCompanyUnchanged) {
+      if (user?.company && !isCompanyUnchanged) {
         await editCompany(user?.company?.id ?? '', data.company);
         setIsEditCompany(
           `회사명이 ${data.company}로 정상적으로 변경되었습니다.`
         );
       }
+
+      authState((updatedUser) => {
+        if (setUser) {
+          setUser(updatedUser);
+        }
+      });
 
       setTimeout(() => {
         setIsEditName('');
