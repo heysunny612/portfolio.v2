@@ -4,20 +4,42 @@ import InputLayout from '../../components/UI/InputLayout';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/Button/Button';
 import { useEffect, useState } from 'react';
-import { authState, editCompany, editProfile } from '../../api/firebase/auth';
+import { editCompany, editProfile } from '../../api/firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
 interface IUpdateData {
   nickname: string;
   company: string;
 }
+const initialEditStatus = {
+  isNotEdit: '',
+  isEditName: '',
+  isEditCompany: '',
+  error: '',
+};
 
 export default function Mypage() {
-  const { user, setUser } = useUserContext() ?? {};
+  const { user, refreshUser } = useUserContext() ?? {};
   const { register, handleSubmit, setValue } = useForm<IUpdateData>();
-  const [isNotEdit, setIsNotEdit] = useState('');
-  const [isEditName, setIsEditName] = useState('');
-  const [isEditCompany, setIsEditCompany] = useState('');
+  const [editMessages, setEditMessages] = useState(initialEditStatus);
+
+  const clearEditStatus = () => {
+    setEditMessages((prevStatus) => ({
+      ...prevStatus,
+      isNotEdit: '',
+      isEditName: '',
+      isEditCompany: '',
+    }));
+  };
+
+  const showEditStatus = (key: keyof typeof editMessages, message: string) => {
+    setEditMessages((prevStatus) => ({
+      ...prevStatus,
+      [key]: message,
+    }));
+    setTimeout(clearEditStatus, 3000);
+  };
+
   const onValid = async (data: IUpdateData) => {
     const isNicknameUnchanged =
       user?.displayName === data.nickname ||
@@ -30,37 +52,34 @@ export default function Mypage() {
       (!user?.company && isNicknameUnchanged) ||
       (user?.company && isNicknameUnchanged && isCompanyUnchanged)
     ) {
-      setIsEditName('수정된 내용이 없습니다.');
-      setTimeout(() => setIsEditName(''), 3000);
+      showEditStatus('isNotEdit', '수정된 내용이 없습니다.');
       return;
     }
 
     try {
       if (!isNicknameUnchanged) {
         await editProfile(data.nickname);
-        setIsEditName(`닉네임이 ${data.nickname}로 정상적으로 변경되었습니다.`);
-        // 업데이트된 유저 setUser에 할당
+        showEditStatus(
+          'isEditName',
+          `닉네임이 ${data.nickname}로 정상적으로 변경되었습니다.`
+        );
       }
 
       if (user?.company && !isCompanyUnchanged) {
         await editCompany(user?.company?.id ?? '', data.company);
-        setIsEditCompany(
+        showEditStatus(
+          'isEditCompany',
           `회사명이 ${data.company}로 정상적으로 변경되었습니다.`
         );
       }
 
-      authState((updatedUser) => {
-        if (setUser) {
-          setUser(updatedUser);
-        }
-      });
-
-      setTimeout(() => {
-        setIsEditName('');
-        setIsEditCompany('');
-      }, 3000);
-    } catch (error: any) {
-      setIsEditName((error as FirebaseError).message);
+      //유저업데이트
+      refreshUser?.();
+    } catch (error: unknown) {
+      setEditMessages((prevStatus) => ({
+        ...prevStatus,
+        error: (error as FirebaseError).message,
+      }));
     }
   };
 
@@ -101,8 +120,15 @@ export default function Mypage() {
           </div>
         </form>
       </div>
-      {isEditName && <p>{isEditName}</p>}
-      {isEditCompany && <p>{isEditCompany}</p>}
+      {editMessages.isNotEdit && (
+        <p className='error_message'>{editMessages.isNotEdit}</p>
+      )}
+      {editMessages.isEditName && (
+        <p className='error_message'>{editMessages.isEditName}</p>
+      )}
+      {editMessages.isEditCompany && (
+        <p className='error_message'>{editMessages.isEditCompany}</p>
+      )}
     </section>
   );
 }

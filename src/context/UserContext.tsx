@@ -11,6 +11,7 @@ import { IExtendedUser } from '../interfaces/User';
 interface UserContextProps {
   user: IExtendedUser | null;
   setUser: React.Dispatch<React.SetStateAction<IExtendedUser | null>>;
+  refreshUser: () => void;
 }
 const UserContext = createContext<UserContextProps | null>(null);
 
@@ -20,12 +21,17 @@ export default function UserContextProvider({
   children: ReactNode;
 }) {
   const [user, setUser] = useState<IExtendedUser | null>(null);
+
+  const refreshUser = () => {
+    authState(setUser);
+  };
+
   useEffect(() => {
     authState(setUser);
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, refreshUser }}>
       {children}
     </UserContext.Provider>
   );
