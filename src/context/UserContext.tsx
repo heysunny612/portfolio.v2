@@ -21,6 +21,7 @@ export default function UserContextProvider({
   children: ReactNode;
 }) {
   const [user, setUser] = useState<IExtendedUser | null>(null);
+  console.log(user);
 
   const refreshUser = () => {
     authState(setUser);

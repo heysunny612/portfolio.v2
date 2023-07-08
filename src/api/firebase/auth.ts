@@ -16,7 +16,8 @@ import {
   doc,
   updateDoc,
 } from 'firebase/firestore';
-import { auth, db } from './initialize';
+import { get, ref } from 'firebase/database';
+import { auth, database, db } from './initialize';
 import { IExtendedUser } from '../../interfaces/User';
 
 interface IAuthData {
@@ -83,8 +84,8 @@ export const socialLogin = async (
 //관찰자 설정 및 유저데이터 가져오기
 export const authState = (setUser: (user: IExtendedUser | null) => void) => {
   return onAuthStateChanged(auth, async (user) => {
-    const updateUser = user ? await getCompanyUser(user) : null;
-    setUser(updateUser);
+    const updatedUser = user ? await adminUser(user) : null;
+    setUser(updatedUser);
   });
 };
 
@@ -103,6 +104,19 @@ const getCompanyUser = async (user: IExtendedUser) => {
     },
   };
   return companyUser ? userWithCompany : user;
+};
+
+// 어드민 유저 데이터가져오기
+const adminUser = async (user: IExtendedUser) => {
+  return get(ref(database, 'admins')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const admins = snapshot.val();
+        const isAdmin = admins.includes(user.uid);
+        return { ...user, isAdmin };
+      }
+      return user;
+    });
 };
 
 //사용자 프로필 업데이트
