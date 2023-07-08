@@ -90,20 +90,15 @@ export const authState = (setUser: (user: IUser | null) => void) => {
 //[어드민, 비즈니스 유저 설정]
 const getUserData = (user: IUser) => {
   //데이터베이스에 저장된 어드민 유저 확인후 어드민유저 설정
-  const adminPromise = get(ref(database, DB_ADMINS))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const admins = snapshot.val();
-        return admins.includes(user.uid);
-      }
-    })
-    .catch((error) => {
-      console.error('어드민 데이터 불러오기 오류:', error);
-      return user;
-    });
+  const adminPromise = get(ref(database, DB_ADMINS)).then((snapshot) => {
+    if (snapshot.exists()) {
+      const admins = snapshot.val();
+      return admins.includes(user.uid);
+    }
+  });
   //데이터베이스에 저장된 비즈니스 유저 확인후 비즈니스유저 설정
-  const businessUserPromise = get(ref(database, DB_BUSINESS_USER))
-    .then((snapshot) => {
+  const businessUserPromise = get(ref(database, DB_BUSINESS_USER)).then(
+    (snapshot) => {
       if (snapshot.exists()) {
         const businessUser = snapshot.val();
         const businessUserList = Object.values<{ uid: string }>(
@@ -111,12 +106,8 @@ const getUserData = (user: IUser) => {
         ).map((value) => value.uid);
         return businessUserList.includes(user.uid);
       }
-    })
-    .catch((error) => {
-      console.error('비즈니스 사용자 데이터 불러오기 오류:', error);
-      return user;
-    });
-
+    }
+  );
   return Promise.all([adminPromise, businessUserPromise])
     .then(([isAdmin, isBusinessUser]) => {
       return { ...user, isAdmin, isBusinessUser };

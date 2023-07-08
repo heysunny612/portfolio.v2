@@ -25,9 +25,6 @@ export default function Mypage() {
       isEditName: '',
     }));
   };
-
-  console.log(user);
-
   const showEditStatus = (key: keyof typeof editMessages, message: string) => {
     setEditMessages((prevStatus) => ({
       ...prevStatus,

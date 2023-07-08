@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import InputLayout from '../../components/UI/InputLayout';
 import { useForm } from 'react-hook-form';
-import { authState, joinWithEmail } from '../../api/firebase/auth';
+import { joinWithEmail } from '../../api/firebase/auth';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
@@ -25,7 +25,7 @@ export default function Join() {
   });
   const [error, setError] = useState('');
   const userType = watch('userType');
-  const { user, setUser } = useUserContext() ?? {};
+  const { user, refreshUser } = useUserContext() ?? {};
   const navigate = useNavigate();
 
   const onVaild = async ({
@@ -47,13 +47,7 @@ export default function Join() {
       displayName,
       isBusinessUser,
       setError
-    ).then(() => {
-      authState((updatedUser) => {
-        if (setUser) {
-          setUser(updatedUser);
-        }
-      });
-    });
+    ).then(() => refreshUser?.());
   };
 
   //로그인시 페이지 전환

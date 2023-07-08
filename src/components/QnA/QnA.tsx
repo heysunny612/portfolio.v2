@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IAskMe, IQnA } from '../../interfaces/AskMe';
 import Button from '../Button/Button';
 import QnACard from './QnACard';
 import AddQnA from './AddQnA';
