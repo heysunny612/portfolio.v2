@@ -9,9 +9,17 @@
       display: inline-block;
       width: 25px;
       height: 25px;
-      background-color: $accent;
+      background-color: $slate;
       border-radius: 50%;
       margin-right: 10px;
+      font-size: 25px;
+      color: $lightest-slate;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
     }
 
     .display_name {

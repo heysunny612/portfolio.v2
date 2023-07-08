@@ -1,50 +1,34 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IQnA } from '../../interfaces/QnA';
+import { IAskMe, IQnA } from '../../interfaces/AskMe';
 import Button from '../Button/Button';
 import QnACard from './QnACard';
 import AddQnA from './AddQnA';
 import { AnimatePresence, motion } from 'framer-motion';
-
-const qna: IQnA[] = [
-  {
-    id: 1,
-    createAt: 20231101,
-    title: '포트폴리오 만드는데 얼마나 걸렸나요?',
-    reply: false,
-  },
-  {
-    id: 2,
-    createAt: 20231101,
-    title: '제로베이스는 어땠나요?',
-    reply: true,
-    answer: '어떤 부분이 구체적으로 말씀하시는건지 모르겠지만 어쩌고저쩌고~',
-  },
-  {
-    id: 3,
-    createAt: 20231101,
-    title: '뷰가 아닌 리액트를 선택한 이유가있나요?',
-    reply: false,
-  },
-  {
-    id: 4,
-    createAt: 20231101,
-    title: '구직 중이 신가요?',
-    reply: true,
-    answer: '넵 맞습니다 ! 언제든지 연락주세요!',
-  },
-];
+import { useQuery } from 'react-query';
+import { getQuestion } from '../../api/firebase/askMe';
 
 export default function QnA() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const {
+    isLoading,
+    error,
+    data: questions,
+  } = useQuery(['question'], getQuestion);
 
+  const sortedQuestions =
+    questions && questions.sort((a, b) => b.createAt - a.createAt);
   return (
     <>
-      <ul className='qna_list'>
-        {qna.map((q) => (
-          <QnACard key={q.id} qna={q} />
-        ))}
-      </ul>
+      {isLoading && <p>로딩중입니다</p>}
+      {error && <p>썸띵이즈롱</p>}
+      {questions && (
+        <ul className='qna_list'>
+          {sortedQuestions?.map((question) => (
+            <QnACard key={question.id} question={question} />
+          ))}
+        </ul>
+      )}
       <div className='qna_list_bottom'>
         <Button filled large>
           View More

@@ -13,6 +13,7 @@ import Auth from './pages/Auth/Auth';
 import Mypage from './pages/Auth/Mypage';
 import ProtectedRoute from './pages/ProtectedRoute';
 import Join from './pages/Auth/Join';
+import AddBlog from './pages/Blog/AddBlog';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -26,6 +27,7 @@ export default function Router() {
         { path: '/portfolio', element: <Portfolio /> },
         { path: '/portfolio/:id', element: <PortfolioDetail /> },
         { path: '/blog', element: <Blog /> },
+        { path: '/blog/write', element: <AddBlog /> },
         { path: '/contact', element: <Contact /> },
         { path: '/askme', element: <AskMe /> },
         { path: '/askme/write', element: <AskMe /> },

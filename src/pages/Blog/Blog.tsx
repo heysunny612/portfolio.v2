@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 import Slider from '../../components/Slider/Slider';
 import SubLayout from '../../components/UI/SubLayout';
 
 export default function Blog() {
+  const navigate = useNavigate();
   return (
     <SubLayout className='blog_container' subTitle='blog'>
       <>
@@ -64,6 +67,9 @@ export default function Blog() {
             </div>
           </li>
         </ul>
+        <Button filled onClick={() => navigate('write')}>
+          Write
+        </Button>
       </>
     </SubLayout>
   );

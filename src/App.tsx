@@ -4,16 +4,20 @@ import { Outlet } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollBtn from './components/ScrollBtns/ScrollBtns';
 import UserContextProvider from './context/UserContext';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
+const queryClient = new QueryClient();
 function App() {
   return (
-    <UserContextProvider>
-      <Header />
-      <Outlet />
-      <Footer />
-      <ScrollToTop />
-      <ScrollBtn />
-    </UserContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserContextProvider>
+        <Header />
+        <Outlet />
+        <Footer />
+        <ScrollToTop />
+        <ScrollBtn />
+      </UserContextProvider>
+    </QueryClientProvider>
   );
 }
 
