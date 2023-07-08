@@ -3,7 +3,6 @@ import { FaUserCircle } from 'react-icons/fa';
 interface IProfileProps {
   inline?: boolean;
   displayName: string;
-  companyName: string;
   photoURL: string;
   email: string;
 }
@@ -11,7 +10,6 @@ interface IProfileProps {
 export default function Profile({
   inline,
   displayName,
-  companyName,
   photoURL,
   email,
 }: IProfileProps) {
@@ -25,9 +23,7 @@ export default function Profile({
             <FaUserCircle />
           )}
         </span>
-        <div className='display_name'>
-          {displayName ? displayName : companyName ? companyName : email}
-        </div>
+        <div className='display_name'>{displayName ? displayName : email}</div>
       </div>
     </div>
   );

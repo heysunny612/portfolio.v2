@@ -3,7 +3,6 @@ export interface IAskMe {
   writer: {
     uid: string;
     displayName: string;
-    companyName: string;
     photoURL: string;
     email: string;
   };

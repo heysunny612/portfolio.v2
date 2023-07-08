@@ -3,20 +3,12 @@ import Button from '../Button/Button';
 import QnACard from './QnACard';
 import AddQnA from './AddQnA';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useQuery } from 'react-query';
-import { getQuestion } from '../../api/firebase/askMe';
-import { useUserContext } from '../../context/UserContext';
+import useAskMe from '../../hooks/useAskMe';
 
 export default function QnA() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const {
-    isLoading,
-    error,
-    data: questions,
-  } = useQuery(['question'], getQuestion);
-  const { user } = useUserContext() ?? {};
-
+  const { isLoading, error, data: questions } = useAskMe().questionsQuery;
   const sortedQuestions =
     questions && questions.sort((a, b) => b.createAt - a.createAt);
   return (

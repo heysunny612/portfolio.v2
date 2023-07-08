@@ -10,7 +10,6 @@ import { deleteQuestion } from '../../api/firebase/askMe';
 interface IQnACardProps {
   question: IAskMe;
 }
-
 const answerVars: Variants = {
   initial: { opacity: 0, transform: 'scaleY(0)' },
   visible: {
@@ -35,17 +34,17 @@ export default function QnACard({ question }: IQnACardProps) {
   const handleDelete = async () => {
     const isDelete = confirm(`[${text}] 정말 삭제 하시겠습니까?`);
     if (isDelete && id) {
-      await deleteQuestion(id);
+      deleteQuestion(id);
     }
   };
   return (
     <li className='qna_card'>
       <div className='qan_info' role='button' onClick={toggleQnA}>
         <span className={`badge ${reply ? 'completed' : ''}`}>
-          {isPublic && <FaLock />} {reply ? '답변완료' : '답변대기중'}
+          {!isPublic ? <FaLock /> : ''} {reply ? '답변완료' : '답변대기중'}
         </span>
         <h4 className='title'>
-          {isPublic && !(user?.uid === writer.uid)
+          {!isPublic && !user?.isAdmin && !(user?.uid === writer.uid)
             ? '비공개로 작성된 질문입니다'
             : text}
         </h4>
@@ -58,21 +57,22 @@ export default function QnACard({ question }: IQnACardProps) {
       <div className='qna_writer'>
         <Profile
           inline
-          displayName={writer.displayName}
-          companyName={writer.companyName}
-          photoURL={writer.photoURL}
-          email={writer.email}
+          displayName={writer?.displayName}
+          photoURL={writer?.photoURL}
+          email={writer?.email}
         />
         <span className='date'>작성일 : {formatDate(createAt)}</span>
-        <div className='qna_buttons'>
-          {(user?.uid === writer.uid || user?.isAdmin) && (
-            <>
-              <button>수정</button>
-              <button onClick={handleDelete}>삭제</button>
-            </>
-          )}
-          {user?.isAdmin && <button>답변</button>}
-        </div>
+        {user && (
+          <div className='qna_buttons'>
+            {(user?.uid === writer?.uid || user?.isAdmin) && (
+              <>
+                <button>수정</button>
+                <button onClick={handleDelete}>삭제</button>
+              </>
+            )}
+            {user?.isAdmin && <button>답변</button>}
+          </div>
+        )}
       </div>
       {reply && (
         <AnimatePresence>

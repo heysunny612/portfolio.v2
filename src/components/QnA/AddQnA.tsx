@@ -3,8 +3,7 @@ import Button from '../Button/Button';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import { useUserContext } from '../../context/UserContext';
-import { addQuestion } from '../../api/firebase/askMe';
-
+import useAskMe from '../../hooks/useAskMe';
 interface IAddQnAFormData {
   question: string;
   radio: string;
@@ -14,20 +13,20 @@ export default function AddQnA() {
   const { user } = useUserContext() ?? {};
   const navigate = useNavigate();
   const handleClose = () => navigate('/askme', { replace: true });
-  console.log(user);
   const { register, handleSubmit } = useForm<IAddQnAFormData>({
     defaultValues: {
       question: '',
       radio: 'public',
     },
   });
+
+  const { addQuestionMutation } = useAskMe();
   const onAddQuestion = async (data: IAddQnAFormData) => {
     if (data.question.trim() === '') return;
-    await addQuestion({
+    const questionData = {
       writer: {
         uid: user?.uid ?? '',
         displayName: user?.displayName ?? '',
-        companyName: user?.company?.companyName ?? '',
         photoURL: user?.photoURL ?? '',
         email: user?.email ?? '',
       },
@@ -35,6 +34,9 @@ export default function AddQnA() {
       isPublic: data.radio === 'public' ? true : false,
       createAt: Date.now(),
       reply: false,
+    };
+    addQuestionMutation.mutate(questionData, {
+      onSuccess: () => navigate('/askme'),
     });
   };
 
