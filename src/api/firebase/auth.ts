@@ -9,22 +9,19 @@ import {
   AuthProvider,
   updateProfile,
 } from 'firebase/auth';
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-} from 'firebase/firestore';
+
 import { get, ref, set } from 'firebase/database';
-import { auth, database, db } from './initialize';
+import { auth, database } from './initialize';
 import { IUser } from '../../interfaces/User';
+
+const DB_ADMINS = 'admins';
+const DB_BUSINESS_USER = 'BusinessUser';
 
 interface ISocialLoginData {
   type: 'google' | 'github';
 }
 
-//이메일 & 패스워드로 신규가입
+//[이메일 & 패스워드로 신규가입]
 export const joinWithEmail = async (
   email: string,
   password: string,
@@ -38,6 +35,8 @@ export const joinWithEmail = async (
       if (displayName) {
         await updateProfile(user, { displayName });
       }
+
+      //비즈니스 유저가 선택되었다면 해당 uid 실시간데이터베이스에 저장
       if (isBusinessUser) {
         set(ref(database, `BusinessUser/${user.displayName}_${user.uid}`), {
           uid: user.uid,
@@ -47,7 +46,7 @@ export const joinWithEmail = async (
     .catch((error) => setError(error.message));
 };
 
-//기존 사용자 로그인
+//[기존 사용자 로그인]
 export const loginWithEmail = async (
   email: string,
   password: string,
@@ -57,7 +56,7 @@ export const loginWithEmail = async (
     .catch((error) => setError(error.message));
 };
 
-//로그아웃
+//[로그아웃]
 export const logout = () => signOut(auth);
 
 const getAuthProvider = (type: 'google' | 'github'): AuthProvider => {
@@ -69,7 +68,7 @@ const getAuthProvider = (type: 'google' | 'github'): AuthProvider => {
   throw new Error(`유효하지 않은 소셜 로그인 type입니다.: ${type}`);
 };
 
-//소셜로그인
+//[소셜로그인]
 export const socialLogin = async (
   data: ISocialLoginData,
   setSocialError: (error: string) => void
@@ -80,42 +79,62 @@ export const socialLogin = async (
     .catch((error) => setSocialError(error.message));
 };
 
-//관찰자 설정 및 유저데이터 가져오기
+//[관찰자 설정 및 유저데이터 가져오기]
 export const authState = (setUser: (user: IUser | null) => void) => {
   return onAuthStateChanged(auth, async (user) => {
-    const updatedUser = user ? await adminUser(user) : null;
+    const updatedUser = user ? await getUserData(user) : null;
     setUser(updatedUser);
   });
 };
 
-// 어드민 유저 데이터가져오기
-const adminUser = async (user: IUser) => {
-  return get(ref(database, 'admins')) //
+//[어드민, 비즈니스 유저 설정]
+const getUserData = (user: IUser) => {
+  //데이터베이스에 저장된 어드민 유저 확인후 어드민유저 설정
+  const adminPromise = get(ref(database, DB_ADMINS))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const admins = snapshot.val();
-        const isAdmin = admins.includes(user.uid);
-        return { ...user, isAdmin };
+        return admins.includes(user.uid);
       }
+    })
+    .catch((error) => {
+      console.error('어드민 데이터 불러오기 오류:', error);
+      return user;
+    });
+  //데이터베이스에 저장된 비즈니스 유저 확인후 비즈니스유저 설정
+  const businessUserPromise = get(ref(database, DB_BUSINESS_USER))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const businessUser = snapshot.val();
+        const businessUserList = Object.values<{ uid: string }>(
+          businessUser
+        ).map((value) => value.uid);
+        return businessUserList.includes(user.uid);
+      }
+    })
+    .catch((error) => {
+      console.error('비즈니스 사용자 데이터 불러오기 오류:', error);
+      return user;
+    });
+
+  return Promise.all([adminPromise, businessUserPromise])
+    .then(([isAdmin, isBusinessUser]) => {
+      return { ...user, isAdmin, isBusinessUser };
+    })
+    .catch((error) => {
+      console.error('어드민, 비즈니스 사용자 데이터 불러오기 오류:', error);
       return user;
     });
 };
 
-//사용자 프로필 업데이트
-export const editProfile = async (newName: string) => {
+//[사용자 프로필 업데이트]
+export const editProfile = async (displayName: string) => {
   const user = auth.currentUser;
   if (user) {
     return await updateProfile(user, {
-      displayName: newName,
+      displayName,
     }).catch((error) => {
-      console.log(error);
+      console.error('사용자 프로필 업데이트 오류', error);
     });
   }
-};
-
-//회사명 업데이트
-export const editCompany = async (id: string, newCompany: string) => {
-  return await updateDoc(doc(db, 'company', id), {
-    companyName: newCompany,
-  });
 };

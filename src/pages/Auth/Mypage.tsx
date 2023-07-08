@@ -4,17 +4,12 @@ import InputLayout from '../../components/UI/InputLayout';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/Button/Button';
 import { useEffect, useState } from 'react';
-import { editCompany, editProfile } from '../../api/firebase/auth';
+import { editProfile } from '../../api/firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-interface IUpdateData {
-  nickname: string;
-  company: string;
-}
 const initialEditStatus = {
   isNotEdit: '',
   isEditName: '',
-  isEditCompany: '',
   error: '',
 };
 
@@ -28,9 +23,10 @@ export default function Mypage() {
       ...prevStatus,
       isNotEdit: '',
       isEditName: '',
-      isEditCompany: '',
     }));
   };
+
+  console.log(user);
 
   const showEditStatus = (key: keyof typeof editMessages, message: string) => {
     setEditMessages((prevStatus) => ({
@@ -40,53 +36,37 @@ export default function Mypage() {
     setTimeout(clearEditStatus, 3000);
   };
 
-  // const onValid = async (data: IUpdateData) => {
-  //   const isNicknameUnchanged =
-  //     user?.displayName === data.nickname ||
-  //     user?.displayName?.trim() === data.nickname.trim();
-  //   const isCompanyUnchanged =
-  //     user?.company?.companyName === data.company ||
-  //     user?.company?.companyName?.trim() === data.company.trim();
+  const onValid = async ({ displayName }: { displayName: string }) => {
+    const isNicknameUnchanged =
+      user?.displayName === displayName ||
+      user?.displayName?.trim() === displayName.trim();
 
-  //   if (
-  //     (!user?.company && isNicknameUnchanged) ||
-  //     (user?.company && isNicknameUnchanged && isCompanyUnchanged)
-  //   ) {
-  //     showEditStatus('isNotEdit', '수정된 내용이 없습니다.');
-  //     return;
-  //   }
-
-  //   try {
-  //     if (!isNicknameUnchanged) {
-  //       await editProfile(data.nickname);
-  //       showEditStatus(
-  //         'isEditName',
-  //         `닉네임이 ${data.nickname}로 정상적으로 변경되었습니다.`
-  //       );
-  //     }
-
-  //     if (user?.company && !isCompanyUnchanged) {
-  //       await editCompany(user?.company?.id ?? '', data.company);
-  //       showEditStatus(
-  //         'isEditCompany',
-  //         `회사명이 ${data.company}로 정상적으로 변경되었습니다.`
-  //       );
-  //     }
-
-  //     //유저업데이트
-  //     // refreshUser?.();
-  //   } catch (error: unknown) {
-  //     setEditMessages((prevStatus) => ({
-  //       ...prevStatus,
-  //       error: (error as FirebaseError).message,
-  //     }));
-  //   }
-  // };
+    if (isNicknameUnchanged) {
+      showEditStatus('isNotEdit', '수정된 내용이 없습니다.');
+      return;
+    }
+    try {
+      if (!isNicknameUnchanged) {
+        await editProfile(displayName);
+        showEditStatus(
+          'isEditName',
+          `${
+            user?.isBusinessUser ? '회사명' : '닉네임'
+          }이 ${displayName}로 정상적으로 변경되었습니다.`
+        );
+      }
+      refreshUser?.();
+    } catch (error: unknown) {
+      setEditMessages((prevStatus) => ({
+        ...prevStatus,
+        error: (error as FirebaseError).message,
+      }));
+    }
+  };
 
   useEffect(() => {
     if (user) {
-      setValue('nickname', user.displayName || '');
-      setValue('company', user.company?.companyName || '');
+      setValue('displayName', user.displayName || '');
     }
   }, [user, setValue]);
 
@@ -106,14 +86,9 @@ export default function Mypage() {
             <input type='email' value={user?.email ?? ''} readOnly />
           </InputLayout>
           <div className='nickname_area'>
-            <InputLayout title='닉네임'>
-              <input type='text' {...register('nickname')} />
+            <InputLayout title={user?.isBusinessUser ? '회사명' : '닉네임'}>
+              <input type='text' {...register('displayName')} />
             </InputLayout>
-            {user?.company && (
-              <InputLayout title='회사명'>
-                <input type='text' {...register('company')} />
-              </InputLayout>
-            )}
           </div>
           <div className='btn_save'>
             <Button type='submit'>변경사항 저장</Button>
@@ -125,9 +100,6 @@ export default function Mypage() {
       )}
       {editMessages.isEditName && (
         <p className='error_message'>{editMessages.isEditName}</p>
-      )}
-      {editMessages.isEditCompany && (
-        <p className='error_message'>{editMessages.isEditCompany}</p>
       )}
     </section>
   );
