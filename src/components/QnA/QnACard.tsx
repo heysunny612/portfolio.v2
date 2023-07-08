@@ -6,6 +6,7 @@ import { FaLock } from 'react-icons/fa';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useUserContext } from '../../context/UserContext';
 import { formatDate } from '../../utils/formatDate';
+import { deleteQuestion } from '../../api/firebase/askMe';
 interface IQnACardProps {
   question: IAskMe;
 }
@@ -30,6 +31,13 @@ export default function QnACard({ question }: IQnACardProps) {
   const { user } = useUserContext() ?? {};
   const { id, question: text, writer, isPublic, createAt, reply } = question;
   const answer = '테스트중입니다';
+
+  const handleDelete = async () => {
+    const isDelete = confirm(`[${text}] 정말 삭제 하시겠습니까?`);
+    if (isDelete && id) {
+      await deleteQuestion(id);
+    }
+  };
   return (
     <li className='qna_card'>
       <div className='qan_info' role='button' onClick={toggleQnA}>
@@ -57,9 +65,13 @@ export default function QnACard({ question }: IQnACardProps) {
         />
         <span className='date'>작성일 : {formatDate(createAt)}</span>
         <div className='qna_buttons'>
-          <button>수정</button>
-          <button>삭제</button>
-          <button>답변</button>
+          {(user?.uid === writer.uid || user?.isAdmin) && (
+            <>
+              <button>수정</button>
+              <button onClick={handleDelete}>삭제</button>
+            </>
+          )}
+          {user?.isAdmin && <button>답변</button>}
         </div>
       </div>
       {reply && (

@@ -1,4 +1,10 @@
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+} from 'firebase/firestore';
 import { db } from './initialize';
 import { IAskMe } from '../../interfaces/AskMe';
 
@@ -14,4 +20,8 @@ export const getQuestion = async () => {
     id: doc.id,
     ...doc.data(),
   })) as IAskMe[];
+};
+
+export const deleteQuestion = async (id: string) => {
+  await deleteDoc(doc(db, COLLECTION_NAME, id));
 };

@@ -5,6 +5,7 @@ import AddQnA from './AddQnA';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQuery } from 'react-query';
 import { getQuestion } from '../../api/firebase/askMe';
+import { useUserContext } from '../../context/UserContext';
 
 export default function QnA() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function QnA() {
     error,
     data: questions,
   } = useQuery(['question'], getQuestion);
+  const { user } = useUserContext() ?? {};
 
   const sortedQuestions =
     questions && questions.sort((a, b) => b.createAt - a.createAt);
