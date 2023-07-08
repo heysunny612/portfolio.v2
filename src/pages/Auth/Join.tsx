@@ -6,18 +6,25 @@ import { authState, joinWithEmail } from '../../api/firebase/auth';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
+import { GoCodeReview } from 'react-icons/go';
+import { MdBusiness } from 'react-icons/md';
 
-interface IUserData {
+interface IJoinForm {
   email: string;
   password: string;
   passwordCheck: string;
-  company?: string;
-  nickname?: string;
+  displayName?: string;
+  userType: 'Business' | 'Individual';
 }
 
 export default function Join() {
-  const { register, handleSubmit, setFocus } = useForm<IUserData>();
+  const { register, handleSubmit, setFocus, watch } = useForm<IJoinForm>({
+    defaultValues: {
+      userType: 'Individual',
+    },
+  });
   const [error, setError] = useState('');
+  const userType = watch('userType');
   const { user, setUser } = useUserContext() ?? {};
   const navigate = useNavigate();
 
@@ -25,19 +32,27 @@ export default function Join() {
     email,
     password,
     passwordCheck,
-    company,
-    nickname,
-  }: IUserData) => {
+    displayName,
+    userType,
+  }: IJoinForm) => {
     if (password !== passwordCheck) {
       setError('입력하신 두 개의 비밀번호가 일치하지 않습니다.');
       setFocus('password');
       return;
     }
-    await joinWithEmail({ email, password, company, nickname, setError });
-    authState((updatedUser) => {
-      if (setUser) {
-        setUser(updatedUser);
-      }
+    const isBusinessUser = userType === 'Business';
+    await joinWithEmail(
+      email,
+      password,
+      displayName,
+      isBusinessUser,
+      setError
+    ).then(() => {
+      authState((updatedUser) => {
+        if (setUser) {
+          setUser(updatedUser);
+        }
+      });
     });
   };
 
@@ -56,22 +71,32 @@ export default function Join() {
       <div className='login_form'>
         <form onSubmit={handleSubmit(onVaild)}>
           {error && <p className='error_message'>{error}</p>}
+          <div className='login_radio'>
+            <label>
+              <input
+                type='radio'
+                {...register('userType')}
+                value='Individual'
+              />
+              동료 회원 <GoCodeReview />
+            </label>
+            <label>
+              <input type='radio' {...register('userType')} value='Business' />
+              기업 회원 <MdBusiness />
+            </label>
+          </div>
           <InputLayout title='이메일' required>
             <input type='email' {...register('email', { required: true })} />
           </InputLayout>
-          <InputLayout title='닉네임'>
-            <input type='text' {...register('nickname')} />
+          <InputLayout title={userType === 'Individual' ? '닉네임' : '회사명'}>
+            <input type='text' {...register('displayName')} />
           </InputLayout>
           <p className='join_info'>
-            닉네임을 입력하지 않으시면, 이메일로 설정됩니다.
+            {userType === 'Individual'
+              ? '닉네임을 입력하지 않으시면, 이메일로 설정됩니다.'
+              : '채용담당자님이라면 회사명을 입력해주세요. RESUME를 다운로드 받을 수 있습니다!'}
           </p>
-          <InputLayout title='회사명'>
-            <input type='text' {...register('company')} />
-          </InputLayout>
-          <p className='join_info'>
-            채용담당자님이라면 회사명을 입력해주세요. RESUME를 다운로드 받을 수
-            있습니다!
-          </p>
+          <p className='join_info'></p>
           <InputLayout title='패스워드' required>
             <input
               type='password'

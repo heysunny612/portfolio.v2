@@ -16,6 +16,7 @@ export default function InputLayout({
       </span>
       <div className='input'>
         {children}
+
         <span className='line1'></span>
         <span className='line2'></span>
         <span className='line3'></span>

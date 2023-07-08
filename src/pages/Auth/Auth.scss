@@ -64,6 +64,21 @@
     .input {
       margin-bottom: 40px;
     }
+    .login_radio {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-bottom: 50px;
+      font-size: 22px;
+
+      label {
+        color: $lightest-slate;
+        input[type='radio'] {
+          margin-right: 10px;
+        }
+      }
+    }
     .btn_login {
       text-align: center;
     }

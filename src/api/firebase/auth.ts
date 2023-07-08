@@ -16,35 +16,31 @@ import {
   doc,
   updateDoc,
 } from 'firebase/firestore';
-import { get, ref } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { auth, database, db } from './initialize';
-import { IExtendedUser } from '../../interfaces/User';
-
-interface IAuthData {
-  email: string;
-  password: string;
-  setError: (error: string) => void;
-  company?: string;
-  nickname?: string;
-}
+import { IUser } from '../../interfaces/User';
 
 interface ISocialLoginData {
   type: 'google' | 'github';
 }
 
 //이메일 & 패스워드로 신규가입
-export const joinWithEmail = async (data: IAuthData) => {
-  const { email, password, company, nickname, setError } = data;
+export const joinWithEmail = async (
+  email: string,
+  password: string,
+  displayName: string | undefined,
+  isBusinessUser: boolean,
+  setError: (error: string) => void
+) => {
   await createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       const user = userCredential.user;
-      if (nickname) {
-        await updateProfile(user, { displayName: nickname });
+      if (displayName) {
+        await updateProfile(user, { displayName });
       }
-      if (company) {
-        await addDoc(collection(db, 'company'), {
+      if (isBusinessUser) {
+        set(ref(database, `BusinessUser/${user.displayName}_${user.uid}`), {
           uid: user.uid,
-          companyName: company,
         });
       }
     }) //
@@ -52,8 +48,11 @@ export const joinWithEmail = async (data: IAuthData) => {
 };
 
 //기존 사용자 로그인
-export const loginWithEmail = async (data: IAuthData) => {
-  const { email, password, setError } = data;
+export const loginWithEmail = async (
+  email: string,
+  password: string,
+  setError: (error: string) => void
+) => {
   await signInWithEmailAndPassword(auth, email, password) //
     .catch((error) => setError(error.message));
 };
@@ -82,32 +81,15 @@ export const socialLogin = async (
 };
 
 //관찰자 설정 및 유저데이터 가져오기
-export const authState = (setUser: (user: IExtendedUser | null) => void) => {
+export const authState = (setUser: (user: IUser | null) => void) => {
   return onAuthStateChanged(auth, async (user) => {
     const updatedUser = user ? await adminUser(user) : null;
     setUser(updatedUser);
   });
 };
 
-//회사 유저 데이터 가져오기
-const getCompanyUser = async (user: IExtendedUser) => {
-  const querySnapshot = await getDocs(collection(db, 'company'));
-  const companyUser = querySnapshot.docs.find(
-    (doc) => doc.data().uid === user?.uid
-  );
-  const userWithCompany: IExtendedUser = {
-    ...user,
-    company: {
-      id: companyUser?.id,
-      companyName: companyUser?.data().companyName,
-      uid: companyUser?.data().uid,
-    },
-  };
-  return companyUser ? userWithCompany : user;
-};
-
 // 어드민 유저 데이터가져오기
-const adminUser = async (user: IExtendedUser) => {
+const adminUser = async (user: IUser) => {
   return get(ref(database, 'admins')) //
     .then((snapshot) => {
       if (snapshot.exists()) {

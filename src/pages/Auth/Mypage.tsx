@@ -40,48 +40,48 @@ export default function Mypage() {
     setTimeout(clearEditStatus, 3000);
   };
 
-  const onValid = async (data: IUpdateData) => {
-    const isNicknameUnchanged =
-      user?.displayName === data.nickname ||
-      user?.displayName?.trim() === data.nickname.trim();
-    const isCompanyUnchanged =
-      user?.company?.companyName === data.company ||
-      user?.company?.companyName?.trim() === data.company.trim();
+  // const onValid = async (data: IUpdateData) => {
+  //   const isNicknameUnchanged =
+  //     user?.displayName === data.nickname ||
+  //     user?.displayName?.trim() === data.nickname.trim();
+  //   const isCompanyUnchanged =
+  //     user?.company?.companyName === data.company ||
+  //     user?.company?.companyName?.trim() === data.company.trim();
 
-    if (
-      (!user?.company && isNicknameUnchanged) ||
-      (user?.company && isNicknameUnchanged && isCompanyUnchanged)
-    ) {
-      showEditStatus('isNotEdit', '수정된 내용이 없습니다.');
-      return;
-    }
+  //   if (
+  //     (!user?.company && isNicknameUnchanged) ||
+  //     (user?.company && isNicknameUnchanged && isCompanyUnchanged)
+  //   ) {
+  //     showEditStatus('isNotEdit', '수정된 내용이 없습니다.');
+  //     return;
+  //   }
 
-    try {
-      if (!isNicknameUnchanged) {
-        await editProfile(data.nickname);
-        showEditStatus(
-          'isEditName',
-          `닉네임이 ${data.nickname}로 정상적으로 변경되었습니다.`
-        );
-      }
+  //   try {
+  //     if (!isNicknameUnchanged) {
+  //       await editProfile(data.nickname);
+  //       showEditStatus(
+  //         'isEditName',
+  //         `닉네임이 ${data.nickname}로 정상적으로 변경되었습니다.`
+  //       );
+  //     }
 
-      if (user?.company && !isCompanyUnchanged) {
-        await editCompany(user?.company?.id ?? '', data.company);
-        showEditStatus(
-          'isEditCompany',
-          `회사명이 ${data.company}로 정상적으로 변경되었습니다.`
-        );
-      }
+  //     if (user?.company && !isCompanyUnchanged) {
+  //       await editCompany(user?.company?.id ?? '', data.company);
+  //       showEditStatus(
+  //         'isEditCompany',
+  //         `회사명이 ${data.company}로 정상적으로 변경되었습니다.`
+  //       );
+  //     }
 
-      //유저업데이트
-      refreshUser?.();
-    } catch (error: unknown) {
-      setEditMessages((prevStatus) => ({
-        ...prevStatus,
-        error: (error as FirebaseError).message,
-      }));
-    }
-  };
+  //     //유저업데이트
+  //     // refreshUser?.();
+  //   } catch (error: unknown) {
+  //     setEditMessages((prevStatus) => ({
+  //       ...prevStatus,
+  //       error: (error as FirebaseError).message,
+  //     }));
+  //   }
+  // };
 
   useEffect(() => {
     if (user) {

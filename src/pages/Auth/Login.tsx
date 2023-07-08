@@ -7,20 +7,20 @@ import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import Button from '../../components/Button/Button';
 import InputLayout from '../../components/UI/InputLayout';
 
-interface IUserData {
+interface ILoginForm {
   email: string;
   password: string;
 }
 
 export default function Login() {
-  const { register, handleSubmit } = useForm<IUserData>();
+  const { register, handleSubmit } = useForm<ILoginForm>();
   const [error, setError] = useState('');
-  const onValid = ({ email, password }: IUserData) => {
-    loginWithEmail({ email, password, setError });
+  const onLogin = ({ email, password }: ILoginForm) => {
+    loginWithEmail(email, password, setError);
   };
   const user = useUserContext()?.user;
   const navigate = useNavigate();
-  // 로그인시 페이지 전환
+
   useEffect(() => {
     if (user) {
       navigate('/auth/mypage', { replace: true });
@@ -34,7 +34,7 @@ export default function Login() {
         <span>가입한 이메일로 로그인하세요!</span>
       </h3>
       <div className='login_form'>
-        <form onSubmit={handleSubmit(onValid)}>
+        <form onSubmit={handleSubmit(onLogin)}>
           {error && <p className='error_message'>{error}</p>}
           <InputLayout title='이메일' required>
             <input type='email' {...register('email', { required: true })} />
