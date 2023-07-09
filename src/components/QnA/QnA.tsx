@@ -4,8 +4,10 @@ import QnACard from './QnACard';
 import AddQnA from './AddQnA';
 import { AnimatePresence, motion } from 'framer-motion';
 import useAskMe from '../../hooks/useAskMe';
+import { useUserContext } from '../../context/UserContext';
 
 export default function QnA() {
+  const { user } = useUserContext() || {};
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isLoading, error, data: questions } = useAskMe().questionsQuery;
@@ -25,9 +27,13 @@ export default function QnA() {
       <div className='qna_list_bottom'>
         <Button filled large>
           View More
-        </Button>
+        </Button>{' '}
         <div className='btn_write'>
-          <Button onClick={() => navigate('write')}>질문하기</Button>
+          {user ? (
+            <Button onClick={() => navigate('write')}>질문하기</Button>
+          ) : (
+            <Button onClick={() => navigate('/auth/login')}>로그인</Button>
+          )}
         </div>
       </div>
       <AnimatePresence>

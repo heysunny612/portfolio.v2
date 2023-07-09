@@ -6,7 +6,6 @@ import { FaLock } from 'react-icons/fa';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useUserContext } from '../../context/UserContext';
 import { formatDate } from '../../utils/formatDate';
-import { deleteQuestion } from '../../api/firebase/askMe';
 import useAskMe from '../../hooks/useAskMe';
 import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
@@ -32,7 +31,7 @@ export default function QnACard({ question }: IQnACardProps) {
   const { id, question: text, writer, isPublic, createAt, answer } = question;
   const [isToggle, setToggle] = useState(false);
   const toggleQnA = () => setToggle(!isToggle);
-  const { updateQuestionMutation } = useAskMe();
+  const { updateQuestionMutation, deleteQuestionMutation } = useAskMe();
   const { register, handleSubmit, reset } = useForm<{
     answerText: string;
   }>();
@@ -43,14 +42,14 @@ export default function QnACard({ question }: IQnACardProps) {
   };
 
   //질문삭제
-  const handleDelete = async () => {
+  const handleDelete = () => {
     const isDelete = confirm(`[${text}] 정말 삭제 하시겠습니까?`);
     if (answer && !user?.isAdmin) {
       alert('답변이 달린 경우, 질문을 삭제할 수 없습니다.');
       return;
     }
     if (isDelete && id) {
-      await deleteQuestion(id);
+      deleteQuestionMutation.mutate(id);
     }
   };
 
@@ -84,7 +83,8 @@ export default function QnACard({ question }: IQnACardProps) {
           {!isPublic ? <FaLock /> : ''} {answer ? '답변완료' : '답변대기중'}
         </span>
         <h4 className='title'>
-          {!isPublic && user && !user?.isAdmin && !(user?.uid === writer.uid)
+          {!isPublic &&
+          (!user || (!user?.isAdmin && !(user?.uid === writer.uid)))
             ? '비공개로 작성된 질문입니다'
             : text}
         </h4>

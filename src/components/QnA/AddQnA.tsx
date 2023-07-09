@@ -32,7 +32,7 @@ export default function AddQnA() {
         email: user?.email ?? '',
       },
       question: data.question.trim(),
-      isPublic: data.radio === 'public' ? true : false,
+      isPublic: data.publicType === 'public' ? true : false,
       createAt: Date.now(),
     };
     addQuestionMutation.mutate(questionData, {
