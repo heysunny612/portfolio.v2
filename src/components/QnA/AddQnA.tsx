@@ -4,22 +4,23 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import { useUserContext } from '../../context/UserContext';
 import useAskMe from '../../hooks/useAskMe';
+import { FaLock, FaUnlock } from 'react-icons/fa';
 interface IAddQnAFormData {
   question: string;
-  radio: string;
+  publicType: string;
 }
 
 export default function AddQnA() {
   const { user } = useUserContext() ?? {};
   const navigate = useNavigate();
   const handleClose = () => navigate('/askme', { replace: true });
-  const { register, handleSubmit } = useForm<IAddQnAFormData>({
+  const { register, handleSubmit, watch } = useForm<IAddQnAFormData>({
     defaultValues: {
       question: '',
-      radio: 'public',
+      publicType: 'public',
     },
   });
-
+  const publicType = watch('publicType');
   const { addQuestionMutation } = useAskMe();
   const onAddQuestion = async (data: IAddQnAFormData) => {
     if (data.question.trim() === '') return;
@@ -33,7 +34,6 @@ export default function AddQnA() {
       question: data.question.trim(),
       isPublic: data.radio === 'public' ? true : false,
       createAt: Date.now(),
-      reply: false,
     };
     addQuestionMutation.mutate(questionData, {
       onSuccess: () => navigate('/askme'),
@@ -46,13 +46,17 @@ export default function AddQnA() {
         <h3 className='common_h3'>Question</h3>
         <form onSubmit={handleSubmit(onAddQuestion)}>
           <div className='qna_radio'>
-            <label>
-              공개질문
-              <input {...register('radio')} type='radio' value='public' />
+            <label className={publicType === 'public' ? 'checked' : ''}>
+              <input {...register('publicType')} type='radio' value='public' />
+              <FaUnlock /> 공개질문
             </label>
-            <label>
-              비공개질문
-              <input {...register('radio')} type='radio' value='notPublic' />
+            <label className={publicType === 'notPublic' ? 'checked' : ''}>
+              <input
+                {...register('publicType')}
+                type='radio'
+                value='notPublic'
+              />
+              <FaLock /> 비공개질문
             </label>
           </div>
           <div className='qna_input'>
@@ -60,6 +64,7 @@ export default function AddQnA() {
               type='text'
               placeholder='무엇이든 편하게 질문해주세요'
               {...register('question', { required: true })}
+              autoComplete='off'
             />
           </div>
           <div className='qna_buttons'>

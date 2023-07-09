@@ -17,8 +17,8 @@ export default function SendEmail() {
   const form = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    const { displayName, email, company } = user || {};
-    setValue('user_name', company?.companyName || displayName || '');
+    const { displayName, email } = user || {};
+    setValue('user_name', displayName || '');
     setValue('user_email', email || '');
   }, [user, setValue]);
 

@@ -1,5 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { addQuestion, getQuestion } from '../api/firebase/askMe';
+import {
+  addQuestion,
+  getQuestion,
+  updateQuestion,
+} from '../api/firebase/askMe';
+import { IAnswer } from '../interfaces/AskMe';
 
 export default function useAskMe() {
   const queryClient = useQueryClient();
@@ -10,5 +15,13 @@ export default function useAskMe() {
     onSuccess: () => queryClient.invalidateQueries(['questions']),
   });
 
-  return { questionsQuery, addQuestionMutation };
+  const updateQuestionMutation = useMutation(
+    ({ id, answer }: { id: string; answer: IAnswer }) =>
+      updateQuestion(id, answer),
+    {
+      onSuccess: () => queryClient.invalidateQueries(['questions']),
+    }
+  );
+
+  return { questionsQuery, addQuestionMutation, updateQuestionMutation };
 }
