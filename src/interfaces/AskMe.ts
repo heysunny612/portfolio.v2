@@ -20,3 +20,11 @@ export interface IAnswer {
   content: string;
   createAt: number;
 }
+
+export interface IUpdateData {
+  id: string;
+  updateData: {
+    answer?: IAnswer;
+    question?: string;
+  };
+}

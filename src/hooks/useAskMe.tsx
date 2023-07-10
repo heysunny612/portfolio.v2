@@ -5,29 +5,30 @@ import {
   getQuestion,
   updateQuestion,
 } from '../api/firebase/askMe';
-import { IAnswer } from '../interfaces/AskMe';
+import { IUpdateData } from '../interfaces/AskMe';
+
+const CACHE_NAME = 'questions';
 
 export default function useAskMe() {
   const queryClient = useQueryClient();
 
-  const questionsQuery = useQuery(['questions'], getQuestion, {
+  const questionsQuery = useQuery([CACHE_NAME], getQuestion, {
     staleTime: 1000 * 6 * 10,
   });
 
   const addQuestionMutation = useMutation(addQuestion, {
-    onSuccess: () => queryClient.invalidateQueries(['questions']),
+    onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
   });
 
   const updateQuestionMutation = useMutation(
-    ({ id, answer }: { id: string; answer: IAnswer }) =>
-      updateQuestion(id, answer),
+    ({ id, updateData }: IUpdateData) => updateQuestion(id, updateData),
     {
-      onSuccess: () => queryClient.invalidateQueries(['questions']),
+      onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
     }
   );
 
   const deleteQuestionMutation = useMutation(deleteQuestion, {
-    onSuccess: () => queryClient.invalidateQueries(['questions']),
+    onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
   });
 
   return {

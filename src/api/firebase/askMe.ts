@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from './initialize';
-import { IAskMe, IAnswer } from '../../interfaces/AskMe';
+import { IAskMe, IUpdateData } from '../../interfaces/AskMe';
 
 const COLLECTION_NAME = 'question';
 
@@ -31,7 +31,9 @@ export const deleteQuestion = async (id: string) => {
 };
 
 //UPDATE
-//UPDATE
-export const updateQuestion = async (id: string, answer: IAnswer) => {
-  await updateDoc(doc(db, COLLECTION_NAME, id), { answer });
+export const updateQuestion = async (
+  id: string,
+  updateData: IUpdateData['updateData']
+) => {
+  await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
 };

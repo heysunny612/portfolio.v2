@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { IAskMe } from '../../interfaces/AskMe';
-import Profile from '../Profile/Profile';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { FaLock } from 'react-icons/fa';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useUserContext } from '../../context/UserContext';
 import { formatDate } from '../../utils/formatDate';
+import Profile from '../Profile/Profile';
 import useAskMe from '../../hooks/useAskMe';
-import { useForm } from 'react-hook-form';
-import Button from '../Button/Button';
+import UpdateQnA from './UpdateQnA';
+
 interface IQnACardProps {
   question: IAskMe;
 }
@@ -26,74 +26,63 @@ const answerVars: Variants = {
   },
 };
 
-export default function QnACard({ question }: IQnACardProps) {
+export default function QnACard({
+  question: { id, question: text, writer, isPublic, createAt, answer },
+}: IQnACardProps) {
   const { user } = useUserContext() || {};
-  const { id, question: text, writer, isPublic, createAt, answer } = question;
-  const [isToggle, setToggle] = useState(false);
-  const toggleQnA = () => setToggle(!isToggle);
-  const { updateQuestionMutation, deleteQuestionMutation } = useAskMe();
-  const { register, handleSubmit, reset } = useForm<{
-    answerText: string;
-  }>();
+  const { deleteQuestionMutation } = useAskMe();
+  const [isCardClick, setisCardClick] = useState(false);
   const [isAnswerClick, setIsAnswerClick] = useState(false);
-  const toggleAnswerClick = () => {
-    setIsAnswerClick(!isAnswerClick);
-    reset({ answerText: answer?.content || '' });
+  const [isEditClick, setIsEditClick] = useState(false);
+  const toggleCard = () => setisCardClick(!isCardClick);
+  const toggleAnswer = () => setIsAnswerClick(!isAnswerClick);
+  const toggleEdit = () => setIsEditClick(!isEditClick);
+
+  const handleEdit = () => {
+    if (answer && !user?.isAdmin) {
+      alert('답변이 등록된 질문은 수정할 수 없습니다.');
+      return;
+    }
+    setIsEditClick(!isEditClick);
   };
 
   //질문삭제
   const handleDelete = () => {
     const isDelete = confirm(`[${text}] 정말 삭제 하시겠습니까?`);
     if (answer && !user?.isAdmin) {
-      alert('답변이 달린 경우, 질문을 삭제할 수 없습니다.');
+      alert('답변이 등록된 질문을 삭제할 수 없습니다.');
       return;
     }
     if (isDelete && id) {
       deleteQuestionMutation.mutate(id);
     }
   };
-
-  //답변등록
-  const handleAddAnswer = ({ answerText }: { answerText: string }) => {
-    updateQuestionMutation.mutate(
-      {
-        id: id ?? '',
-        answer: {
-          uid: user?.uid ?? '',
-          displayName: user?.displayName ?? '',
-          photoURL: user?.photoURL ?? '',
-          email: user?.email ?? '',
-          content: answerText,
-          createAt: Date.now(),
-        },
-      },
-      {
-        onSuccess: () => {
-          toggleAnswerClick();
-          setToggle(true);
-        },
-      }
-    );
-  };
-
   return (
     <li className='qna_card'>
-      <div className='qan_info' role='button' onClick={toggleQnA}>
+      <div className='qan_info'>
         <span className={`badge ${answer ? 'completed' : ''}`}>
           {!isPublic ? <FaLock /> : ''} {answer ? '답변완료' : '답변대기중'}
         </span>
-        <h4 className='title'>
+        <h4 className='title' onClick={toggleCard} role='button'>
           {!isPublic &&
           (!user || (!user?.isAdmin && !(user?.uid === writer.uid)))
             ? '비공개로 작성된 질문입니다'
             : text}
         </h4>
         {answer && (
-          <div className='toggle'>
-            {isToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          <div className='toggle' onClick={toggleCard} role='button'>
+            {isCardClick ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </div>
         )}
       </div>
+      {isEditClick && (
+        <UpdateQnA
+          defaultValue={text}
+          id={id!}
+          user={user!}
+          toggle={toggleEdit}
+        />
+      )}
       <div className='qna_writer'>
         <Profile
           inline
@@ -106,12 +95,14 @@ export default function QnACard({ question }: IQnACardProps) {
           <div className='qna_buttons'>
             {(user?.uid === writer?.uid || user?.isAdmin) && (
               <>
-                <button>수정</button>
+                <button onClick={handleEdit}>
+                  {isEditClick ? '취소' : '수정'}
+                </button>
                 <button onClick={handleDelete}>삭제</button>
               </>
             )}
             {user?.isAdmin && (
-              <button onClick={toggleAnswerClick}>
+              <button onClick={toggleAnswer}>
                 {isAnswerClick ? '취소' : '답변'}
               </button>
             )}
@@ -119,20 +110,18 @@ export default function QnACard({ question }: IQnACardProps) {
         )}
       </div>
       {isAnswerClick && (
-        <div className='qna_answer_form'>
-          <form onSubmit={handleSubmit(handleAddAnswer)}>
-            <textarea
-              placeholder='답변을 작성하세요'
-              {...register('answerText')}
-              defaultValue={answer?.content || ''}
-            ></textarea>
-            <Button type='submit'>답변등록</Button>
-          </form>
-        </div>
+        <UpdateQnA
+          id={id!}
+          defaultValue={answer?.content || ''}
+          user={user!}
+          toggle={toggleAnswer}
+          setisCardClick={setisCardClick}
+          answer
+        />
       )}
       {answer && (
         <AnimatePresence>
-          {isToggle ? (
+          {isCardClick ? (
             <motion.div
               className='qna_answer'
               variants={answerVars}

@@ -23,7 +23,8 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      navigate('/auth/mypage', { replace: true });
+      // @ts-ignore
+      navigate(-1, { replace: true });
     }
   }, [user, navigate]);
 
