@@ -3,6 +3,7 @@ interface IButtonPros {
   children: React.ReactNode;
   filled?: boolean;
   large?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -11,12 +12,13 @@ export default function Button({
   children,
   filled,
   large,
+  disabled,
   onClick,
 }: IButtonPros) {
   return (
     <button
-      className={`primary_btn ${filled ? 'filled' : null}
-      ${large ? 'large' : null}`}
+      className={`primary_btn ${filled ? 'filled' : null}  
+      ${large ? 'large' : null} ${disabled ? 'disabled' : null}`}
       onClick={onClick}
       type={type}
     >

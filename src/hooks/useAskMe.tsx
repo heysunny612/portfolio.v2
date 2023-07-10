@@ -13,7 +13,7 @@ export default function useAskMe() {
   const queryClient = useQueryClient();
 
   const questionsQuery = useQuery([CACHE_NAME], getQuestion, {
-    staleTime: 1000 * 6 * 10,
+    staleTime: 1000,
   });
 
   const addQuestionMutation = useMutation(addQuestion, {

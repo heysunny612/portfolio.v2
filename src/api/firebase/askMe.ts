@@ -4,7 +4,13 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  limit,
+  orderBy,
   updateDoc,
+  query,
+  startAfter,
+  QueryDocumentSnapshot,
+  DocumentData,
 } from 'firebase/firestore';
 import { db } from './initialize';
 import { IAskMe, IUpdateData } from '../../interfaces/AskMe';
@@ -17,12 +23,16 @@ export const addQuestion = async (data: IAskMe) => {
 };
 
 //READ
-export const getQuestion = async () => {
-  const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
-  return querySnapshot.docs.map((doc) => ({
+export const getQuestion = async (): Promise<IAskMe[]> => {
+  const q = query(collection(db, COLLECTION_NAME), orderBy('createAt', 'desc'));
+
+  const querySnapshot = await getDocs(q);
+  const questions = querySnapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data(),
-  })) as IAskMe[];
+    ...(doc.data() as IAskMe),
+  }));
+
+  return questions;
 };
 
 //DELETE

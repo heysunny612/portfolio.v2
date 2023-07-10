@@ -8,6 +8,8 @@ import { formatDate } from '../../utils/formatDate';
 import Profile from '../Profile/Profile';
 import useAskMe from '../../hooks/useAskMe';
 import UpdateQnA from './UpdateQnA';
+import fadeIn from '../../utils/fadeIn';
+import { useInView } from 'react-intersection-observer';
 
 interface IQnACardProps {
   question: IAskMe;
@@ -37,6 +39,9 @@ export default function QnACard({
   const toggleCard = () => setisCardClick(!isCardClick);
   const toggleAnswer = () => setIsAnswerClick(!isAnswerClick);
   const toggleEdit = () => setIsEditClick(!isEditClick);
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+  });
 
   const handleEdit = () => {
     if (answer && !user?.isAdmin) {
@@ -58,7 +63,13 @@ export default function QnACard({
     }
   };
   return (
-    <li className='qna_card'>
+    <motion.li
+      className='qna_card'
+      variants={fadeIn('up', 0.1)}
+      initial='hidden'
+      animate={inView ? 'show' : 'hidden'}
+      ref={ref}
+    >
       <div className='qan_info'>
         <span className={`badge ${answer ? 'completed' : ''}`}>
           {!isPublic ? <FaLock /> : ''} {answer ? '답변완료' : '답변대기중'}
@@ -148,6 +159,6 @@ export default function QnACard({
           ) : null}
         </AnimatePresence>
       )}
-    </li>
+    </motion.li>
   );
 }
