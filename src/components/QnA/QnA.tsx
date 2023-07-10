@@ -1,22 +1,24 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Button from '../Button/Button';
 import QnACard from './QnACard';
 import AddQnA from './AddQnA';
 import { AnimatePresence, motion } from 'framer-motion';
 import useAskMe from '../../hooks/useAskMe';
 import { useUserContext } from '../../context/UserContext';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import SearchQnA from './SearchQna';
+import { IAskMe } from '../../interfaces/AskMe';
 
 const LOAD_COUNT = 5;
 
 export default function QnA() {
-  const listRef = useRef(null);
   const { user } = useUserContext() || {};
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isLoading, error, data: questions } = useAskMe().questionsQuery;
   const [loadCount, setLoadCount] = useState(LOAD_COUNT);
   const questionsCount = questions?.length || 0;
+  const { keyword } = useParams<{ keyword: string }>();
   const handleMore = () => {
     if (questions && loadCount + LOAD_COUNT >= questionsCount) {
       setLoadCount(questionsCount);
@@ -24,27 +26,46 @@ export default function QnA() {
     }
     setLoadCount((prevCount) => prevCount + LOAD_COUNT);
   };
-
+  const filtered = questions?.filter((question) =>
+    question.question.includes(keyword!)
+  );
+  const hasFiltered = filtered?.length! <= 0;
   return (
     <>
       {isLoading && <p>로딩중입니다</p>}
       {error && <p>썸띵이즈롱</p>}
       {questions && (
-        <>
-          <ul className='qna_list' ref={listRef}>
-            {questions.slice(0, loadCount).map((question) => (
-              <QnACard key={question.id} question={question} />
-            ))}
+        <div className='qna_wrap'>
+          <SearchQnA />
+          {hasFiltered && keyword && (
+            <div className='qna_no_result'>{keyword} 검색결과가 없습니다</div>
+          )}
+          <ul className='qna_list'>
+            {!keyword
+              ? questions
+                  .slice(0, loadCount)
+                  .map((question) => (
+                    <QnACard key={question.id} question={question} />
+                  ))
+              : filtered!.map((question) => (
+                  <QnACard key={question.id} question={question} />
+                ))}
           </ul>
           <div className='qna_list_bottom'>
-            <Button
-              filled
-              large
-              onClick={handleMore}
-              disabled={loadCount === questionsCount}
-            >
-              Show More <span>{loadCount}</span> / {questionsCount}
-            </Button>
+            {!keyword ? (
+              <Button
+                filled
+                large
+                onClick={handleMore}
+                disabled={loadCount === questionsCount}
+              >
+                Show More <span>{loadCount}</span> / {questionsCount}
+              </Button>
+            ) : (
+              <Button filled large onClick={() => navigate('/askme')}>
+                리스트보기
+              </Button>
+            )}
 
             <div className='btn_write'>
               {user ? (
@@ -54,9 +75,8 @@ export default function QnA() {
               )}
             </div>
           </div>
-        </>
+        </div>
       )}
-
       <AnimatePresence>
         {pathname === '/askme/write' && (
           <motion.div

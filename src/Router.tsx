@@ -30,6 +30,7 @@ export default function Router() {
         { path: '/blog/write', element: <AddBlog /> },
         { path: '/contact', element: <Contact /> },
         { path: '/askme', element: <AskMe /> },
+        { path: '/askme/:keyword', element: <AskMe /> },
         { path: '/askme/write', element: <AskMe /> },
         {
           path: '/auth',
