@@ -8,13 +8,20 @@ import {
   updateDoc,
   query,
 } from 'firebase/firestore';
-import { db } from './initialize';
+import { db, storage } from './initialize';
 import { IAskMe, IUpdateData } from '../../interfaces/AskMe';
+import { IBlog } from '../../interfaces/Blog';
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from 'firebase/storage';
 
 const COLLECTION_NAME = 'blog';
 
 //CREATE
-export const addBlog = async (data: IAskMe) => {
+export const addBlog = async (data: IBlog) => {
   return await addDoc(collection(db, COLLECTION_NAME), data);
 };
 
@@ -42,4 +49,19 @@ export const updateBlogItem = async (
   updateData: IUpdateData['updateData']
 ) => {
   await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
+};
+
+//블로그 에디터 이미지 storage에 업로드
+
+export const uploadImage = async (file: any) => {
+  const storageRef = ref(storage, `blog/${Date.now()}`);
+  return await uploadBytes(storageRef, file)
+    .then((snapshot) => getDownloadURL(snapshot.ref))
+    .catch((error) => console.log(error));
+};
+
+// DELETE the file
+export const deleteFile = async (imgURL: string) => {
+  const urlRef = ref(storage, imgURL);
+  return await deleteObject(urlRef);
 };

@@ -1,11 +1,8 @@
+import { IWriter } from './User';
+
 export interface IAskMe {
   id?: string;
-  writer: {
-    uid: string;
-    displayName: string;
-    photoURL: string;
-    email: string;
-  };
+  writer: IWriter;
   question: string;
   isPublic: boolean;
   createAt: number;
