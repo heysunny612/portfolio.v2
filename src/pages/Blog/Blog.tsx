@@ -10,9 +10,7 @@ export default function Blog() {
       <>
         <h3 className='common_h3'>My Stroy</h3>
         <Slider />
-
         <h3 className='common_h3'>전체보기</h3>
-
         <ul className='blog_list'>
           <li>
             <div className='thumb_area'>

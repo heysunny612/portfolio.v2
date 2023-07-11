@@ -1,0 +1,27 @@
+.ReactTags__tags {
+  width: 100%;
+  .ReactTags__selected {
+    display: flex;
+    flex-wrap: wrap;
+    > span {
+      margin: 0 15px 15px 0;
+      padding: 5px;
+      border: 1px solid $light-slate;
+      font-size: 14px;
+      background-color: $dark-slate;
+      color: $accent;
+
+      button {
+        margin-left: 10px;
+        border: 1px solid $dark-navy;
+        background-color: $lightest-navy;
+        color: $lightest-slate;
+      }
+    }
+  }
+  .ReactTags__tagInput {
+    input::placeholder {
+      color: $lightest-slate;
+    }
+  }
+}

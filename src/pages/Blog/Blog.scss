@@ -38,3 +38,47 @@
     }
   }
 }
+
+//블로그 작성
+.blog_add_container {
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      > span {
+        flex-shrink: 0;
+        display: block;
+        width: 150px;
+      }
+      input,
+      select,
+      textarea {
+        padding: 7px;
+        width: 100%;
+        margin: 0;
+        border: 1px solid $dark-slate;
+        background-color: transparent;
+        color: $lightest-slate;
+        font-family: inherit;
+      }
+      textarea {
+        min-height: 300px;
+      }
+      option {
+        color: black;
+      }
+    }
+
+    .blog_add_btns {
+      margin-top: 40px;
+      text-align: center;
+      button {
+        margin: 0 10px;
+      }
+    }
+  }
+}

@@ -4,13 +4,9 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  limit,
   orderBy,
   updateDoc,
   query,
-  startAfter,
-  QueryDocumentSnapshot,
-  DocumentData,
 } from 'firebase/firestore';
 import { db } from './initialize';
 import { IAskMe, IUpdateData } from '../../interfaces/AskMe';
