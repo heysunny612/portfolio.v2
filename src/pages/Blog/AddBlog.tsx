@@ -4,10 +4,12 @@ import Tags from '../../components/Tags/Tags';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Tag } from 'react-tag-input';
-import { addBlog, deleteImage, uploadImage } from '../../api/firebase/blog';
+import { deleteImage, uploadImage } from '../../api/firebase/blog';
 import { IBlog } from '../../interfaces/Blog';
 import { useUserContext } from '../../context/UserContext';
 import { useState, useRef, useMemo } from 'react';
+import useBlog from '../../hooks/useBlog';
+import { useNavigate } from 'react-router-dom';
 
 const categoryOptions = ['나의 스토리', '개발 스토리'];
 
@@ -19,6 +21,8 @@ export default function AddBlog() {
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const { user } = useUserContext() || {};
   const quillRef = useRef<ReactQuill>(null);
+  const { addBlogMutation } = useBlog();
+  const navigate = useNavigate();
 
   //에디터에 이미지 등록시 파이어베이스 저장
   const imageHandler = () => {
@@ -108,19 +112,17 @@ export default function AddBlog() {
       },
     };
 
-    try {
-      await addBlog(blogData)
-        .then(() => {
-          alert('등록되었습니다');
-        })
-        .then(() => {
-          const editorImageUrls = imageUrlsFromContent(content);
-          const imagesToDelete = uploadedImages.filter(
-            (image) => !editorImageUrls.includes(image)
-          );
-          Promise.all(imagesToDelete.map((image) => deleteImage(image)));
-        });
-    } catch {}
+    addBlogMutation.mutate(blogData, {
+      onSuccess: () => {
+        alert('등록되었습니다');
+        navigate('/blog');
+        const editorImageUrls = imageUrlsFromContent(content);
+        const imagesToDelete = uploadedImages.filter(
+          (image) => !editorImageUrls.includes(image)
+        );
+        Promise.all(imagesToDelete.map((image) => deleteImage(image)));
+      },
+    });
   };
 
   return (

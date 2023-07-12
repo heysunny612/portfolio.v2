@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import {
-  addQuestion,
-  deleteQuestion,
-  updateQuestion,
-} from '../api/firebase/askMe';
 import { IUpdateData } from '../interfaces/AskMe';
-import { getblogItems } from '../api/firebase/blog';
+import {
+  addBlog,
+  deleteBlogItem,
+  getblogItems,
+  updateBlogItem,
+} from '../api/firebase/blog';
 
 const CACHE_NAME = 'blog';
 
@@ -13,28 +13,28 @@ export default function useBlog() {
   const queryClient = useQueryClient();
 
   const blogQuery = useQuery([CACHE_NAME], getblogItems, {
-    staleTime: 1000,
+    staleTime: 1000 * 6 * 5,
   });
 
-  const addQuestionMutation = useMutation(addQuestion, {
+  const addBlogMutation = useMutation(addBlog, {
     onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
   });
 
-  const updateQuestionMutation = useMutation(
-    ({ id, updateData }: IUpdateData) => updateQuestion(id, updateData),
+  const updateBlogMutation = useMutation(
+    ({ id, updateData }: IUpdateData) => updateBlogItem(id, updateData),
     {
       onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
     }
   );
 
-  const deleteQuestionMutation = useMutation(deleteQuestion, {
+  const deleteblogMutation = useMutation(deleteBlogItem, {
     onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
   });
 
   return {
     blogQuery,
-    addQuestionMutation,
-    updateQuestionMutation,
-    deleteQuestionMutation,
+    addBlogMutation,
+    updateBlogMutation,
+    deleteblogMutation,
   };
 }

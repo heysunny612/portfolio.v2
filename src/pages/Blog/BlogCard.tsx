@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { IBlog } from '../../interfaces/Blog';
 import { formatDate } from '../../utils/formatDate';
+import useBlog from '../../hooks/useBlog';
 
 interface IBlogCardPrps {
   blog: IBlog;
@@ -17,6 +18,18 @@ export default function BlogCard({
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/blog/${id}`, { state: { blog, index, blogItems } });
+  };
+  const { deleteblogMutation } = useBlog();
+
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    const isDelete = confirm('정말 삭제하시겠습니까?');
+    if (!isDelete) return;
+    deleteblogMutation.mutate(id!, {
+      onSuccess: () => {
+        alert('삭제되었습니다');
+      },
+    });
   };
 
   return (
@@ -37,7 +50,7 @@ export default function BlogCard({
       </div>
       <div className='blog_card_btns'>
         <button>수정</button>
-        <button>삭제</button>
+        <button onClick={handleDelete}>삭제</button>
       </div>
     </li>
   );
