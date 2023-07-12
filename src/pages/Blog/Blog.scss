@@ -16,9 +16,25 @@
     .thumb_area {
       flex: 1 1 1;
       overflow: hidden;
+      width: 350px;
+      height: 200px;
+      background-color: $slate;
+
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-size: 24px;
+        color: $lightest-slate;
+        text-align: center;
+        line-height: 1.2;
+        color: $accent;
+      }
       img {
-        width: 350px;
-        height: 200px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         transition: $transition;
       }
@@ -34,6 +50,13 @@
       }
       h4 {
         font-size: 24px;
+      }
+    }
+    .blog_card_btns {
+      button {
+        border: 1px solid $slate;
+        padding: 5px;
+        margin: 0 5px;
       }
     }
   }
@@ -89,5 +112,95 @@
   background-color: white;
   .ql-editor {
     min-height: 400px;
+  }
+}
+
+//블로그 상세페이지
+.blog_detail {
+  .blog_detail_category {
+    margin-bottom: 10px;
+    color: $accent;
+  }
+  .blog_detail_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .blog_writer_info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 50px;
+      font-size: 13px;
+    }
+  }
+
+  .blog_content_wrap {
+    padding: 50px 20px;
+    border: 1px solid $dark-slate;
+    border-radius: 5px;
+    margin-bottom: 20px;
+
+    .blog_content {
+      .ql-container {
+        border: 0 none;
+      }
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .blog_detail_tags {
+      margin-top: 80px;
+      display: flex;
+      gap: 10px;
+
+      li {
+        padding: 10px;
+        background-color: $accent;
+        color: $dark-navy;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+//불로그 최근 리스트
+.blog_detail_list {
+  border: 1px solid $dark-slate;
+  border-radius: 5px;
+  padding: 20px;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    h3 {
+      color: $lightest-slate;
+    }
+    a {
+      font-size: 14px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .blog_list {
+    li {
+      &:last-child {
+        border-bottom: 0 none;
+      }
+      a {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        span.date {
+          font-size: 14px;
+        }
+      }
+    }
   }
 }

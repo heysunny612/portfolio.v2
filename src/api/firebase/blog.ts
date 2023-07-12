@@ -9,7 +9,7 @@ import {
   query,
 } from 'firebase/firestore';
 import { db, storage } from './initialize';
-import { IAskMe, IUpdateData } from '../../interfaces/AskMe';
+import { IUpdateData } from '../../interfaces/AskMe';
 import { IBlog } from '../../interfaces/Blog';
 import {
   deleteObject,
@@ -26,15 +26,16 @@ export const addBlog = async (data: IBlog) => {
 };
 
 //READ
-export const getblogItems = async (): Promise<IAskMe[]> => {
-  const q = query(collection(db, COLLECTION_NAME), orderBy('createAt', 'desc'));
-
+export const getblogItems = async (): Promise<IBlog[]> => {
+  const q = query(
+    collection(db, COLLECTION_NAME),
+    orderBy('createdAt', 'desc')
+  );
   const querySnapshot = await getDocs(q);
   const questions = querySnapshot.docs.map((doc) => ({
     id: doc.id,
-    ...(doc.data() as IAskMe),
+    ...(doc.data() as IBlog),
   }));
-
   return questions;
 };
 
@@ -52,7 +53,6 @@ export const updateBlogItem = async (
 };
 
 //블로그 에디터 이미지 storage에 업로드
-
 export const uploadImage = async (file: any) => {
   const storageRef = ref(storage, `blog/${Date.now()}`);
   return await uploadBytes(storageRef, file)

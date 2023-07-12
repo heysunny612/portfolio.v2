@@ -8,9 +8,8 @@ import { addBlog, deleteImage, uploadImage } from '../../api/firebase/blog';
 import { IBlog } from '../../interfaces/Blog';
 import { useUserContext } from '../../context/UserContext';
 import { useState, useRef, useMemo } from 'react';
-import { formats } from './editorConfig';
 
-const categoryOptions = ['스토리', '개발스토리'];
+const categoryOptions = ['나의 스토리', '개발 스토리'];
 
 export default function AddBlog() {
   const [title, setTitle] = useState('');
@@ -50,12 +49,15 @@ export default function AddBlog() {
     () => ({
       toolbar: {
         container: [
-          [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote'],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          [{ size: [] }],
+          [{ font: [] }],
+          [{ align: ['right', 'center', 'justify'] }],
           [{ list: 'ordered' }, { list: 'bullet' }],
-          [{ color: [] }, { background: [] }],
-          [{ align: [] }, 'link', 'image'],
+          ['link', 'image'],
+          [{ color: ['red', '#785412'] }],
+          [{ background: ['red', '#785412'] }],
         ],
         handlers: { image: imageHandler },
       },
@@ -63,19 +65,41 @@ export default function AddBlog() {
     []
   );
 
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'link',
+    'color',
+    'image',
+    'background',
+    'align',
+    'size',
+    'font',
+  ];
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setTitle('');
     setBlogTags([]);
     setContent('');
+
+    const editorImageUrls = imageUrlsFromContent(content);
+    const thumbnail =
+      uploadedImages.find((image) => editorImageUrls.includes(image)) || '';
+
     const blogData: IBlog = {
       title,
       blogTags,
       category,
       content,
       createdAt: Date.now(),
-      thumbnail:
-        uploadedImages.filter((image) => content.includes(image))[0] || '',
+      thumbnail,
       writer: {
         uid: user?.uid!,
         displayName: user?.displayName!,
