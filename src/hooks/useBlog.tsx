@@ -2,17 +2,17 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import {
   addQuestion,
   deleteQuestion,
-  getQuestion,
   updateQuestion,
 } from '../api/firebase/askMe';
 import { IUpdateData } from '../interfaces/AskMe';
+import { getblogItems } from '../api/firebase/blog';
 
 const CACHE_NAME = 'blog';
 
-export default function useAskMe() {
+export default function useBlog() {
   const queryClient = useQueryClient();
 
-  const questionsQuery = useQuery([CACHE_NAME], getQuestion, {
+  const blogQuery = useQuery([CACHE_NAME], getblogItems, {
     staleTime: 1000,
   });
 
@@ -32,7 +32,7 @@ export default function useAskMe() {
   });
 
   return {
-    questionsQuery,
+    blogQuery,
     addQuestionMutation,
     updateQuestionMutation,
     deleteQuestionMutation,

@@ -1,10 +1,15 @@
 import BlogSlider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RiArrowRightSFill } from 'react-icons/ri';
+import { IBlog } from '../../interfaces/Blog';
 
-export default function Slider() {
+interface ISliderProps {
+  myStoryList: IBlog[];
+}
+
+export default function Slider({ myStoryList }: ISliderProps) {
   const settings = {
     dots: false,
     infinite: false,
@@ -31,57 +36,34 @@ export default function Slider() {
       },
     ],
   };
+  const navigate = useNavigate();
+  const handleClick = (myStory: IBlog, index: number) => {
+    navigate(`/blog/${myStory.id}`, {
+      state: { blog: myStory, index, myStoryList },
+    });
+  };
   return (
     <div className='slider_container'>
       <BlogSlider {...settings}>
-        <div className='slider_box'>
-          <img
-            src='https://www.navercorp.com/navercorp_/story/2023/20230220125733_1.jpg'
-            alt=''
-          />
-          <div className='title_area'>
-            <h4>내가 제일 좋아하는 취미생활</h4>
-            <Link to='/'>
-              View details <RiArrowRightSFill />
-            </Link>
+        {myStoryList.map((myStory, index) => (
+          <div
+            className='slider_box'
+            onClick={() => handleClick(myStory, index)}
+            role='button'
+            key={myStory.id}
+          >
+            {myStory.thumbnail && (
+              <img src={myStory.thumbnail} alt='마이스토리 썸네일' />
+            )}
+
+            <div className='title_area'>
+              <h4>{myStory.title}</h4>
+              <p>
+                View details <RiArrowRightSFill />
+              </p>
+            </div>
           </div>
-        </div>
-        <div className='slider_box'>
-          <img
-            src='https://www.navercorp.com/img/ko/story/img_work_view.png'
-            alt=''
-          />
-          <div className='title_area'>
-            <h4>내가 요즘 행복한이유</h4>
-            <Link to='/'>
-              View details <RiArrowRightSFill />
-            </Link>
-          </div>
-        </div>
-        <div className='slider_box'>
-          <img
-            src='https://www.navercorp.com/img/ko/story/img_teamnaver.png'
-            alt=''
-          />
-          <div className='title_area'>
-            <h4>포트폴리오를 만들면서 ...</h4>
-            <Link to='/'>
-              View details <RiArrowRightSFill />
-            </Link>
-          </div>
-        </div>
-        <div className='slider_box'>
-          <img
-            src='https://www.navercorp.com/navercorp_/story/2023/20230220125733_1.jpg'
-            alt=''
-          />
-          <div className='title_area'>
-            <h4>내가 요즘 행복한이유</h4>
-            <Link to='/'>
-              View details <RiArrowRightSFill />
-            </Link>
-          </div>
-        </div>
+        ))}
       </BlogSlider>
     </div>
   );

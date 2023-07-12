@@ -4,18 +4,21 @@ import { formatDate } from '../../utils/formatDate';
 
 interface IBlogCardPrps {
   blog: IBlog;
+  index: number;
+  blogItems: IBlog[];
 }
 
 export default function BlogCard({
   blog,
   blog: { id, thumbnail, category, createdAt, title },
+  index,
+  blogItems,
 }: IBlogCardPrps) {
   const navigate = useNavigate();
-  console.log(thumbnail);
-
   const handleClick = () => {
-    navigate(`/blog/${id}`, { state: { blog } });
+    navigate(`/blog/${id}`, { state: { blog, index, blogItems } });
   };
+
   return (
     <li onClick={handleClick} role='button'>
       <div className='thumb_area'>

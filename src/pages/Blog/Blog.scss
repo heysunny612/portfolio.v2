@@ -133,6 +133,23 @@
       margin-bottom: 50px;
       font-size: 13px;
     }
+
+    .blog_top_btns {
+      display: flex;
+      position: relative;
+      top: -20px;
+      gap: 15px;
+      button {
+        padding: 5px 10px;
+        border: 1px solid $accent;
+        font-size: 12px;
+        background-color: $dark-slate;
+        color: $accent;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
   .blog_content_wrap {

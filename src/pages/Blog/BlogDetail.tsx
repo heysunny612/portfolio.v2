@@ -12,8 +12,52 @@ const modules = {
 };
 
 export default function BlogDetail() {
-  const { blog } = useLocation().state as { blog: IBlog };
+  const { blog, index, blogItems, myStoryList } = useLocation().state as {
+    blog: IBlog;
+    index: number;
+    blogItems: IBlog[];
+    myStoryList?: IBlog[];
+  };
   const navigate = useNavigate();
+  const totalCount =
+    (blogItems && blogItems.length) || (myStoryList && myStoryList.length);
+  const handlePrev = () => {
+    const prevIndex = index - 1;
+    if (prevIndex >= 0) {
+      if (myStoryList) {
+        navigate(`/blog/${myStoryList[prevIndex].id}`, {
+          state: {
+            blog: myStoryList[prevIndex],
+            index: prevIndex,
+            myStoryList,
+          },
+        });
+        return;
+      }
+      navigate(`/blog/${blogItems[prevIndex].id}`, {
+        state: { blog: blogItems[prevIndex], index: prevIndex, blogItems },
+      });
+    }
+  };
+  const handleNext = () => {
+    const nextIndex = index + 1;
+    if (nextIndex <= totalCount!) {
+      if (myStoryList) {
+        navigate(`/blog/${myStoryList[nextIndex].id}`, {
+          state: {
+            blog: myStoryList[nextIndex],
+            index: nextIndex,
+            myStoryList,
+          },
+        });
+        return;
+      }
+      navigate(`/blog/${blogItems[nextIndex].id}`, {
+        state: { blog: blogItems[nextIndex], index: nextIndex, blogItems },
+      });
+    }
+  };
+
   return (
     <SubLayout className='blog_detail' subTitle='blog'>
       <>
@@ -30,9 +74,11 @@ export default function BlogDetail() {
             <span>{formatDate(blog.createdAt)}</span>
           </div>
           <div className='blog_top_btns'>
-            <button>이전글</button>
+            {index !== 0 && <button onClick={handlePrev}>이전글</button>}
             <button onClick={() => navigate('/blog')}>목록보기</button>
-            <button>다음글</button>
+            {index !== totalCount! - 1 && (
+              <button onClick={handleNext}>다음글</button>
+            )}
           </div>
         </div>
         <div className='blog_content_wrap'>
