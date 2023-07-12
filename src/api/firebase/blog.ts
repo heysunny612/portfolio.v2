@@ -61,7 +61,7 @@ export const uploadImage = async (file: any) => {
 };
 
 // DELETE the file
-export const deleteFile = async (imgURL: string) => {
+export const deleteImage = async (imgURL: string) => {
   const urlRef = ref(storage, imgURL);
   return await deleteObject(urlRef);
 };

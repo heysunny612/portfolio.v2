@@ -1,14 +1,13 @@
 import SubLayout from '../../components/UI/SubLayout';
 import Button from '../../components/Button/Button';
 import Tags from '../../components/Tags/Tags';
-import { useState } from 'react';
-import { Tag } from 'react-tag-input';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { addBlog, deleteFile, uploadImage } from '../../api/firebase/blog';
+import { Tag } from 'react-tag-input';
+import { addBlog, deleteImage, uploadImage } from '../../api/firebase/blog';
 import { IBlog } from '../../interfaces/Blog';
 import { useUserContext } from '../../context/UserContext';
-import { useRef, useMemo } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { formats } from './editorConfig';
 
 const categoryOptions = ['스토리', '개발스토리'];
@@ -17,11 +16,12 @@ export default function AddBlog() {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [blogTags, setBlogTags] = useState<Tag[]>([]);
-  const [contents, setContents] = useState('');
+  const [content, setContent] = useState('');
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const { user } = useUserContext() || {};
-  const quillRef = useRef(null);
+  const quillRef = useRef<ReactQuill>(null);
 
+  //에디터에 이미지 등록시 파이어베이스 저장
   const imageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -30,12 +30,15 @@ export default function AddBlog() {
     input.addEventListener('change', async () => {
       const editor = quillRef?.current?.getEditor();
       const file = input.files?.[0];
-      const range = editor.getSelection(true);
+      const range = editor?.getSelection(true);
       try {
         await uploadImage(file).then((url) => {
-          editor.insertEmbed(range.index, 'image', url);
-          editor.setSelection(range.index + 1);
-          setUploadedImages((prevImages) => [...prevImages, url]);
+          if (editor && range && file) {
+            editor?.insertEmbed(range?.index, 'image', url);
+            const nextIndex = range.index + 1;
+            editor?.setSelection(nextIndex, nextIndex);
+            setUploadedImages((prevImages) => [...prevImages, url] as string[]);
+          }
         });
       } catch (error) {
         console.log(error);
@@ -62,12 +65,17 @@ export default function AddBlog() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setTitle('');
+    setBlogTags([]);
+    setContent('');
     const blogData: IBlog = {
       title,
       blogTags,
       category,
-      contents,
+      content,
       createdAt: Date.now(),
+      thumbnail:
+        uploadedImages.filter((image) => content.includes(image))[0] || '',
       writer: {
         uid: user?.uid!,
         displayName: user?.displayName!,
@@ -77,7 +85,17 @@ export default function AddBlog() {
     };
 
     try {
-      addBlog(blogData).then(() => alert('등록되었습니다'));
+      await addBlog(blogData)
+        .then(() => {
+          alert('등록되었습니다');
+        })
+        .then(() => {
+          const editorImageUrls = imageUrlsFromContent(content);
+          const imagesToDelete = uploadedImages.filter(
+            (image) => !editorImageUrls.includes(image)
+          );
+          Promise.all(imagesToDelete.map((image) => deleteImage(image)));
+        });
     } catch {}
   };
 
@@ -88,7 +106,11 @@ export default function AddBlog() {
         <form onSubmit={handleSubmit}>
           <label>
             <span>제목</span>
-            <input type='text' onChange={(e) => setTitle(e.target.value)} />
+            <input
+              type='text'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </label>
           <label>
             <span>태그</span>
@@ -110,8 +132,8 @@ export default function AddBlog() {
               theme='snow'
               modules={modules}
               formats={formats}
-              value={contents}
-              onChange={(contents) => setContents(contents)}
+              value={content}
+              onChange={(content) => setContent(content)}
               ref={quillRef}
             />
           </div>
@@ -126,3 +148,12 @@ export default function AddBlog() {
     </SubLayout>
   );
 }
+
+//에디터에 있는 이미지 URL
+const imageUrlsFromContent = (content: any) => {
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = content;
+  const imgElements = tempElement.getElementsByTagName('img');
+  const imageUrls = Array.from(imgElements).map((img) => img.src);
+  return imageUrls;
+};

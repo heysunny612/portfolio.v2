@@ -6,7 +6,8 @@ export interface IBlog {
   title: string;
   blogTags: Tag[];
   category: string;
-  contents: string;
+  content: string;
   createdAt: number;
+  thumbnail: string;
   writer: IWriter;
 }
