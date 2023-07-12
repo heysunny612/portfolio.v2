@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { IUpdateData } from '../interfaces/AskMe';
 import {
   addBlog,
   deleteBlogItem,
   getblogItems,
   updateBlogItem,
 } from '../api/firebase/blog';
+import { IUpdateBlog } from '../interfaces/Blog';
 
 const CACHE_NAME = 'blog';
 
@@ -21,7 +21,7 @@ export default function useBlog() {
   });
 
   const updateBlogMutation = useMutation(
-    ({ id, updateData }: IUpdateData) => updateBlogItem(id, updateData),
+    ({ id, updateData }: IUpdateBlog) => updateBlogItem(id, updateData),
     {
       onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
     }

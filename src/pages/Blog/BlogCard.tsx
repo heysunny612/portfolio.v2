@@ -32,6 +32,11 @@ export default function BlogCard({
     });
   };
 
+  const handleEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    navigate(`/blog/write/${id}`, { state: { blog } });
+  };
+
   return (
     <li onClick={handleClick} role='button'>
       <div className='thumb_area'>
@@ -49,7 +54,7 @@ export default function BlogCard({
         <p className='date'>{formatDate(createdAt)}</p>
       </div>
       <div className='blog_card_btns'>
-        <button>수정</button>
+        <button onClick={handleEdit}>수정</button>
         <button onClick={handleDelete}>삭제</button>
       </div>
     </li>

@@ -9,5 +9,16 @@ export interface IBlog {
   content: string;
   createdAt: number;
   thumbnail: string;
-  writer: IWriter;
+  writer?: IWriter;
+}
+
+export interface IUpdateBlog {
+  id: string;
+  updateData: {
+    title: string;
+    blogTags: Tag[];
+    category: string;
+    content: string;
+    thumbnail: string;
+  };
 }

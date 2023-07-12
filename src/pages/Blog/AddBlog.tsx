@@ -2,26 +2,31 @@ import SubLayout from '../../components/UI/SubLayout';
 import Button from '../../components/Button/Button';
 import Tags from '../../components/Tags/Tags';
 import ReactQuill from 'react-quill';
+import useBlog from '../../hooks/useBlog';
 import 'react-quill/dist/quill.snow.css';
-import { Tag } from 'react-tag-input';
 import { deleteImage, uploadImage } from '../../api/firebase/blog';
 import { IBlog } from '../../interfaces/Blog';
 import { useUserContext } from '../../context/UserContext';
 import { useState, useRef, useMemo } from 'react';
-import useBlog from '../../hooks/useBlog';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const categoryOptions = ['나의 스토리', '개발 스토리'];
 
 export default function AddBlog() {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [blogTags, setBlogTags] = useState<Tag[]>([]);
-  const [content, setContent] = useState('');
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const { blog } = useLocation()?.state || {};
+  const { id } = useParams();
   const { user } = useUserContext() || {};
+  const initialState = {
+    title: (id && blog && blog.title) || '',
+    category: (id && blog && blog.category) || '',
+    blogTags: (id && blog && blog.blogTags) || [],
+    content: (id && blog && blog.content) || '',
+  };
+  const [state, setState] = useState(initialState);
+  const { title, category, blogTags, content } = state;
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const quillRef = useRef<ReactQuill>(null);
-  const { addBlogMutation } = useBlog();
+  const { addBlogMutation, updateBlogMutation } = useBlog();
   const navigate = useNavigate();
 
   //에디터에 이미지 등록시 파이어베이스 저장
@@ -49,6 +54,7 @@ export default function AddBlog() {
     });
   };
 
+  //에디터 설정
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -68,7 +74,7 @@ export default function AddBlog() {
     }),
     []
   );
-
+  //에디터 설정
   const formats = [
     'header',
     'bold',
@@ -89,14 +95,20 @@ export default function AddBlog() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTitle('');
-    setBlogTags([]);
-    setContent('');
+    setState(initialState);
 
-    const editorImageUrls = imageUrlsFromContent(content);
+    //에디터의 이미지 URL을 가져온 후, 첫번째이미지를 썸네일로등록
+    const editorImageUrls = imageUrlsFromContent(state.content);
     const thumbnail =
       uploadedImages.find((image) => editorImageUrls.includes(image)) || '';
+    //만약 파이어베이스에 업로드된 이미지가 에디터에서 삭제되었다면,
+    //파이어베이스에서도 함께 삭제될 수 있도록 처리
+    const imagesToDelete = uploadedImages.filter(
+      (image) => !editorImageUrls.includes(image)
+    );
+    Promise.all(imagesToDelete.map((image) => deleteImage(image)));
 
+    //새로 등록되는 블로그 데이터
     const blogData: IBlog = {
       title,
       blogTags,
@@ -112,15 +124,35 @@ export default function AddBlog() {
       },
     };
 
+    //업데이트되는 블로그 데이터
+    //최초 등록된 날짜는 수정한다고 해도 업데이트 되지 않음
+    const updateBlogData = {
+      id: id || '',
+      updateData: {
+        title,
+        blogTags,
+        category,
+        content,
+        thumbnail,
+      },
+    };
+
+    if (id) {
+      // 아이디가 존재한다면 등록이 아닌 업데이트
+      updateBlogMutation.mutate(updateBlogData, {
+        onSuccess: () => {
+          alert('수정 되었습니다');
+          navigate('/blog');
+        },
+      });
+      return;
+    }
+
+    //아이디가 존재하지 않는다면 새 블로그 등록
     addBlogMutation.mutate(blogData, {
       onSuccess: () => {
-        alert('등록되었습니다');
+        alert('등록 되었습니다');
         navigate('/blog');
-        const editorImageUrls = imageUrlsFromContent(content);
-        const imagesToDelete = uploadedImages.filter(
-          (image) => !editorImageUrls.includes(image)
-        );
-        Promise.all(imagesToDelete.map((image) => deleteImage(image)));
       },
     });
   };
@@ -135,16 +167,22 @@ export default function AddBlog() {
             <input
               type='text'
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setState({ ...state, title: e.target.value })}
             />
           </label>
           <label>
             <span>태그</span>
-            <Tags tags={blogTags} setTags={setBlogTags} />
+            <Tags
+              tags={blogTags}
+              setTags={(tags) => setState({ ...state, blogTags: tags })}
+            />
           </label>
           <label>
             <span>카테고리</span>
-            <select onChange={(e) => setCategory(e.target.value)}>
+            <select
+              onChange={(e) => setState({ ...state, category: e.target.value })}
+              value={category}
+            >
               <option value=''>Please select category</option>
               {categoryOptions.map((category, index) => (
                 <option value={category} key={index}>
@@ -159,13 +197,13 @@ export default function AddBlog() {
               modules={modules}
               formats={formats}
               value={content}
-              onChange={(content) => setContent(content)}
+              onChange={(content) => setState({ ...state, content })}
               ref={quillRef}
             />
           </div>
           <div className='blog_add_btns'>
             <Button filled type='submit'>
-              등록
+              {id ? '수정' : '등록'}
             </Button>
             <Button type='button'>취소</Button>
           </div>
@@ -175,7 +213,7 @@ export default function AddBlog() {
   );
 }
 
-//에디터에 있는 이미지 URL
+//에디터에 있는 이미지 URL 추출
 const imageUrlsFromContent = (content: any) => {
   const tempElement = document.createElement('div');
   tempElement.innerHTML = content;

@@ -10,7 +10,7 @@ import {
 } from 'firebase/firestore';
 import { db, storage } from './initialize';
 import { IUpdateData } from '../../interfaces/AskMe';
-import { IBlog } from '../../interfaces/Blog';
+import { IBlog, IUpdateBlog } from '../../interfaces/Blog';
 import {
   deleteObject,
   getDownloadURL,
@@ -47,7 +47,7 @@ export const deleteBlogItem = async (id: string) => {
 //UPDATE
 export const updateBlogItem = async (
   id: string,
-  updateData: IUpdateData['updateData']
+  updateData: IUpdateBlog['updateData']
 ) => {
   await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
 };
