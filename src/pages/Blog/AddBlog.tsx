@@ -175,6 +175,7 @@ export default function AddBlog() {
             <Tags
               tags={blogTags}
               setTags={(tags) => setState({ ...state, blogTags: tags })}
+              placeholder='태그를 입력하세요(스페이스,엔터로 입력가능)'
             />
           </label>
           <label>

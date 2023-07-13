@@ -2,6 +2,7 @@ import { WithContext as ReactTags, Tag } from 'react-tag-input';
 
 interface ITagsProps {
   tags: Tag[];
+  placeholder: string;
   setTags: (tags: Tag[]) => void;
 }
 
@@ -10,9 +11,9 @@ const KeyCodes = {
   enter: 13,
   space: 32,
 };
-const delimiters = [KeyCodes.comma, KeyCodes.enter, KeyCodes.space];
+const delimiters = [KeyCodes.enter];
 
-export default function Tags({ tags, setTags }: ITagsProps) {
+export default function Tags({ tags, setTags, placeholder }: ITagsProps) {
   const handleDelete = (i: number) => {
     setTags(tags.filter((_, index) => index !== i));
   };
@@ -34,7 +35,7 @@ export default function Tags({ tags, setTags }: ITagsProps) {
       handleAddition={handleAddition}
       handleDrag={handleDrag}
       inputFieldPosition='bottom'
-      autocomplete
+      placeholder={placeholder}
     />
   );
 }

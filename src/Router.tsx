@@ -15,6 +15,7 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import Join from './pages/Auth/Join';
 import AddBlog from './pages/Blog/AddBlog';
 import BlogDetail from './pages/Blog/BlogDetail';
+import AddPortfolio from './pages/Portfolio/AddPortfolio';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -27,6 +28,7 @@ export default function Router() {
         { path: '/about', element: <About /> },
         { path: '/portfolio', element: <Portfolio /> },
         { path: '/portfolio/:id', element: <PortfolioDetail /> },
+        { path: '/portfolio/write', element: <AddPortfolio /> },
         { path: '/blog', element: <Blog /> },
         { path: '/blog/:id', element: <BlogDetail /> },
         { path: '/blog/write', element: <AddBlog /> },

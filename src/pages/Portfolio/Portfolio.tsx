@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import Button from '../../components/Button/Button';
 import Projects from '../../components/Projects/Projects';
 import SubLayout from '../../components/UI/SubLayout';
+import { useNavigate } from 'react-router-dom';
 
 const tags = [
   'Firebase',
@@ -18,6 +19,7 @@ const tags = [
 ];
 
 export default function Portfolio() {
+  const navigate = useNavigate();
   const { register, watch, setValue } = useForm();
   const handleChange = (tag: string) => {
     const currentValue = watch(tag);
@@ -49,6 +51,9 @@ export default function Portfolio() {
         </form>
         <h3 className='common_h3'>Projects</h3>
         <Projects />
+        <button onClick={() => navigate('/portfolio/write')}>
+          포트폴리오작성
+        </button>
       </>
     </SubLayout>
   );
