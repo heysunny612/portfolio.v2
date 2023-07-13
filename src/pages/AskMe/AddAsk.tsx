@@ -1,16 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../Button/Button';
-import { AiOutlineClose } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import { useUserContext } from '../../context/UserContext';
-import useAskMe from '../../hooks/useAskMe';
+import { AiOutlineClose } from 'react-icons/ai';
 import { FaLock, FaUnlock } from 'react-icons/fa';
+import useAskMe from '../../hooks/useAskMe';
+import Button from '../../components/Button/Button';
 interface IAddQnAFormData {
   question: string;
   publicType: string;
 }
 
-export default function AddQnA() {
+export default function AddAsk() {
   const { user } = useUserContext() ?? {};
   const navigate = useNavigate();
   const handleClose = () => navigate('/askme', { replace: true });

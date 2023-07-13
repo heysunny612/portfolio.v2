@@ -55,7 +55,11 @@ export default function Slider({ myStoryList }: ISliderProps) {
             {myStory.thumbnail && (
               <img src={myStory.thumbnail} alt='마이스토리 썸네일' />
             )}
-
+            <div className='slider_tags'>
+              {myStory.blogTags.map((tag, index) => (
+                <span key={index}>#{tag.text}</span>
+              ))}
+            </div>
             <div className='title_area'>
               <h4>{myStory.title}</h4>
               <p>

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
-export default function SearchQnA() {
+export default function SearchAsk() {
   const { register, handleSubmit, setValue } = useForm<{ keyword: string }>();
   const navigate = useNavigate();
   const { keyword } = useParams();

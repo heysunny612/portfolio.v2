@@ -2,9 +2,9 @@ import { FaUserCircle } from 'react-icons/fa';
 
 interface IProfileProps {
   inline?: boolean;
-  displayName: string;
-  photoURL: string;
-  email: string;
+  displayName?: string;
+  photoURL?: string;
+  email?: string;
 }
 
 export default function Profile({

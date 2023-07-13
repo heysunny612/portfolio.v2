@@ -1,64 +1,83 @@
-.blog_list {
-  li {
-    display: flex;
-    gap: 30px;
-    padding: 10px 0;
-    border-bottom: 1px solid $dark-slate;
-    cursor: pointer;
-
-    &:hover {
-      background-color: $dark-navy;
-      img {
-        transform: scale(1.1);
-      }
-    }
-
-    .thumb_area {
-      flex: 1 1 1;
-      overflow: hidden;
-      width: 350px;
-      height: 200px;
-      background-color: $slate;
-
-      p {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        font-size: 24px;
-        color: $lightest-slate;
-        text-align: center;
-        line-height: 1.2;
-        color: $accent;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: $transition;
-      }
-    }
-    .text_area {
-      flex: 1 1 auto;
+//블로그 리스트
+.blog_container {
+  .blog_list {
+    li {
       display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      .category {
-        color: $accent;
-        font-size: 18px;
+      gap: 30px;
+      padding: 10px 0;
+      border-bottom: 1px solid $dark-slate;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $dark-navy;
+        img {
+          transform: scale(1.1);
+        }
       }
-      h4 {
-        font-size: 24px;
+
+      .thumb_area {
+        flex: 1 1 1;
+        overflow: hidden;
+        width: 350px;
+        height: 200px;
+        background-color: $slate;
+
+        p {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          font-size: 24px;
+          color: $lightest-slate;
+          text-align: center;
+          line-height: 1.2;
+          color: $accent;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: $transition;
+        }
+      }
+      .text_area {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .category {
+          margin-top: 7px;
+          color: $accent;
+          font-size: 18px;
+        }
+        h4 {
+          margin-top: 10px;
+          font-size: 24px;
+        }
+        .text_area_bottom {
+          span {
+            margin-right: 5px;
+          }
+          p {
+            margin-bottom: 7px;
+          }
+        }
+      }
+      .blog_card_btns {
+        button {
+          border: 1px solid $slate;
+          padding: 5px;
+          margin: 0 5px;
+        }
       }
     }
-    .blog_card_btns {
-      button {
-        border: 1px solid $slate;
-        padding: 5px;
-        margin: 0 5px;
-      }
-    }
+  }
+
+  .blog_write_btn {
+    margin-top: 30px;
+    text-align: right;
   }
 }
 

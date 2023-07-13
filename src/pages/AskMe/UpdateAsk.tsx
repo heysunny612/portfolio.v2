@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import Button from '../Button/Button';
-import useAskMe from '../../hooks/useAskMe';
 import { IUser } from '../../interfaces/User';
+import Button from '../../components/Button/Button';
+import useAskMe from '../../hooks/useAskMe';
 
 interface IUpdateQnAProps {
   id: string;
@@ -15,7 +15,7 @@ interface IFormData {
   updateText: string;
 }
 
-export default function UpdateQnA({
+export default function UpdateAsk({
   defaultValue,
   id,
   user,

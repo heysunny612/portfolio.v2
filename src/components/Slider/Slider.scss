@@ -28,6 +28,20 @@
       transition: $transition;
     }
 
+    .slider_tags {
+      position: absolute;
+      top: 10px;
+      left: 0px;
+      right: 0;
+      padding: 0 20px;
+      span {
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 10px;
+        color: $lightest-slate;
+      }
+    }
+
     .title_area {
       background-color: rgba($color: $dark-navy, $alpha: 0.2);
       position: absolute;

@@ -5,11 +5,11 @@ import { FaLock } from 'react-icons/fa';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useUserContext } from '../../context/UserContext';
 import { formatDate } from '../../utils/formatDate';
-import Profile from '../Profile/Profile';
-import useAskMe from '../../hooks/useAskMe';
-import UpdateQnA from './UpdateQnA';
-import fadeIn from '../../utils/fadeIn';
 import { useInView } from 'react-intersection-observer';
+import useAskMe from '../../hooks/useAskMe';
+import UpdateAsk from './UpdateAsk';
+import fadeIn from '../../utils/fadeIn';
+import Profile from '../../components/Profile/Profile';
 
 interface IQnACardProps {
   question: IAskMe;
@@ -28,7 +28,7 @@ const answerVars: Variants = {
   },
 };
 
-export default function QnACard({
+export default function AskCard({
   question: { id, question: text, writer, isPublic, createAt, answer },
 }: IQnACardProps) {
   const { user } = useUserContext() || {};
@@ -87,7 +87,7 @@ export default function QnACard({
         )}
       </div>
       {isEditClick && (
-        <UpdateQnA
+        <UpdateAsk
           defaultValue={text}
           id={id!}
           user={user!}
@@ -121,7 +121,7 @@ export default function QnACard({
         )}
       </div>
       {isAnswerClick && (
-        <UpdateQnA
+        <UpdateAsk
           id={id!}
           defaultValue={answer?.content || ''}
           user={user!}

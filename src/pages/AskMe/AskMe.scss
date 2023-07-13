@@ -1,3 +1,277 @@
 .qna_container {
   position: relative;
+
+  //QnA 리스트
+  .qna_wrap {
+    position: relative;
+
+    .qna_no_result {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 250px;
+    }
+
+    .qna_list {
+      width: 100%;
+
+      .qna_card {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid $dark-slate;
+        padding: 20px;
+
+        .qan_info {
+          display: flex;
+          position: relative;
+          align-items: flex-start;
+          justify-content: space-between;
+
+          .badge {
+            flex-shrink: 0;
+            padding: 5px 10px 7px;
+            display: inline-block;
+            font-size: 12px;
+            background-color: transparent;
+            letter-spacing: -0.5px;
+            border: 1px solid $accent;
+            color: $accent;
+
+            &.completed {
+              background-color: $accent;
+              border: 1px solid transparent;
+              color: $navy;
+            }
+          }
+
+          .title {
+            flex-grow: 1;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            line-height: 1.2;
+            font-size: 18px;
+            color: $lightest-slate;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .toggle {
+            margin-left: 20px;
+            flex-shrink: 0;
+            font-size: 30px;
+            cursor: pointer;
+          }
+
+          .form_edit {
+            margin-left: 10px;
+            flex-grow: 1;
+            input {
+              position: relative;
+
+              border: 0 none;
+              font-family: inherit;
+              color: $lightest-slate;
+              font-size: 18px;
+              padding: 0;
+            }
+          }
+        }
+
+        .qna_writer {
+          display: flex;
+          align-items: center;
+          font-size: 13px;
+          .date {
+            margin-left: 30px;
+            position: relative;
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -15px;
+              width: 1px;
+              height: 15px;
+              background-color: $dark-slate;
+            }
+          }
+          .qna_buttons {
+            margin-left: 10px;
+            button {
+              margin: 0 5px;
+              padding: 5px;
+              border: 1px solid $dark-slate;
+              font-size: 12px;
+            }
+          }
+        }
+
+        //답변작성 & 질문수정
+        .qna_update_form {
+          padding: 20px 10px;
+          form {
+            width: 100%;
+            display: flex;
+            textarea {
+              flex: 1 1 auto;
+              padding: 10px;
+              font-family: inherit;
+              font-size: 16px;
+            }
+            button {
+              flex-shrink: 0;
+            }
+          }
+        }
+      }
+
+      .qna_answer {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: $dark-slate;
+        color: $white;
+        line-height: 1.5;
+
+        > p {
+          color: $lightest-slate;
+        }
+
+        .answer_bottom {
+          margin-top: 15px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+
+          .date {
+            margin-left: 15px;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    .qna_list_bottom {
+      margin-top: 50px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+
+      span {
+        font-weight: bold;
+        color: $navy;
+        font-size: 18px;
+      }
+      .btn_write {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+
+  //QnA 작성
+  .qna_add_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba($color: $lightest-navy, $alpha: 0.5);
+    z-index: 89;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .qna_add {
+      position: relative;
+      background-color: $dark-navy;
+      padding: 50px;
+      .qna_radio {
+        margin-bottom: 25px;
+        text-align: left;
+        label {
+          color: $lightest-slate;
+          font-size: 16px;
+          margin-right: 20px;
+          cursor: pointer;
+          transition: $transition;
+          &.checked {
+            color: $accent;
+          }
+          input[type='radio'] {
+            display: none;
+          }
+        }
+      }
+      .qna_input {
+        input {
+          width: 550px;
+          padding: 10px;
+          background-color: $white;
+          outline: none;
+          border: 3px solid $accent;
+          font-size: 16px;
+        }
+      }
+      .qna_buttons {
+        margin-top: 50px;
+        button {
+          margin: 0 5px;
+        }
+      }
+    }
+
+    .qna_add_close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 35px;
+      height: 35px;
+      border: 1px solid $accent;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: $transition;
+    }
+  }
+
+  //검색
+  .qna_search_form {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    border: 1px solid $dark-slate;
+    height: 40px;
+    width: 350px;
+    display: flex;
+
+    .input {
+      flex: 1;
+      input {
+        padding: 0 10px;
+        width: 100%;
+        height: 100%;
+        font-family: inherit;
+        border: 0 none;
+        outline: none;
+        background-color: transparent;
+        color: $lightest-slate;
+        font-size: 16px;
+        &::placeholder {
+          color: $slate;
+        }
+      }
+    }
+    .button {
+      button {
+        padding: 0 10px;
+        height: 100%;
+        font-size: 22px;
+        color: $accent;
+      }
+    }
+  }
 }

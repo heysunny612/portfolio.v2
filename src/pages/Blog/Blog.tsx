@@ -4,12 +4,14 @@ import Slider from '../../components/Slider/Slider';
 import SubLayout from '../../components/UI/SubLayout';
 import BlogCard from './BlogCard';
 import useBlog from '../../hooks/useBlog';
+import { useUserContext } from '../../context/UserContext';
 
 export default function Blog() {
   const navigate = useNavigate();
   const { isLoading, error, data: blogItems } = useBlog().blogQuery;
   const myStoryList =
     blogItems && blogItems.filter((item) => item.category === '나의 스토리');
+  const { user } = useUserContext() || {};
 
   return (
     <SubLayout className='blog_container' subTitle='blog'>
@@ -31,9 +33,13 @@ export default function Blog() {
             ))}
           </ul>
         )}
-        <Button filled onClick={() => navigate('/blog/write')}>
-          Write
-        </Button>
+        {user && user.isAdmin && (
+          <div className='blog_write_btn'>
+            <Button filled onClick={() => navigate('/blog/write')}>
+              Write
+            </Button>
+          </div>
+        )}
       </>
     </SubLayout>
   );
