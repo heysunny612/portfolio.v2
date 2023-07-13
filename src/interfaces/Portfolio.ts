@@ -4,7 +4,7 @@ export interface IPortfolio {
   id?: string;
   title: string;
   description: Tag[];
-  skills: string;
+  skills: string[];
   buildAdress: string;
   codeAdress: string;
   images: {

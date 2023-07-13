@@ -27,7 +27,7 @@ export default function ProjectCard({ project }: IProjectProps) {
       <div className='info'>
         <h3>{title}</h3>
         <ul className='skills'>
-          {skills.map((skill, idx) => (
+          {skills.map((skill: string, idx: number) => (
             <li key={idx}>#{skill}</li>
           ))}
         </ul>

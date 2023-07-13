@@ -1,32 +1,27 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { IProject } from '../../interfaces/Project';
-import { FaReact, FaSass } from 'react-icons/fa';
-import { BiLogoFirebase, BiLogoNetlify, BiLogoGithub } from 'react-icons/bi';
-import { SiReactquery, SiTypescript } from 'react-icons/si';
+import { BiLogoNetlify, BiLogoGithub } from 'react-icons/bi';
 import { BsSuitHeartFill } from 'react-icons/bs';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import Comments from '../../components/Comments/Comments';
 import SubLayout from '../../components/UI/SubLayout';
+import { IPortfolio } from '../../interfaces/Portfolio';
+import { skillIcons } from './skillIcons';
+
 interface IStateProp {
-  project: IProject;
+  project: IPortfolio;
 }
 export default function PortfolioDetail() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const state = location.state as IStateProp;
-  const { project } = state;
+  const { project } = useLocation().state as IStateProp;
+  const { title, images, skills, description, buildAdress, codeAdress } =
+    project;
+  const sortedImg = images.sort((a, b) => a.index - b.index);
+
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle((toggle) => !toggle);
-  const tagIcons: { [key: string]: JSX.Element } = {
-    react: <FaReact />,
-    sass: <FaSass />,
-    firebase: <BiLogoFirebase />,
-    'react-query': <SiReactquery />,
-    typescript: <SiTypescript />,
-  };
 
   return (
     <SubLayout className='detail_container' subTitle='portfolio'>
@@ -35,13 +30,13 @@ export default function PortfolioDetail() {
           <BsSuitHeartFill />
         </div>
         <h3 className='common_h3'>
-          {project.title}
+          {title}
           <span>맘에 드신다면 오른쪽에 있는 하트를 눌러주세요❤️</span>
         </h3>
         <ul className='detail_images'>
-          {project.images.map((image, idx) => (
-            <li key={idx}>
-              <img src={image} alt='프로젝트 이미지' />
+          {sortedImg.map(({ index, imageURL }) => (
+            <li key={index}>
+              <img src={imageURL!} alt='프로젝트 이미지' />
             </li>
           ))}
         </ul>
@@ -50,22 +45,20 @@ export default function PortfolioDetail() {
           <div className='detail_desc'>
             <h4>프로젝트 설명</h4>
             <ul>
-              {project.desc.map((value, idx) => (
-                <li key={idx}>{value}</li>
+              {description.map(({ text }, index) => (
+                <li key={index}>{text}</li>
               ))}
             </ul>
           </div>
           <div className='detail_skills'>
             <h4>사용 기술</h4>
             <ul>
-              {project.tags.map((tag, idx) => {
-                const icon = Object.keys(tagIcons).find(
-                  (key) => key.toLowerCase() === tag.toLowerCase()
-                );
+              {skills.map((skill, index) => {
+                const found = skillIcons.find((item) => item.name === skill);
                 return (
-                  <li key={idx}>
-                    <span>{icon ? tagIcons[icon] : <BsSuitHeartFill />}</span>
-                    {tag}
+                  <li key={index}>
+                    <span>{found ? found.icon : <BsSuitHeartFill />}</span>
+                    {skill}
                   </li>
                 );
               })}
@@ -77,7 +70,7 @@ export default function PortfolioDetail() {
               <span>
                 <BiLogoNetlify />
               </span>
-              <a href={project.deploy}>{project.deploy}</a>
+              <a href={buildAdress}>{buildAdress}</a>
             </p>
           </div>
           <div className='detail_deploy'>
@@ -86,7 +79,7 @@ export default function PortfolioDetail() {
               <span>
                 <BiLogoGithub />
               </span>
-              <a href={project.repository}>{project.repository}</a>
+              <a href={codeAdress}>{codeAdress}</a>
             </p>
           </div>
         </div>

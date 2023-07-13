@@ -1,6 +1,3 @@
-import { FaReact, FaSass } from 'react-icons/fa';
-import { BiLogoFirebase } from 'react-icons/bi';
-import { SiReactquery, SiTypescript } from 'react-icons/si';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Tag } from 'react-tag-input';
@@ -9,14 +6,7 @@ import Button from '../../components/Button/Button';
 import SubLayout from '../../components/UI/SubLayout';
 import FileUploader from './FileUploader';
 import { addPortfolio, uploadImage } from '../../api/firebase/portfolio';
-
-const skills = [
-  { name: 'react', icon: <FaReact /> },
-  { name: 'sass', icon: <FaSass /> },
-  { name: 'firebase', icon: <BiLogoFirebase /> },
-  { name: 'react-query', icon: <SiReactquery /> },
-  { name: 'typescript', icon: <SiTypescript /> },
-];
+import { skillIcons } from './skillIcons';
 
 interface IFilesData {
   index: number;
@@ -25,7 +15,7 @@ interface IFilesData {
 
 interface IFormData {
   title: string;
-  skills: string;
+  skills: string[];
   buildAdress: string;
   codeAdress: string;
 }
@@ -84,7 +74,7 @@ export default function AddPortfolio() {
           <div className='skills_checkbox'>
             <span>사용기술</span>
             <ul>
-              {skills.map((skill, index) => (
+              {skillIcons.map((skill, index) => (
                 <li key={index}>
                   <label>
                     <input
