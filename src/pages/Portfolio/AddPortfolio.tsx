@@ -7,6 +7,8 @@ import { Tag } from 'react-tag-input';
 import Tags from '../../components/Tags/Tags';
 import Button from '../../components/Button/Button';
 import SubLayout from '../../components/UI/SubLayout';
+import FileUploader from './FileUploader';
+import { addPortfolio, uploadImage } from '../../api/firebase/portfolio';
 
 const skills = [
   { name: 'react', icon: <FaReact /> },
@@ -16,12 +18,52 @@ const skills = [
   { name: 'typescript', icon: <SiTypescript /> },
 ];
 
+interface IFilesData {
+  index: number;
+  file: string;
+}
+
+interface IFormData {
+  title: string;
+  skills: string;
+  buildAdress: string;
+  codeAdress: string;
+}
 export default function AddPortfolio() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<IFormData>();
   const [desc, setDesc] = useState<Tag[]>([]);
-  const onAddProject = (data) => {
-    console.log(data.skills);
+  const [uploadedFiles, setUploadedFiles] = useState<IFilesData[]>([]);
+
+  const onAddProject = async (data: IFormData) => {
+    //파이어베이스에 이미지 올리기
+    const uploadPromises = uploadedFiles.map(async (file) => {
+      const imageURL = await uploadImage(file.file);
+      return { index: file.index, imageURL };
+    });
+    //저장된 URL
+    const images = await Promise.all(uploadPromises);
+    const portfolioData = {
+      title: data.title,
+      description: desc,
+      skills: data.skills,
+      buildAdress: data.buildAdress,
+      codeAdress: data.codeAdress,
+      images,
+      createdAt: Date.now(),
+    };
+    await addPortfolio(portfolioData).then(() =>
+      alert('정상적으로 등록되었습니다')
+    );
   };
+
+  const handleFileUpload = (index: number, file: string) => {
+    setUploadedFiles((prev) => [...prev, { index, file }]);
+  };
+  const handleDeleteFile = (index: number) => {
+    const filteredFiles = uploadedFiles.filter((file) => file.index !== index);
+    setUploadedFiles(filteredFiles);
+  };
+
   return (
     <SubLayout className='add_portfolio_container' subTitle='portfolio'>
       <>
@@ -66,48 +108,16 @@ export default function AddPortfolio() {
             <input type='text' {...register('codeAdress')} />
           </label>
           <ul className='image_files'>
-            <li>
-              <label>
-                <span>이미지 1</span>
-                <input type='file' />
-              </label>
-              <div className='image_preview'>IMAGE_PREVIEW</div>
-            </li>
-            <li>
-              <label>
-                <span>이미지 2</span>
-                <input type='file' />
-              </label>
-              <div className='image_preview'>IMAGE_PREVIEW</div>
-            </li>
-            <li>
-              <label>
-                <span>이미지 3</span>
-                <input type='file' />
-              </label>
-              <div className='image_preview'>IMAGE_PREVIEW</div>
-            </li>
-            <li>
-              <label>
-                <span>이미지 4</span>
-                <input type='file' />
-              </label>
-              <div className='image_preview'>IMAGE_PREVIEW</div>
-            </li>
-            <li>
-              <label>
-                <span>이미지 5</span>
-                <input type='file' />
-              </label>
-              <div className='image_preview'>IMAGE_PREVIEW</div>
-            </li>
-            <li>
-              <label>
-                <span>이미지 6</span>
-                <input type='file' />
-              </label>
-              <div className='image_preview'>IMAGE_PREVIEW</div>
-            </li>
+            {Array(6)
+              .fill(0)
+              .map((_, index) => (
+                <FileUploader
+                  key={index}
+                  index={index}
+                  onFileUpload={handleFileUpload}
+                  onFileDelete={handleDeleteFile}
+                />
+              ))}
           </ul>
           <div className='add_btns'>
             <Button filled type='submit'>

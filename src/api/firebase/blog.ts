@@ -9,7 +9,6 @@ import {
   query,
 } from 'firebase/firestore';
 import { db, storage } from './initialize';
-import { IUpdateData } from '../../interfaces/AskMe';
 import { IBlog, IUpdateBlog } from '../../interfaces/Blog';
 import {
   deleteObject,
@@ -54,7 +53,7 @@ export const updateBlogItem = async (
 
 //블로그 에디터 이미지 storage에 업로드
 export const uploadImage = async (file: any) => {
-  const storageRef = ref(storage, `blog/${Date.now()}`);
+  const storageRef = ref(storage, `${COLLECTION_NAME}/${Date.now()}`);
   return await uploadBytes(storageRef, file)
     .then((snapshot) => getDownloadURL(snapshot.ref))
     .catch((error) => console.log(error));
