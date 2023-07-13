@@ -3,9 +3,12 @@ import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 import { IPortfolio } from '../../interfaces/Portfolio';
 import { db, storage } from './initialize';
@@ -29,6 +32,16 @@ export const getPortfolios = async (): Promise<IPortfolio[]> => {
     ...(doc.data() as IPortfolio),
   }));
   return portfolios;
+};
+
+//DELETE
+export const deletePortfolio = async (id: string) => {
+  await deleteDoc(doc(db, COLLECTION_NAME, id));
+};
+
+//UPDATE
+export const updateBlogItem = async (id, updateData) => {
+  await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
 };
 
 //포트폴리오 이미지 업로드

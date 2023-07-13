@@ -9,6 +9,7 @@ import Comments from '../../components/Comments/Comments';
 import SubLayout from '../../components/UI/SubLayout';
 import { IPortfolio } from '../../interfaces/Portfolio';
 import { skillIcons } from './skillIcons';
+import { deletePortfolio } from '../../api/firebase/portfolio';
 
 interface IStateProp {
   project: IPortfolio;
@@ -16,13 +17,19 @@ interface IStateProp {
 export default function PortfolioDetail() {
   const navigate = useNavigate();
   const { project } = useLocation().state as IStateProp;
-  const { title, images, skills, description, buildAdress, codeAdress } =
+  const { id, title, images, skills, description, buildAdress, codeAdress } =
     project;
   const sortedImg = images.sort((a, b) => a.index - b.index);
 
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle((toggle) => !toggle);
-
+  const handleDelete = async () => {
+    const isDelete = confirm('정말 삭제하시겠습니까?');
+    if (isDelete && id) {
+      await deletePortfolio(id);
+      navigate('/portfolio');
+    }
+  };
   return (
     <SubLayout className='detail_container' subTitle='portfolio'>
       <>
@@ -97,10 +104,18 @@ export default function PortfolioDetail() {
               <span>댓글 보기 15</span>
             </button>
           </div>
-          <button onClick={() => navigate(-1)}>
-            <AiOutlineUnorderedList />
-            <span>목록 보기</span>
-          </button>
+          <div className='bottom_btns'>
+            <button onClick={() => navigate(-1)}>
+              <span>수정</span>
+            </button>
+            <button onClick={handleDelete}>
+              <span>삭제</span>
+            </button>
+            <button onClick={() => navigate(-1)}>
+              <AiOutlineUnorderedList />
+              <span>목록 보기</span>
+            </button>
+          </div>
         </div>
         <div className='detail_btns'>
           <button className='prev'>
