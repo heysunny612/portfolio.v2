@@ -11,6 +11,7 @@ import { deleteImage } from '../../api/firebase/portfolio';
 import Comments from '../../components/Comments/Comments';
 import SubLayout from '../../components/UI/SubLayout';
 import usePortfolio from '../../hooks/usePortfolio';
+import { useUserContext } from '../../context/UserContext';
 
 interface IStateProp {
   project: IPortfolio;
@@ -26,6 +27,7 @@ export default function PortfolioDetail() {
   const firstPage = currentIndex <= 0;
   const lastPage = currentIndex >= projectList.length - 1;
   const { deletePortfolioMutation } = usePortfolio();
+  const { user } = useUserContext() || {};
 
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle((toggle) => !toggle);
@@ -150,12 +152,16 @@ export default function PortfolioDetail() {
             </button>
           </div>
           <div className='bottom_btns'>
-            <button onClick={handleEdit}>
-              <span>수정</span>
-            </button>
-            <button onClick={handleDelete}>
-              <span>삭제</span>
-            </button>
+            {user && user?.isAdmin && (
+              <>
+                <button onClick={handleEdit}>
+                  <span>수정</span>
+                </button>
+                <button onClick={handleDelete}>
+                  <span>삭제</span>
+                </button>
+              </>
+            )}
             <button onClick={() => navigate('/portfolio')}>
               <AiOutlineUnorderedList />
               <span>목록 보기</span>

@@ -22,13 +22,21 @@
         background-color: transparent;
         border-radius: 5px;
         font-size: 15px;
-
+        > div {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          svg {
+            font-size: 20px;
+          }
+        }
         &.checked {
           border-color: $accent;
-          color: $navy;
           background-color: $accent;
+          > div {
+            color: $navy;
+          }
         }
-
         input[type='checkbox'] {
           appearance: none;
           -webkit-appearance: none;
@@ -271,10 +279,11 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 20px;
+
       > span {
         margin-bottom: 10px;
-        font-size: 16px;
-        color: $lightest-slate;
+        font-size: 18px;
+        color: $accent;
       }
       input {
         padding: 7px;
@@ -284,13 +293,15 @@
         background-color: transparent;
         color: $lightest-slate;
         font-family: inherit;
+        font-size: 16px;
       }
     }
 
     .skills_checkbox {
       margin-bottom: 20px;
       span {
-        color: $lightest-slate;
+        font-size: 18px;
+        color: $accent;
       }
       ul {
         display: flex;
@@ -310,14 +321,19 @@
             align-items: center;
             margin-left: 5px;
             gap: 5px;
+            cursor: pointer;
             &.checked {
-              background-color: red;
+              color: $accent;
             }
             input[type='checkbox'] {
-              width: 20px;
-              height: 20px;
+              appearance: none;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              width: 0;
+              height: 0;
+              position: absolute;
+              opacity: 0;
             }
-
             svg {
               font-size: 24px;
             }
@@ -334,6 +350,10 @@
         display: flex;
         align-items: center;
         gap: 20px;
+        span {
+          font-size: 18px;
+          color: $accent;
+        }
         input[type='file'] {
           border: none;
           outline: none;

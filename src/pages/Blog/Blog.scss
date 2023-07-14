@@ -96,6 +96,8 @@
         flex-shrink: 0;
         display: block;
         width: 150px;
+        font-size: 18px;
+        color: $accent;
       }
       input,
       select,
@@ -107,6 +109,7 @@
         background-color: transparent;
         color: $lightest-slate;
         font-family: inherit;
+        font-size: 16px;
       }
       textarea {
         min-height: 300px;

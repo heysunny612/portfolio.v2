@@ -36,6 +36,7 @@ export default function Tags({ tags, setTags, placeholder }: ITagsProps) {
       handleDrag={handleDrag}
       inputFieldPosition='bottom'
       placeholder={placeholder}
+      autofocus={false}
     />
   );
 }

@@ -1,16 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Tag } from 'react-tag-input';
+import { deleteImage, uploadImage } from '../../api/firebase/portfolio';
+import { skillIcons } from './skillIcons';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { IPortfolio } from '../../interfaces/Portfolio';
+import usePortfolio from '../../hooks/usePortfolio';
 import Tags from '../../components/Tags/Tags';
 import Button from '../../components/Button/Button';
 import SubLayout from '../../components/UI/SubLayout';
 import FileUploader from './FileUploader';
-import { deleteImage, uploadImage } from '../../api/firebase/portfolio';
-import { skillIcons } from './skillIcons';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import usePortfolio from '../../hooks/usePortfolio';
-import { IPortfolio } from '../../interfaces/Portfolio';
-
 interface IFilesData {
   index: number;
   imageURL: string;
@@ -26,7 +25,7 @@ export default function AddPortfolio() {
   const { id } = useParams();
   const { project }: { project?: IPortfolio } = useLocation()?.state || {};
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<IFormData>({
+  const { register, handleSubmit, watch } = useForm<IFormData>({
     defaultValues: {
       // 수정모드로 들어왔을경우 초기값 셋팅
       title: project ? project.title : '',
@@ -42,6 +41,7 @@ export default function AddPortfolio() {
       imageURL: image.imageURL || '',
     })) || []
   );
+  const [isUploding, setIsUploding] = useState(false);
   const { addPortfolioMutation, updateBlogMutation } = usePortfolio();
 
   // 기존에 등록된 이미지 URL 리스트
@@ -54,55 +54,60 @@ export default function AddPortfolio() {
   );
 
   const onAddProject = async (data: IFormData) => {
-    //파이어베이스에 이미지 올리기
-    const uploadPromises = uploadedFiles.map(async (uploadeFile) => {
-      if (uploadeFile.imageURL.startsWith('data:')) {
-        const imageURL = await uploadImage(uploadeFile.imageURL);
-        return { index: uploadeFile.index, imageURL };
-      } else {
-        return uploadeFile;
-      }
-    });
-    //파이어베이스에 저장된 URL 가져오기
-    const images = await Promise.all(uploadPromises);
-
-    //파이어베이스에서도 사용하지 않는 이미지 삭제하기
-    if (imagesToDelete && imagesToDelete.length > 0) {
-      const deletePromises = imagesToDelete.map((imageURL) => {
-        if (!imageURL) return;
-        deleteImage(imageURL);
-      });
-      await Promise.all(deletePromises);
-    }
-
-    const portfolioData = {
-      title: data.title,
-      description: desc,
-      skills: data.skills,
-      buildAdress: data.buildAdress,
-      codeAdress: data.codeAdress,
-      images,
-      createdAt: project ? project.createdAt : Date.now(),
-    };
-
-    if (id && project) {
-      updateBlogMutation.mutate(
-        { id, updateData: portfolioData },
-        {
-          onSuccess: () => {
-            alert('정상적으로 수정되었습니다');
-            navigate('/portfolio');
-          },
+    setIsUploding(true);
+    try {
+      //파이어베이스에 이미지 올리기
+      const uploadPromises = uploadedFiles.map(async (uploadeFile) => {
+        if (uploadeFile.imageURL.startsWith('data:')) {
+          const imageURL = await uploadImage(uploadeFile.imageURL);
+          return { index: uploadeFile.index, imageURL };
+        } else {
+          return uploadeFile;
         }
-      );
-      return;
+      });
+      //파이어베이스에 저장된 URL 가져오기
+      const images = await Promise.all(uploadPromises);
+
+      //파이어베이스에서도 사용하지 않는 이미지 삭제하기
+      if (imagesToDelete && imagesToDelete.length > 0) {
+        const deletePromises = imagesToDelete.map((imageURL) => {
+          if (!imageURL) return;
+          deleteImage(imageURL);
+        });
+        await Promise.all(deletePromises);
+      }
+
+      const portfolioData = {
+        title: data.title,
+        description: desc,
+        skills: data.skills,
+        buildAdress: data.buildAdress,
+        codeAdress: data.codeAdress,
+        images,
+        createdAt: project ? project.createdAt : Date.now(),
+      };
+
+      if (id && project) {
+        updateBlogMutation.mutate(
+          { id, updateData: portfolioData },
+          {
+            onSuccess: () => {
+              alert('정상적으로 수정되었습니다');
+              navigate('/portfolio');
+            },
+          }
+        );
+        return;
+      }
+      addPortfolioMutation.mutate(portfolioData, {
+        onSuccess: () => {
+          alert('정상적으로 등록되었습니다');
+          navigate('/portfolio');
+        },
+      });
+    } finally {
+      setIsUploding(false);
     }
-    addPortfolioMutation.mutate(portfolioData, {
-      onSuccess: () => {
-        alert('정상적으로 등록되었습니다');
-        navigate('/portfolio');
-      },
-    });
   };
 
   return (
@@ -112,7 +117,11 @@ export default function AddPortfolio() {
         <form onSubmit={handleSubmit(onAddProject)}>
           <label>
             <span>프로젝트명</span>
-            <input type='text' {...register('title')} />
+            <input
+              type='text'
+              {...register('title', { required: true })}
+              autoFocus
+            />
           </label>
           <label>
             <span>프로젝트 설명</span>
@@ -125,16 +134,19 @@ export default function AddPortfolio() {
           <div className='skills_checkbox'>
             <span>사용기술</span>
             <ul>
-              {skillIcons.map((skill, index) => (
+              {skillIcons.map(({ name, icon }, index) => (
                 <li key={index}>
-                  <label>
+                  <label
+                    key={index}
+                    className={watch('skills')?.includes(name) ? 'checked' : ''}
+                  >
                     <input
                       {...register('skills')}
                       type='checkbox'
-                      value={skill.name}
+                      value={name}
                     />
-                    {skill.name}
-                    {skill.icon}
+                    {icon}
+                    {name}
                   </label>
                 </li>
               ))}
@@ -163,7 +175,7 @@ export default function AddPortfolio() {
           </ul>
           <div className='add_btns'>
             <Button filled type='submit'>
-              {id && project ? '수정' : '등록'}
+              {isUploding ? '업로드중...' : id && project ? '수정' : '등록'}
             </Button>
             <Button type='button' onClick={() => navigate(-1)}>
               취소
