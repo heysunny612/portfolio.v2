@@ -13,13 +13,17 @@ import SubLayout from '../../components/UI/SubLayout';
 
 interface IStateProp {
   project: IPortfolio;
+  projectList: IPortfolio[];
 }
 export default function PortfolioDetail() {
   const navigate = useNavigate();
-  const { project } = useLocation().state as IStateProp;
+  const { project, projectList } = useLocation().state as IStateProp;
   const { id, title, images, skills, description, buildAdress, codeAdress } =
     project;
   const sortedImg = images.sort((a, b) => a.index - b.index);
+  const currentIndex = projectList.findIndex((project) => project.id === id);
+  const firstPage = currentIndex <= 0;
+  const lastPage = currentIndex >= projectList.length - 1;
 
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle((toggle) => !toggle);
@@ -38,6 +42,28 @@ export default function PortfolioDetail() {
   };
   const handleEdit = () => {
     navigate(`/portfolio/write/${id}`, { state: { project } });
+  };
+
+  //이전페이지
+  const handlePrev = () => {
+    const prevIndex = currentIndex - 1;
+    if (firstPage) return;
+    const prevPage = id && projectList[prevIndex]?.id;
+    const prevProject = projectList[prevIndex];
+    navigate(`/portfolio/${prevPage}`, {
+      state: { project: prevProject, projectList },
+    });
+  };
+
+  //다음페이지
+  const handleNext = () => {
+    const nextIndex = currentIndex + 1;
+    if (lastPage) return;
+    const nextPage = id && projectList[nextIndex]?.id;
+    const nextProject = projectList[nextIndex];
+    navigate(`/portfolio/${nextPage}`, {
+      state: { project: nextProject, projectList },
+    });
   };
   return (
     <SubLayout className='detail_container' subTitle='portfolio'>
@@ -130,13 +156,18 @@ export default function PortfolioDetail() {
             </button>
           </div>
         </div>
+
         <div className='detail_btns'>
-          <button className='prev'>
-            <MdArrowBackIos />
-          </button>
-          <button className='next'>
-            <MdArrowForwardIos />
-          </button>
+          {!firstPage && (
+            <button className='prev' onClick={handlePrev}>
+              <MdArrowBackIos />
+            </button>
+          )}
+          {!lastPage && (
+            <button className='next' onClick={handleNext}>
+              <MdArrowForwardIos />
+            </button>
+          )}
         </div>
         {toggle && (
           <div className='detail_comments'>

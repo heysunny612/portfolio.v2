@@ -10,16 +10,19 @@ import { IPortfolio } from '../../interfaces/Portfolio';
 
 interface IProjectProps {
   project: IPortfolio;
+  projectList: IPortfolio[];
 }
 
-export default function ProjectCard({ project }: IProjectProps) {
+export default function ProjectCard({ project, projectList }: IProjectProps) {
   const { id, title, skills, images, buildAdress, codeAdress } = project;
   const navigate = useNavigate();
   return (
     <li
       className='project_card'
       role='button'
-      onClick={() => navigate(`/portfolio/${id}`, { state: { project } })}
+      onClick={() =>
+        navigate(`/portfolio/${id}`, { state: { project, projectList } })
+      }
     >
       <div className='thum'>
         <img src={images[0]?.imageURL!} alt={project.title} />

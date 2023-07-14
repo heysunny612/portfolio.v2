@@ -15,7 +15,11 @@ export default function Projects() {
       {projectList && (
         <ul className='projects'>
           {projectList.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              projectList={projectList}
+            />
           ))}
         </ul>
       )}
