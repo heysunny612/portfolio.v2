@@ -59,7 +59,7 @@ export const uploadImage = async (file: any) => {
     .catch((error) => console.log(error));
 };
 
-// DELETE the file
+// storage 이미지 삭제
 export const deleteImage = async (imgURL: string) => {
   const urlRef = ref(storage, imgURL);
   return await deleteObject(urlRef);

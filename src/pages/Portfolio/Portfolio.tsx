@@ -51,9 +51,11 @@ export default function Portfolio() {
         </form>
         <h3 className='common_h3'>Projects</h3>
         <Projects />
-        <button onClick={() => navigate('/portfolio/write')}>
-          포트폴리오작성
-        </button>
+        <div className='btn_write'>
+          <Button filled onClick={() => navigate('/portfolio/write')}>
+            Write
+          </Button>
+        </div>
       </>
     </SubLayout>
   );

@@ -1,4 +1,9 @@
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadString,
+} from 'firebase/storage';
 
 import {
   addDoc,
@@ -50,4 +55,10 @@ export const uploadImage = async (fileURL: string) => {
   return await uploadString(storageRef, fileURL, 'data_url')
     .then((snapshot) => getDownloadURL(snapshot.ref))
     .catch((error) => console.log(error));
+};
+
+// storage 이미지 삭제
+export const deleteImage = async (imgURL: string) => {
+  const urlRef = ref(storage, imgURL);
+  return await deleteObject(urlRef);
 };

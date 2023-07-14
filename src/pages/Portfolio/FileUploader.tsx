@@ -19,9 +19,11 @@ export default function FileUploader({
   setUploadedFiles,
 }: IFileUploader) {
   const [file, setFile] = useState<string>('');
-  const found = images?.find((image) => image.index === index);
+  const existingImage = images?.find((image) => image.index === index);
+  const imageSrc =
+    uploadedFiles.find((file) => file.index === index)?.imageURL || '';
 
-  const imageURL = file || (found ? found.imageURL : '');
+  //파일업로드 후 미리보기 및 URL 저장
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     const image = files && files[0];
@@ -31,40 +33,48 @@ export default function FileUploader({
       const fileURL = finishedEvent?.target?.result;
       if (fileURL) {
         setFile(fileURL as string);
-
         setUploadedFiles((prevImages) => {
-          const existingImage = images?.find((image) => image.index === index);
-          //이미 파이어베이스 저장된 IAMGE가 있는데, 파일 업로드를 했을경우
+          const existingImage = prevImages.find(
+            (image) => image.index === index
+          );
+          //수정모드에서 이미 이미지가 있는데, 파일추가로 추가한 경우
           if (existingImage) {
             return prevImages.map((image) =>
               image.index === index
                 ? { index, imageURL: fileURL as string }
                 : image
             );
-          } else {
-            return [...prevImages, { index, imageURL: fileURL as string }];
+          }
+          //이미지가 추가되지 않은 상태에서 새로 이미지를 추가하는 경우
+          else {
+            return [
+              ...prevImages.filter((image) => image.index !== index),
+              { index, imageURL: fileURL as string },
+            ];
           }
         });
       }
     };
   };
-
-  //파일삭제
   const handleDelete = () => {
     setFile('');
-    const existingImage = images?.find((image) => image.index === index);
-    //이미 파이어베이스 저장된 IAMGE가 있는데, 파일업로드후, 업로드전 삭제했을때
+    //업로드된 이미지가 이미 있는데, 삭제하는경우
     if (existingImage) {
       setUploadedFiles((prevImages) =>
         prevImages.map((image) =>
-          image.index === index ? existingImage : image
+          image.index === index
+            ? { ...image, imageURL: file ? existingImage.imageURL : '' }
+            : image
         )
       );
-    } else {
-      const filteredFiles = uploadedFiles.filter(
-        (image) => image.index !== index
+    }
+    // 파이어베이스에 올라가기전에 이미지 업로드를 취소하는 경우
+    else if (file) {
+      setUploadedFiles((prevImages) =>
+        prevImages.map((image) =>
+          image.index === index ? { ...image, imageURL: '' } : image
+        )
       );
-      setUploadedFiles(filteredFiles);
     }
   };
 
@@ -75,14 +85,19 @@ export default function FileUploader({
         <input type='file' accept='image/*' onChange={handleFile} />
       </label>
       <div className='image_preview'>
-        {imageURL ? (
-          <img src={imageURL as string} alt='프로젝트 이미지 미리보기' />
+        {imageSrc ? (
+          <img src={imageSrc} alt='프로젝트 이미지 미리보기' />
         ) : (
           'IMAGE_PREVIEW'
         )}
-        {file && (
+        {imageSrc && !file && (
           <button onClick={handleDelete} type='button'>
             삭제
+          </button>
+        )}
+        {file && (
+          <button onClick={handleDelete} type='button'>
+            업로드취소
           </button>
         )}
       </div>

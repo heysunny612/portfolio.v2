@@ -5,11 +5,11 @@ import { BsSuitHeartFill } from 'react-icons/bs';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import Comments from '../../components/Comments/Comments';
-import SubLayout from '../../components/UI/SubLayout';
 import { IPortfolio } from '../../interfaces/Portfolio';
 import { skillIcons } from './skillIcons';
-import { deletePortfolio } from '../../api/firebase/portfolio';
+import { deleteImage, deletePortfolio } from '../../api/firebase/portfolio';
+import Comments from '../../components/Comments/Comments';
+import SubLayout from '../../components/UI/SubLayout';
 
 interface IStateProp {
   project: IPortfolio;
@@ -24,8 +24,14 @@ export default function PortfolioDetail() {
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle((toggle) => !toggle);
   const handleDelete = async () => {
-    const isDelete = confirm('정말 삭제하시겠습니까?');
+    const isDelete = window.confirm('정말 삭제하시겠습니까?');
     if (isDelete && id) {
+      await Promise.all(
+        images.map(async (image) => {
+          if (!image.imageURL) return;
+          await deleteImage(image.imageURL);
+        })
+      );
       await deletePortfolio(id);
       navigate('/portfolio');
     }
@@ -80,7 +86,9 @@ export default function PortfolioDetail() {
               <span>
                 <BiLogoNetlify />
               </span>
-              <a href={buildAdress}>{buildAdress}</a>
+              <a href={buildAdress} target='_blank' rel='noopener noreferrer'>
+                {buildAdress}
+              </a>
             </p>
           </div>
           <div className='detail_deploy'>
@@ -89,7 +97,9 @@ export default function PortfolioDetail() {
               <span>
                 <BiLogoGithub />
               </span>
-              <a href={codeAdress}>{codeAdress}</a>
+              <a href={codeAdress} target='_blank' rel='noopener noreferrer'>
+                {codeAdress}
+              </a>
             </p>
           </div>
         </div>
