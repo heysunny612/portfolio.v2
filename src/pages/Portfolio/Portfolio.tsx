@@ -3,6 +3,7 @@ import Button from '../../components/Button/Button';
 import Projects from '../../components/Projects/Projects';
 import SubLayout from '../../components/UI/SubLayout';
 import { useNavigate } from 'react-router-dom';
+import usePortfolio from '../../hooks/usePortfolio';
 
 const tags = [
   'Firebase',
@@ -25,6 +26,7 @@ export default function Portfolio() {
     const currentValue = watch(tag);
     setValue(tag, !currentValue);
   };
+  const { isLoading, error, data: projectList } = usePortfolio().portfolioQuery;
 
   return (
     <SubLayout className='portfolio_container' subTitle='portfolio'>
@@ -50,7 +52,9 @@ export default function Portfolio() {
           </div>
         </form>
         <h3 className='common_h3'>Projects</h3>
-        <Projects />
+        {isLoading && <p>로딩중입니다</p>}
+        {error && <p>Something is wrong 😥 Try Again</p>}
+        {projectList && <Projects projectList={projectList} />}
         <div className='btn_write'>
           <Button filled onClick={() => navigate('/portfolio/write')}>
             Write

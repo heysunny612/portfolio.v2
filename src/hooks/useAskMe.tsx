@@ -13,7 +13,7 @@ export default function useAskMe() {
   const queryClient = useQueryClient();
 
   const questionsQuery = useQuery([CACHE_NAME], getQuestion, {
-    staleTime: 1000,
+    staleTime: 1000 * 6 * 1, //유저가 등록할수 있어 빈번한 업데이트 예상
   });
 
   const addQuestionMutation = useMutation(addQuestion, {

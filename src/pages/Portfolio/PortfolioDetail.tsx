@@ -7,9 +7,10 @@ import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { IPortfolio } from '../../interfaces/Portfolio';
 import { skillIcons } from './skillIcons';
-import { deleteImage, deletePortfolio } from '../../api/firebase/portfolio';
+import { deleteImage } from '../../api/firebase/portfolio';
 import Comments from '../../components/Comments/Comments';
 import SubLayout from '../../components/UI/SubLayout';
+import usePortfolio from '../../hooks/usePortfolio';
 
 interface IStateProp {
   project: IPortfolio;
@@ -24,6 +25,7 @@ export default function PortfolioDetail() {
   const currentIndex = projectList.findIndex((project) => project.id === id);
   const firstPage = currentIndex <= 0;
   const lastPage = currentIndex >= projectList.length - 1;
+  const { deletePortfolioMutation } = usePortfolio();
 
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle((toggle) => !toggle);
@@ -36,8 +38,12 @@ export default function PortfolioDetail() {
           await deleteImage(image.imageURL);
         })
       );
-      await deletePortfolio(id);
-      navigate('/portfolio');
+      await deletePortfolioMutation.mutateAsync(id!, {
+        onSuccess: () => {
+          navigate('/portfolio');
+          alert('삭제되었습니다.');
+        },
+      });
     }
   };
   const handleEdit = () => {

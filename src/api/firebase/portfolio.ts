@@ -45,7 +45,10 @@ export const deletePortfolio = async (id: string) => {
 };
 
 //UPDATE
-export const updatePortfolio = async (id, updateData) => {
+export const updatePortfolio = async (
+  id: string,
+  updateData: Partial<IPortfolio>
+) => {
   await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
 };
 

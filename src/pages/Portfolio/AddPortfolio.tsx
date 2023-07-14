@@ -5,14 +5,11 @@ import Tags from '../../components/Tags/Tags';
 import Button from '../../components/Button/Button';
 import SubLayout from '../../components/UI/SubLayout';
 import FileUploader from './FileUploader';
-import {
-  addPortfolio,
-  deleteImage,
-  updatePortfolio,
-  uploadImage,
-} from '../../api/firebase/portfolio';
+import { deleteImage, uploadImage } from '../../api/firebase/portfolio';
 import { skillIcons } from './skillIcons';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import usePortfolio from '../../hooks/usePortfolio';
+import { IPortfolio } from '../../interfaces/Portfolio';
 
 interface IFilesData {
   index: number;
@@ -27,7 +24,7 @@ interface IFormData {
 
 export default function AddPortfolio() {
   const { id } = useParams();
-  const { project } = useLocation()?.state || {};
+  const { project }: { project?: IPortfolio } = useLocation()?.state || {};
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<IFormData>({
     defaultValues: {
@@ -40,20 +37,20 @@ export default function AddPortfolio() {
   });
   const [desc, setDesc] = useState<Tag[]>(project ? project.description : []);
   const [uploadedFiles, setUploadedFiles] = useState<IFilesData[]>(
-    project?.images || []
+    project?.images.map((image) => ({
+      index: image.index,
+      imageURL: image.imageURL || '',
+    })) || []
   );
+  const { addPortfolioMutation, updateBlogMutation } = usePortfolio();
 
   // 기존에 등록된 이미지 URL 리스트
-  const existingImages = project?.images?.map(
-    (image: { imageURL: string }) => image.imageURL
-  );
+  const existingImages = project?.images?.map((image) => image.imageURL);
   // 업로드된 파일들의 URL 리스트
-  const uploadedImages = uploadedFiles.map(
-    (file: { index: number; imageURL: string }) => file.imageURL
-  );
+  const uploadedImages = uploadedFiles?.map((file) => file.imageURL);
   // 기존 이미지와 업로드된 파일들을 비교하여 삭제해야 할 이미지 URL 리스트
   const imagesToDelete = existingImages?.filter(
-    (imageURL: string) => !uploadedImages.includes(imageURL)
+    (imageURL) => !uploadedImages.includes(imageURL!)
   );
 
   const onAddProject = async (data: IFormData) => {
@@ -71,9 +68,10 @@ export default function AddPortfolio() {
 
     //파이어베이스에서도 사용하지 않는 이미지 삭제하기
     if (imagesToDelete && imagesToDelete.length > 0) {
-      const deletePromises = imagesToDelete.map((imageURL: string) =>
-        deleteImage(imageURL)
-      );
+      const deletePromises = imagesToDelete.map((imageURL) => {
+        if (!imageURL) return;
+        deleteImage(imageURL);
+      });
       await Promise.all(deletePromises);
     }
 
@@ -84,18 +82,26 @@ export default function AddPortfolio() {
       buildAdress: data.buildAdress,
       codeAdress: data.codeAdress,
       images,
-      createdAt: Date.now(),
+      createdAt: project ? project.createdAt : Date.now(),
     };
+
     if (id && project) {
-      await updatePortfolio(id, portfolioData).then(() => {
-        alert('정상적으로 수정되었습니다');
-        navigate('/portfolio');
-      });
+      updateBlogMutation.mutate(
+        { id, updateData: portfolioData },
+        {
+          onSuccess: () => {
+            alert('정상적으로 수정되었습니다');
+            navigate('/portfolio');
+          },
+        }
+      );
       return;
     }
-    await addPortfolio(portfolioData).then(() => {
-      alert('정상적으로 등록되었습니다');
-      navigate('/portfolio');
+    addPortfolioMutation.mutate(portfolioData, {
+      onSuccess: () => {
+        alert('정상적으로 등록되었습니다');
+        navigate('/portfolio');
+      },
     });
   };
 
@@ -151,7 +157,7 @@ export default function AddPortfolio() {
                   index={index}
                   uploadedFiles={uploadedFiles}
                   setUploadedFiles={setUploadedFiles}
-                  images={project && project.images} // Pass the images pro
+                  images={project && (project.images as IFilesData[])}
                 />
               ))}
           </ul>

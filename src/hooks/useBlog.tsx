@@ -13,7 +13,7 @@ export default function useBlog() {
   const queryClient = useQueryClient();
 
   const blogQuery = useQuery([CACHE_NAME], getblogItems, {
-    staleTime: 1000 * 6 * 5,
+    staleTime: 1000 * 6 * 15, //빈번한 업데이트 되지않아 15분설정
   });
 
   const addBlogMutation = useMutation(addBlog, {

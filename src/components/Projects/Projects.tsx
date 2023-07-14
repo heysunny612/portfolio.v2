@@ -1,15 +1,10 @@
-import { useQuery } from 'react-query';
 import ProjectCard from './ProjectCard';
-import { getPortfolios } from '../../api/firebase/portfolio';
 import { IPortfolio } from '../../interfaces/Portfolio';
 
-export default function Projects() {
-  const {
-    isLoading,
-    error,
-    data: projectList,
-  } = useQuery<IPortfolio[]>(['portfolio'], () => getPortfolios());
-
+interface IProjectsProps {
+  projectList: IPortfolio[];
+}
+export default function Projects({ projectList }: IProjectsProps) {
   return (
     <>
       {projectList && (
