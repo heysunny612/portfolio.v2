@@ -40,7 +40,7 @@ export const deletePortfolio = async (id: string) => {
 };
 
 //UPDATE
-export const updateBlogItem = async (id, updateData) => {
+export const updatePortfolio = async (id, updateData) => {
   await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
 };
 

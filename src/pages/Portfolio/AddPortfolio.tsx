@@ -5,33 +5,56 @@ import Tags from '../../components/Tags/Tags';
 import Button from '../../components/Button/Button';
 import SubLayout from '../../components/UI/SubLayout';
 import FileUploader from './FileUploader';
-import { addPortfolio, uploadImage } from '../../api/firebase/portfolio';
+import {
+  addPortfolio,
+  updatePortfolio,
+  uploadImage,
+} from '../../api/firebase/portfolio';
 import { skillIcons } from './skillIcons';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface IFilesData {
   index: number;
-  file: string;
+  imageURL: string;
 }
-
 interface IFormData {
   title: string;
   skills: string[];
   buildAdress: string;
   codeAdress: string;
 }
+
 export default function AddPortfolio() {
-  const { register, handleSubmit } = useForm<IFormData>();
-  const [desc, setDesc] = useState<Tag[]>([]);
-  const [uploadedFiles, setUploadedFiles] = useState<IFilesData[]>([]);
+  const { id } = useParams();
+  const { project } = useLocation()?.state || {};
+  const { register, handleSubmit } = useForm<IFormData>({
+    defaultValues: {
+      // 수정모드로 들어왔을경우 초기값 셋팅
+      title: project ? project.title : '',
+      codeAdress: project ? project.codeAdress : '',
+      buildAdress: project ? project.buildAdress : '',
+      skills: project ? project.skills : [],
+    },
+  });
+  const [desc, setDesc] = useState<Tag[]>(project ? project.description : []);
+  const [uploadedFiles, setUploadedFiles] = useState<IFilesData[]>(
+    project?.images || []
+  );
 
   const onAddProject = async (data: IFormData) => {
     //파이어베이스에 이미지 올리기
-    const uploadPromises = uploadedFiles.map(async (file) => {
-      const imageURL = await uploadImage(file.file);
-      return { index: file.index, imageURL };
+    const uploadPromises = uploadedFiles.map(async (uploadeFile) => {
+      if (uploadeFile.imageURL.startsWith('data:')) {
+        const imageURL = await uploadImage(uploadeFile.imageURL);
+        return { index: uploadeFile.index, imageURL };
+      } else {
+        return uploadeFile;
+      }
     });
+
     //저장된 URL
     const images = await Promise.all(uploadPromises);
+
     const portfolioData = {
       title: data.title,
       description: desc,
@@ -41,17 +64,15 @@ export default function AddPortfolio() {
       images,
       createdAt: Date.now(),
     };
+    if (id && project) {
+      await updatePortfolio(id, portfolioData).then(() =>
+        alert('정상적으로 수정되었습니다')
+      );
+      return;
+    }
     await addPortfolio(portfolioData).then(() =>
       alert('정상적으로 등록되었습니다')
     );
-  };
-
-  const handleFileUpload = (index: number, file: string) => {
-    setUploadedFiles((prev) => [...prev, { index, file }]);
-  };
-  const handleDeleteFile = (index: number) => {
-    const filteredFiles = uploadedFiles.filter((file) => file.index !== index);
-    setUploadedFiles(filteredFiles);
   };
 
   return (
@@ -104,8 +125,9 @@ export default function AddPortfolio() {
                 <FileUploader
                   key={index}
                   index={index}
-                  onFileUpload={handleFileUpload}
-                  onFileDelete={handleDeleteFile}
+                  uploadedFiles={uploadedFiles}
+                  setUploadedFiles={setUploadedFiles}
+                  images={project && project.images} // Pass the images pro
                 />
               ))}
           </ul>

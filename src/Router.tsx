@@ -29,6 +29,7 @@ export default function Router() {
         { path: '/portfolio', element: <Portfolio /> },
         { path: '/portfolio/:id', element: <PortfolioDetail /> },
         { path: '/portfolio/write', element: <AddPortfolio /> },
+        { path: '/portfolio/write/:id', element: <AddPortfolio /> },
         { path: '/blog', element: <Blog /> },
         { path: '/blog/:id', element: <BlogDetail /> },
         { path: '/blog/write', element: <AddBlog /> },

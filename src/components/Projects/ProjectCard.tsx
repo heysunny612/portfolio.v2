@@ -22,7 +22,7 @@ export default function ProjectCard({ project }: IProjectProps) {
       onClick={() => navigate(`/portfolio/${id}`, { state: { project } })}
     >
       <div className='thum'>
-        <img src={images[0].imageURL!} alt={project.title} />
+        <img src={images[0]?.imageURL!} alt={project.title} />
       </div>
       <div className='info'>
         <h3>{title}</h3>

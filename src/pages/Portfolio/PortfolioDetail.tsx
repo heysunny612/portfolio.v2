@@ -30,6 +30,9 @@ export default function PortfolioDetail() {
       navigate('/portfolio');
     }
   };
+  const handleEdit = () => {
+    navigate(`/portfolio/write/${id}`, { state: { project } });
+  };
   return (
     <SubLayout className='detail_container' subTitle='portfolio'>
       <>
@@ -105,13 +108,13 @@ export default function PortfolioDetail() {
             </button>
           </div>
           <div className='bottom_btns'>
-            <button onClick={() => navigate(-1)}>
+            <button onClick={handleEdit}>
               <span>수정</span>
             </button>
             <button onClick={handleDelete}>
               <span>삭제</span>
             </button>
-            <button onClick={() => navigate(-1)}>
+            <button onClick={() => navigate('/portfolio')}>
               <AiOutlineUnorderedList />
               <span>목록 보기</span>
             </button>
