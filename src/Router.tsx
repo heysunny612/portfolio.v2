@@ -16,6 +16,7 @@ import Join from './pages/Auth/Join';
 import AddBlog from './pages/Blog/AddBlog';
 import BlogDetail from './pages/Blog/BlogDetail';
 import AddPortfolio from './pages/Portfolio/AddPortfolio';
+import SearchResult from './pages/Portfolio/SearchResult';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -26,7 +27,14 @@ export default function Router() {
       children: [
         { index: true, element: <Home /> },
         { path: '/about', element: <About /> },
-        { path: '/portfolio', element: <Portfolio /> },
+        {
+          path: '/portfolio',
+          element: <Portfolio />,
+          children: [
+            { path: '/portfolio', element: <SearchResult /> },
+            { path: '/portfolio/search', element: <SearchResult /> },
+          ],
+        },
         { path: '/portfolio/:id', element: <PortfolioDetail /> },
         { path: '/portfolio/write', element: <AddPortfolio /> },
         { path: '/portfolio/write/:id', element: <AddPortfolio /> },

@@ -1,5 +1,47 @@
 //포트폴리오 서브페이지
 .portfolio_container {
+  //포트폴리오 검색
+  .portfolio_filter_alert {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: $lightest-slate;
+    span {
+      font-weight: bold;
+      color: $accent;
+      font-size: 20px;
+      padding: 0 5px;
+      &.alert {
+        color: Red;
+      }
+    }
+  }
+  .search_result {
+    display: flex;
+    margin-bottom: 20px;
+    ul {
+      display: flex;
+      li {
+        margin-right: 10px;
+        color: $lightest-slate;
+        &:last-child {
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+
+    b {
+      color: $accent;
+    }
+  }
+  .no_search_result {
+    display: flex;
+    min-height: 200px;
+    border: 1px solid $lightest-navy;
+    align-items: center;
+    justify-content: center;
+  }
   //사용기술
   .tech_tags {
     margin-bottom: 70px;
@@ -50,6 +92,9 @@
     }
     .filter_btn {
       text-align: center;
+      button {
+        margin: 0 10px;
+      }
     }
   }
   .btn_write {

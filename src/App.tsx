@@ -14,7 +14,7 @@ function App() {
         <Header />
         <Outlet />
         <Footer />
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
         <ScrollBtn />
       </UserContextProvider>
     </QueryClientProvider>

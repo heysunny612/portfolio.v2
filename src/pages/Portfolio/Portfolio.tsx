@@ -1,33 +1,73 @@
 import { useForm } from 'react-hook-form';
-import Button from '../../components/Button/Button';
-import Projects from '../../components/Projects/Projects';
-import SubLayout from '../../components/UI/SubLayout';
-import { useNavigate } from 'react-router-dom';
-import usePortfolio from '../../hooks/usePortfolio';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { skillIcons } from './skillIcons';
 import { useUserContext } from '../../context/UserContext';
+import { useEffect } from 'react';
+import Button from '../../components/Button/Button';
+import SubLayout from '../../components/UI/SubLayout';
+
+const MAX_COUNT = 3;
+interface IFormData {
+  skills: string[];
+}
 
 export default function Portfolio() {
-  const navigate = useNavigate();
-  const { register, watch, handleSubmit } = useForm();
-  const { isLoading, error, data: projectList } = usePortfolio().portfolioQuery;
   const { user } = useUserContext() || {};
+  const navigate = useNavigate();
+  const { register, watch, handleSubmit, reset, setValue } = useForm<IFormData>(
+    { defaultValues: { skills: [] } }
+  );
+  const [searchParams] = useSearchParams();
+  const paramSkills = searchParams.get('skills');
+  const skiilsArray = paramSkills?.split(',');
+  const selectedSkills = watch('skills') || [];
+  const skillsLength = selectedSkills.length;
+  const isSkillsOutOfRange = skillsLength > MAX_COUNT || skillsLength === 0;
 
-  const onSearch = (data: any) => {
-    console.log(data);
+  const onSearch = (data: IFormData) => {
+    if (isSkillsOutOfRange) return;
+    const skillsQueryParam = data.skills.join(',');
+    navigate(`/portfolio/search?skills=${skillsQueryParam}`);
   };
+
+  const handleReset = () => {
+    navigate('/portfolio');
+    reset({ skills: [] });
+  };
+
+  //뒤로가기 눌렀을때, 이전에 검색한 필터유지
+  useEffect(() => {
+    skiilsArray ? setValue('skills', skiilsArray) : reset({ skills: [] });
+  }, [paramSkills]);
+
   return (
     <SubLayout className='portfolio_container' subTitle='portfolio'>
       <>
-        <h3 className='common_h3'>Tech Tags</h3>
+        <h3 className='common_h3'>
+          Tech Tags
+          <span>
+            최대 {MAX_COUNT}개까지 Tech Tag를 선택하여 검색할 수 있습니다!☺️
+          </span>
+        </h3>
+        <p className='portfolio_filter_alert'>
+          Number of skills selected :
+          <span className={isSkillsOutOfRange ? 'alert' : ''}>
+            {skillsLength}
+          </span>
+          / {MAX_COUNT}
+        </p>
         <form className='tech_tags' onSubmit={handleSubmit(onSearch)}>
           <div className='tags'>
             {skillIcons.map(({ name, icon }, index) => {
-              const skills = watch('skills') || [];
-              const isChecked = skills.includes(name);
+              const isChecked = selectedSkills.includes(name);
               return (
                 <label key={index} className={isChecked ? 'checked' : ''}>
-                  <input type='checkbox' {...register(`skills`)} value={name} />
+                  <input
+                    type='checkbox'
+                    {...register('skills')}
+                    value={name}
+                    defaultChecked={isChecked}
+                  />
                   <div>
                     {icon}
                     {name}
@@ -37,16 +77,18 @@ export default function Portfolio() {
             })}
           </div>
           <div className='filter_btn'>
-            <Button large filled type='submit'>
+            <Button large filled type='submit' disabled={isSkillsOutOfRange}>
               Filter
             </Button>
+            {selectedSkills.length > 0 && paramSkills && (
+              <Button large type='button' onClick={handleReset}>
+                Reset
+              </Button>
+            )}
           </div>
         </form>
-        <h3 className='common_h3'>Projects</h3>
-        {isLoading && <p>로딩중입니다</p>}
-        {error && <p>Something is wrong 😥 Try Again</p>}
-        {projectList && <Projects projectList={projectList} />}
-        {user && user?.isAdmin && (
+        <Outlet />
+        {user?.isAdmin && (
           <div className='btn_write'>
             <Button filled onClick={() => navigate('/portfolio/write')}>
               Write
