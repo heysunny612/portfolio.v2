@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import {
   BsLink45Deg,
@@ -16,6 +16,10 @@ interface IProjectProps {
 export default function ProjectCard({ project, projectList }: IProjectProps) {
   const { id, title, skills, images, buildAdress, codeAdress } = project;
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const paramSkills = searchParams?.get('skills');
+  const skillArray = paramSkills?.split(',');
+
   return (
     <li
       className='project_card'
@@ -31,7 +35,12 @@ export default function ProjectCard({ project, projectList }: IProjectProps) {
         <h3>{title}</h3>
         <ul className='skills'>
           {skills.map((skill: string, idx: number) => (
-            <li key={idx}>#{skill}</li>
+            <li
+              key={idx}
+              className={skillArray?.includes(skill) ? 'active' : ''}
+            >
+              #{skill}
+            </li>
           ))}
         </ul>
       </div>

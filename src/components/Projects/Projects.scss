@@ -50,6 +50,9 @@
         font-size: 14px;
         margin-right: 15px;
         line-height: 1.5;
+        &.active {
+          color: $accent;
+        }
       }
     }
 
