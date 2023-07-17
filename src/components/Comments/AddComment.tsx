@@ -1,16 +1,52 @@
+import { useForm } from 'react-hook-form';
+import { useUserContext } from '../../context/UserContext';
+import { addComment } from '../../api/firebase/comments';
 import Button from '../Button/Button';
 import Profile from '../Profile/Profile';
+interface IFormData {
+  comment: string;
+}
+interface IAddCommentPros {
+  pageId: string;
+}
+export default function AddComment({ pageId }: IAddCommentPros) {
+  const { user } = useUserContext() || {};
+  const { uid, displayName, photoURL, email } = user ?? {};
+  const { register, handleSubmit } = useForm<IFormData>();
+  const onAddComment = async ({ comment }: IFormData) => {
+    await addComment({
+      commentData: {
+        pageId,
+        comment,
+        createdAt: Date.now(),
+        writer: {
+          uid: uid ?? '',
+          displayName: displayName ?? '',
+          photoURL: photoURL ?? '',
+          email: email ?? '',
+        },
+      },
+    });
+  };
 
-export default function AddComment() {
   return (
-    <form className='comments_form'>
-      <Profile />
+    <form className='comments_form' onSubmit={handleSubmit(onAddComment)}>
+      {user && (
+        <Profile
+          displayName={displayName || ''}
+          photoURL={photoURL || ''}
+          email={email || ''}
+        />
+      )}
       <div className='write'>
         <input
           type='text'
           placeholder='발견하신 버그 또는 서로 훈훈해지는 댓글 달아주세요☺️'
+          {...register('comment', { required: true })}
         />
-        <Button filled>등록</Button>
+        <Button filled type='submit'>
+          등록
+        </Button>
       </div>
     </form>
   );

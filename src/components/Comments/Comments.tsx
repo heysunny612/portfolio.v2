@@ -16,13 +16,17 @@ const comments = [
   },
 ];
 
-export default function Comments() {
+interface ICommentsProps {
+  pageId: string;
+}
+
+export default function Comments({ pageId }: ICommentsProps) {
   return (
     <section className='comments_container'>
-      <AddComment />
+      <AddComment pageId={pageId} />
       <ul className='commnets_list'>
-        {comments.map((comment) => (
-          <Comment comment={comment} />
+        {comments.map((comment, index) => (
+          <Comment key={index} comment={comment} />
         ))}
       </ul>
     </section>

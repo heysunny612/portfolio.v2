@@ -195,7 +195,7 @@ export default function PortfolioDetail() {
                 <h3 className='common_h3'>
                   Comments <span>첫 댓글의 주인공이 되어보세요!</span>
                 </h3>
-                <Comments />
+                {id && <Comments pageId={id} />}
               </div>
             )}
           </>

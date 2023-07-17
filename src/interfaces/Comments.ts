@@ -1,7 +1,13 @@
+import { IWriter } from './User';
+
 export interface IComment {
-  id: number;
-  user: 'heysunny';
-  comment: '우왕 굿이네요!!';
-  createAt: '2023.7.4 20:15';
-  reply: string;
+  id?: number; //Create 할때는 없는 데이터
+  commentData: IcommentData;
+}
+
+interface IcommentData {
+  pageId: string;
+  comment: string;
+  createdAt: number;
+  writer: IWriter;
 }
