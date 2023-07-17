@@ -22,9 +22,43 @@
 
     .thum {
       overflow: hidden;
+      position: relative;
       img {
         transition: $transition;
         width: 100%;
+      }
+      .project_likes {
+        position: absolute;
+        bottom: 15px;
+        left: 10px;
+        background-color: $navy;
+        border-radius: 10px;
+        padding: 5px;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 50%;
+          bottom: -5px;
+          display: block;
+          width: 10px;
+          height: 10px;
+          transform: translateX(-50%) rotate(45deg);
+          background-color: $navy;
+        }
+        button {
+          font-size: 20px;
+          color: $accent;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          span {
+            position: relative;
+            top: -2px;
+            font-size: 12px;
+            margin-left: 5px;
+            color: $lightest-slate;
+          }
+        }
       }
     }
 
@@ -71,7 +105,7 @@
         width: 35px;
         height: 35px;
         border-radius: 50%;
-        background-color: $dark-navy;
+        background-color: $navy;
         color: $white;
         margin-left: 5px;
         transition: $transition;
