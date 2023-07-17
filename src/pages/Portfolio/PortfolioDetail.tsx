@@ -12,6 +12,7 @@ import SubLayout from '../../components/UI/SubLayout';
 import usePortfolio from '../../hooks/usePortfolio';
 import LikesButton from '../../components/LikesButton';
 import useComment from '../../hooks/useComment';
+import useReply from '../../hooks/useReply';
 
 export default function PortfolioDetail() {
   const navigate = useNavigate();
@@ -28,11 +29,16 @@ export default function PortfolioDetail() {
   const sortedImg = images?.sort((a, b) => a.index - b.index);
 
   //댓글 불러오기
-  const {
-    commentsQuery: { isLoading, error, data: commentsList },
-  } = useComment();
-  const comments =
-    commentsList && commentsList.filter((data) => data.pageId === id);
+  const { isLoading, error, data: commentsList } = useComment().commentsQuery;
+  const comments = commentsList?.filter((data) => data.pageId === id);
+  const commentsId = comments?.map((comment) => comment.id);
+
+  //대댓글 불러오기
+  const { data: replyList } = useReply().replyQuery;
+  const reply = replyList?.filter((reply) =>
+    commentsId?.includes(reply.commentId)
+  );
+  const totalComments = comments && reply ? comments.length + reply.length : 0;
 
   //prev,next 페이지 적용
   const currentIndex =
@@ -167,7 +173,7 @@ export default function PortfolioDetail() {
                   className={`${toggle ? 'active' : ''}`}
                 >
                   {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  <span>댓글 보기 {comments?.length}</span>
+                  <span>댓글 보기 {totalComments}</span>
                 </button>
               </div>
               <div className='bottom_btns'>

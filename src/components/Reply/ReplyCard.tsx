@@ -1,45 +1,47 @@
 import { useState } from 'react';
-import { IComment } from '../../interfaces/Comments';
+import useReply from '../../hooks/useReply';
+import { IReply } from '../../interfaces/Reply';
 import { formatDate } from '../../utils/formatDate';
-import { useUserContext } from '../../context/UserContext';
-import Button from '../Button/Button';
-import useComment from '../../hooks/useComment';
 import Profile from '../Profile/Profile';
-import AddComment from './AddComment';
+import Button from '../Button/Button';
+import AddComment from '../Comments/AddComment';
+import { useUserContext } from '../../context/UserContext';
 
-import Reply from '../Reply/Reply';
-interface ICommentProps {
-  comment: IComment;
+interface IReplyCardProps {
+  reply: IReply;
+  commentId: string;
 }
 
-export default function Comment({
-  comment: { id, comment: initialComment, createdAt, writer },
-}: ICommentProps) {
+export default function ReplyCard({
+  reply: { id, reply: initialReply, createdAt, writer },
+  commentId,
+}: IReplyCardProps) {
   const { user } = useUserContext() || {};
   const [editMode, setEditMode] = useState(false);
-  const [editText, setEditText] = useState(initialComment);
+  const [editText, setEditText] = useState(initialReply);
   const [replyMode, setReplyMode] = useState(false);
-  const { deleteCommentMutation, updateCommentMutation } = useComment();
+  const { deleteReplyMutation, updateReplyMutation } = useReply();
 
-  //코멘트삭제
+  //대댓글 삭제
   const handleDelete = () => {
     const isDelete = window.confirm('댓글을 삭제하시겠습니까?');
     if (id && isDelete) {
-      deleteCommentMutation.mutate(id);
+      deleteReplyMutation.mutate(id);
     }
   };
+
   //코멘트수정
   const handleEditMode = () => {
     setEditMode(!editMode);
     if (editMode) {
-      setEditText(initialComment);
+      setEditText(initialReply);
     }
   };
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (id) {
-      updateCommentMutation.mutate(
-        { id, comment: editText },
+      updateReplyMutation.mutate(
+        { id, reply: editText },
         { onSuccess: () => setEditMode(!editMode) }
       );
     }
@@ -52,12 +54,12 @@ export default function Comment({
     <li>
       <Profile
         displayName={writer.displayName}
-        photoURL={writer.photoURL}
         email={writer.email}
+        photoURL={writer.photoURL}
       />
       <div className='text'>
         {!editMode ? (
-          <p>{initialComment}</p>
+          <p>{initialReply}</p>
         ) : (
           <form onSubmit={handleEditSubmit} className='comment_edit_form'>
             <textarea
@@ -86,10 +88,9 @@ export default function Comment({
       )}
       {replyMode && (
         <div className='reply_comment'>
-          <AddComment commentId={id} onReplyMode={handleReply} />
+          <AddComment commentId={commentId} onReplyMode={handleReply} />
         </div>
       )}
-      {id && <Reply commentId={id} />}
     </li>
   );
 }

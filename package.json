@@ -36,6 +36,7 @@
     "scss": "^0.2.4",
     "slick-carousel": "^1.8.1",
     "three": "^0.154.0",
+    "uuidv4": "^6.2.13",
     "vite-plugin-sass": "^0.1.0"
   },
   "devDependencies": {

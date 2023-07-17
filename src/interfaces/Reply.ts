@@ -1,10 +1,9 @@
 import { IWriter } from './User';
 
-export interface IComment {
+export interface IReply {
   id?: string; //Create 할때는 없는 데이터
-  pageId?: string;
-  commentId?: string;
-  comment: string;
+  commentId: string;
+  reply: string;
   createdAt: number;
   writer: IWriter;
 }
