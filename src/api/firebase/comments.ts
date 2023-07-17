@@ -1,11 +1,4 @@
 import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadString,
-} from 'firebase/storage';
-
-import {
   addDoc,
   collection,
   deleteDoc,
@@ -15,8 +8,7 @@ import {
   query,
   updateDoc,
 } from 'firebase/firestore';
-import { IPortfolio } from '../../interfaces/Portfolio';
-import { db, storage } from './initialize';
+import { db } from './initialize';
 import { IComment } from '../../interfaces/Comments';
 
 const COLLECTION_NAME = 'comment';
@@ -27,42 +19,28 @@ export const addComment = async (data: IComment) => {
 };
 
 //READ
-export const getPortfolios = async (): Promise<IPortfolio[]> => {
+export const getComments = async (): Promise<IComment[]> => {
   const q = query(
     collection(db, COLLECTION_NAME),
     orderBy('createdAt', 'desc')
   );
   const querySnapshot = await getDocs(q);
-  const portfolios = querySnapshot.docs.map((doc) => ({
+  const comments = querySnapshot.docs.map((doc) => ({
     id: doc.id,
-    ...(doc.data() as IComment['commentData']),
+    ...(doc.data() as IComment),
   }));
-  return portfolios;
+  return comments;
 };
 
 //DELETE
-export const deletePortfolio = async (id: string) => {
+export const deleteComment = async (id: string) => {
   await deleteDoc(doc(db, COLLECTION_NAME, id));
 };
 
 //UPDATE
-export const updatePortfolio = async (
+export const updateComment = async (
   id: string,
-  updateData: Partial<IPortfolio>
+  updateData: Partial<IComment>
 ) => {
   await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
-};
-
-//포트폴리오 이미지 업로드
-export const uploadImage = async (fileURL: string) => {
-  const storageRef = ref(storage, `${COLLECTION_NAME}/${Date.now()}`);
-  return await uploadString(storageRef, fileURL, 'data_url')
-    .then((snapshot) => getDownloadURL(snapshot.ref))
-    .catch((error) => console.log(error));
-};
-
-// storage 이미지 삭제
-export const deleteImage = async (imgURL: string) => {
-  const urlRef = ref(storage, imgURL);
-  return await deleteObject(urlRef);
 };

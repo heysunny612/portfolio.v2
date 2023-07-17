@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useUserContext } from '../../context/UserContext';
-import { addComment } from '../../api/firebase/comments';
 import Button from '../Button/Button';
 import Profile from '../Profile/Profile';
+import useComment from '../../hooks/useComment';
 interface IFormData {
   comment: string;
 }
@@ -12,20 +12,22 @@ interface IAddCommentPros {
 export default function AddComment({ pageId }: IAddCommentPros) {
   const { user } = useUserContext() || {};
   const { uid, displayName, photoURL, email } = user ?? {};
-  const { register, handleSubmit } = useForm<IFormData>();
+  const { addCommentMutation } = useComment();
+  const { register, handleSubmit, reset } = useForm<IFormData>();
   const onAddComment = async ({ comment }: IFormData) => {
-    await addComment({
-      commentData: {
-        pageId,
-        comment,
-        createdAt: Date.now(),
-        writer: {
-          uid: uid ?? '',
-          displayName: displayName ?? '',
-          photoURL: photoURL ?? '',
-          email: email ?? '',
-        },
+    const commentData = {
+      pageId,
+      comment,
+      createdAt: Date.now(),
+      writer: {
+        uid: uid ?? '',
+        displayName: displayName ?? '',
+        photoURL: photoURL ?? '',
+        email: email ?? '',
       },
+    };
+    addCommentMutation.mutate(commentData, {
+      onSuccess: () => reset({ comment: '' }),
     });
   };
 
