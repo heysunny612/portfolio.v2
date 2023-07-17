@@ -1,12 +1,8 @@
 import { TypeAnimation } from 'react-type-animation';
-import Button from '../../components/Button/Button';
-import Projects from '../../components/Projects/Projects';
-import Review from '../../components/Review/Review';
 import { motion } from 'framer-motion';
-import fadeIn from '../../utils/fadeIn';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import Avatar from '../../components/Avatar/Avatar';
+
 import {
   SiJavascript,
   SiTypescript,
@@ -17,8 +13,14 @@ import {
 } from 'react-icons/si';
 import { FaReact, FaSass } from 'react-icons/fa';
 import { BsSuitHeartFill, BsGoogle } from 'react-icons/bs';
-import SendEmail from '../../components/SendEmail/SendEmail';
 import { useNavigate } from 'react-router-dom';
+import SendEmail from '../../components/SendEmail/SendEmail';
+import fadeIn from '../../utils/fadeIn';
+import Button from '../../components/Button/Button';
+import Projects from '../../components/Projects/Projects';
+import Review from '../../components/Review/Review';
+import Avatar from '../../components/Avatar/Avatar';
+import usePortfolio from '../../hooks/usePortfolio';
 
 const typeAni = [
   '안녕하세요',
@@ -50,6 +52,10 @@ const bgIcons = [
 
 export default function Home() {
   const navigate = useNavigate();
+  const { portfolioQuery } = usePortfolio();
+  const { data: projectList } = portfolioQuery;
+  const mainProjectList = projectList?.slice(0, 3);
+
   return (
     <main className='main'>
       <section className='banner_container'>
@@ -137,7 +143,7 @@ export default function Home() {
             Some of my latest work
             <span>최근 작업한 프로젝트</span>
           </h2>
-          <Projects />
+          {mainProjectList && <Projects projectList={mainProjectList} />}
           <div className='btn_view_all'>
             <Button large onClick={() => navigate('/portfolio')}>
               View All Projects
