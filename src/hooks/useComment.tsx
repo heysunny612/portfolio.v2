@@ -21,8 +21,8 @@ export default function useComment() {
   });
 
   const updateCommentMutation = useMutation(
-    ({ id, updateData }: { id: string; updateData: IComment }) =>
-      updateComment(id, updateData),
+    ({ id, comment }: { id: string; comment: string }) =>
+      updateComment(id, comment),
     {
       onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
     }

@@ -11,6 +11,7 @@ import Comments from '../../components/Comments/Comments';
 import SubLayout from '../../components/UI/SubLayout';
 import usePortfolio from '../../hooks/usePortfolio';
 import LikesButton from '../../components/LikesButton';
+import useComment from '../../hooks/useComment';
 
 export default function PortfolioDetail() {
   const navigate = useNavigate();
@@ -25,6 +26,13 @@ export default function PortfolioDetail() {
     project;
   //이미지 1~6번 순서대로 정렬
   const sortedImg = images?.sort((a, b) => a.index - b.index);
+
+  //댓글 불러오기
+  const {
+    commentsQuery: { isLoading, error, data: commentsList },
+  } = useComment();
+  const comments =
+    commentsList && commentsList.filter((data) => data.pageId === id);
 
   //prev,next 페이지 적용
   const currentIndex =
@@ -77,6 +85,7 @@ export default function PortfolioDetail() {
       navigate(`/portfolio/${nextProjectId}`);
     }
   };
+
   return (
     <SubLayout className='detail_container' subTitle='portfolio'>
       <>
@@ -158,7 +167,7 @@ export default function PortfolioDetail() {
                   className={`${toggle ? 'active' : ''}`}
                 >
                   {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  <span>댓글 보기 15</span>
+                  <span>댓글 보기 {comments?.length}</span>
                 </button>
               </div>
               <div className='bottom_btns'>
@@ -195,7 +204,9 @@ export default function PortfolioDetail() {
                 <h3 className='common_h3'>
                   Comments <span>첫 댓글의 주인공이 되어보세요!</span>
                 </h3>
-                {id && <Comments pageId={id} />}
+                {isLoading && <p>댓글로딩중</p>}
+                {error ? <p>댓글 불러오는 도중 오류</p> : null}
+                {id && comments && <Comments pageId={id} comments={comments} />}
               </div>
             )}
           </>

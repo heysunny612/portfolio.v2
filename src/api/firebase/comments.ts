@@ -38,9 +38,6 @@ export const deleteComment = async (id: string) => {
 };
 
 //UPDATE
-export const updateComment = async (
-  id: string,
-  updateData: Partial<IComment>
-) => {
-  await updateDoc(doc(db, COLLECTION_NAME, id), updateData);
+export const updateComment = async (id: string, comment: string) => {
+  await updateDoc(doc(db, COLLECTION_NAME, id), { comment });
 };
