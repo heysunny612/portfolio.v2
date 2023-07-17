@@ -10,11 +10,7 @@ export default function Projects({ projectList }: IProjectsProps) {
       {projectList && (
         <ul className='projects'>
           {projectList.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              projectList={projectList}
-            />
+            <ProjectCard key={project.id} project={project} />
           ))}
         </ul>
       )}

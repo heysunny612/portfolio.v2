@@ -10,7 +10,7 @@ export default function SearchResult() {
   const { isLoading, error, data: projectList } = portfolioQuery;
   const filteredProjects = skills
     ? projectList?.filter((project) =>
-        project.skills.some((skill) => skills.includes(skill))
+        project?.skills?.some((skill) => skills.includes(skill))
       )
     : projectList;
   return (
