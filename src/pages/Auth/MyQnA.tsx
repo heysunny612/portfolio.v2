@@ -28,8 +28,8 @@ export default function MyQnA() {
         )}
         {!hasMyQnaList && (
           <EmptyState text='남긴 질문이 없습니다. 무엇이든 편하게 질문해주세요😆'>
-            <Button filled large onClick={() => navigate('/portfolio')}>
-              좋아요 누르러가기
+            <Button filled large onClick={() => navigate('/askme')}>
+              질문 등록하러 가기
             </Button>
           </EmptyState>
         )}
