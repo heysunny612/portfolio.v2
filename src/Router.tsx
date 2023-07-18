@@ -17,6 +17,9 @@ import AddBlog from './pages/Blog/AddBlog';
 import BlogDetail from './pages/Blog/BlogDetail';
 import AddPortfolio from './pages/Portfolio/AddPortfolio';
 import SearchResult from './pages/Portfolio/SearchResult';
+import Exit from './pages/Auth/Exit';
+import MyHeart from './pages/Auth/MyHeart';
+import MyComments from './pages/Auth/MyComments';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -70,7 +73,7 @@ export default function Router() {
               path: '/auth/myheart',
               element: (
                 <ProtectedRoute>
-                  <Mypage />
+                  <MyHeart />
                 </ProtectedRoute>
               ),
             },
@@ -78,7 +81,15 @@ export default function Router() {
               path: '/auth/mycomments',
               element: (
                 <ProtectedRoute>
-                  <Mypage />
+                  <MyComments />
+                </ProtectedRoute>
+              ),
+            },
+            {
+              path: '/auth/exit',
+              element: (
+                <ProtectedRoute>
+                  <Exit />
                 </ProtectedRoute>
               ),
             },

@@ -8,6 +8,7 @@ import {
   GithubAuthProvider,
   AuthProvider,
   updateProfile,
+  deleteUser,
 } from 'firebase/auth';
 
 import { get, ref, set } from 'firebase/database';
@@ -21,7 +22,7 @@ interface ISocialLoginData {
   type: 'google' | 'github';
 }
 
-//[이메일 & 패스워드로 신규가입]
+//이메일 & 패스워드로 신규가입
 export const joinWithEmail = async (
   email: string,
   password: string,
@@ -46,7 +47,7 @@ export const joinWithEmail = async (
     .catch((error) => setError(error.message));
 };
 
-//[기존 사용자 로그인]
+//기존 사용자 로그인
 export const loginWithEmail = async (
   email: string,
   password: string,
@@ -56,10 +57,11 @@ export const loginWithEmail = async (
     .catch((error) => setError(error.message));
 };
 
-//[로그아웃]
+//로그아웃
 export const logout = () => signOut(auth);
 
-const getAuthProvider = (type: 'google' | 'github'): AuthProvider => {
+//소셜로그인
+const getAuthProvider = (type: ISocialLoginData['type']): AuthProvider => {
   if (type === 'google') {
     return new GoogleAuthProvider();
   } else if (type === 'github') {
@@ -68,7 +70,6 @@ const getAuthProvider = (type: 'google' | 'github'): AuthProvider => {
   throw new Error(`유효하지 않은 소셜 로그인 type입니다.: ${type}`);
 };
 
-//[소셜로그인]
 export const socialLogin = async (
   data: ISocialLoginData,
   setSocialError: (error: string) => void
@@ -79,7 +80,7 @@ export const socialLogin = async (
     .catch((error) => setSocialError(error.message));
 };
 
-//[관찰자 설정 및 유저데이터 가져오기]
+//관찰자 설정 및 유저데이터 가져오기
 export const authState = (setUser: (user: IUser | null) => void) => {
   return onAuthStateChanged(auth, async (user) => {
     const updatedUser = user ? await getUserData(user) : null;
@@ -87,7 +88,7 @@ export const authState = (setUser: (user: IUser | null) => void) => {
   });
 };
 
-//[어드민, 비즈니스 유저 설정]
+//어드민, 비즈니스 유저 설정
 const getUserData = (user: IUser) => {
   //데이터베이스에 저장된 어드민 유저 확인후 어드민유저 설정
   const adminPromise = get(ref(database, DB_ADMINS)).then((snapshot) => {
@@ -96,6 +97,7 @@ const getUserData = (user: IUser) => {
       return admins.includes(user.uid);
     }
   });
+
   //데이터베이스에 저장된 비즈니스 유저 확인후 비즈니스유저 설정
   const businessUserPromise = get(ref(database, DB_BUSINESS_USER)).then(
     (snapshot) => {
@@ -118,7 +120,7 @@ const getUserData = (user: IUser) => {
     });
 };
 
-//[사용자 프로필 업데이트]
+//사용자 프로필 업데이트
 export const editProfile = async (displayName: string) => {
   const user = auth.currentUser;
   if (user) {
@@ -128,4 +130,11 @@ export const editProfile = async (displayName: string) => {
       console.error('사용자 프로필 업데이트 오류', error);
     });
   }
+};
+
+//계정탙퇴
+export const exitUser = async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+  return await deleteUser(user);
 };

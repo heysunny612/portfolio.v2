@@ -133,3 +133,28 @@
     }
   }
 }
+
+//계정삭제
+.exit_btn {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .exit_icon {
+    margin-bottom: 30px;
+    font-size: 88px;
+    animation: shake 0.5s infinite alternate ease-in-out;
+    color: $light-slate;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(-5px) rotate(-90deg);
+  }
+  100% {
+    transform: translateX(5px) rotate(0);
+  }
+}
