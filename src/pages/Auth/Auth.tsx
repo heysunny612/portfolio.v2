@@ -11,7 +11,7 @@ const authMenu = [
   { path: '/auth/myheart', title: '관심 프로젝트', isAuth: true },
   { path: '/auth/mycomments', title: '나의 댓글', isAuth: true },
   { path: '/auth/myqna', title: '나의 질문', isAuth: true },
-  { path: '/auth/exit', title: '계정삭제', isAuth: true },
+  { path: '/auth/exit', title: '계정 탈퇴', isAuth: true },
 ];
 
 export default function Auth() {

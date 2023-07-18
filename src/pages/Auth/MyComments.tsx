@@ -32,7 +32,7 @@ export default function MyComments() {
   return (
     <>
       <h3 className='common_h3'>
-        내 댓글
+        나의 댓글
         <span>내가 남긴 댓글을 한눈에 확인할 수 있어요!</span>
       </h3>
       {myCommentList &&

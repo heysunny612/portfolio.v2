@@ -8,6 +8,7 @@ import SubLayout from '../../components/UI/SubLayout';
 import SearchAsk from './SearchAsk';
 import Button from '../../components/Button/Button';
 import useAskMe from '../../hooks/useAskMe';
+import Questions from '../../components/Question/Questions';
 
 const LOAD_COUNT = 5;
 
@@ -48,17 +49,12 @@ export default function AskMe() {
                     {keyword} 검색결과가 없습니다
                   </div>
                 )}
-                <ul className='qna_list'>
-                  {!keyword
-                    ? questions
-                        .slice(0, loadCount)
-                        .map((question) => (
-                          <AskCard key={question.id} question={question} />
-                        ))
-                    : filtered!.map((question) => (
-                        <AskCard key={question.id} question={question} />
-                      ))}
-                </ul>
+                <Questions
+                  keyword={keyword}
+                  questions={questions}
+                  filtered={filtered}
+                  loadCount={loadCount}
+                />
                 <div className='qna_list_bottom'>
                   {!keyword ? (
                     <Button

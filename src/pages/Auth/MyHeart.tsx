@@ -21,7 +21,7 @@ export default function MyHeart() {
     <>
       <h3 className='common_h3'>
         관심 프로젝트
-        <span>내가 누른 좋아요 프로젝를 한눈에 볼 수 있어요!</span>
+        <span>내가 누른 좋아요 프로젝트를 한눈에 볼 수 있어요!</span>
       </h3>
       <>
         {likedProjects && <Projects projectList={likedProjects} />}

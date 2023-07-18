@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { IAskMe } from '../../interfaces/AskMe';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import { FaLock } from 'react-icons/fa';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
+import { IAskMe } from '../../interfaces/AskMe';
 import { useUserContext } from '../../context/UserContext';
-import { formatDate } from '../../utils/formatDate';
-import { useInView } from 'react-intersection-observer';
 import useAskMe from '../../hooks/useAskMe';
-import UpdateAsk from './UpdateAsk';
+import { useInView } from 'react-intersection-observer';
 import fadeIn from '../../utils/fadeIn';
-import Profile from '../../components/Profile/Profile';
+import { FaLock } from 'react-icons/fa';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import UpdateAsk from '../../pages/AskMe/UpdateAsk';
+import Profile from '../Profile/Profile';
+import { formatDate } from '../../utils/formatDate';
 
 interface IQnACardProps {
   question: IAskMe;
+  animation?: boolean;
 }
 const answerVars: Variants = {
   initial: { opacity: 0, transform: 'scaleY(0)' },
@@ -28,8 +29,9 @@ const answerVars: Variants = {
   },
 };
 
-export default function AskCard({
+export default function QuestionCard({
   question: { id, question: text, writer, isPublic, createAt, answer },
+  animation,
 }: IQnACardProps) {
   const { user } = useUserContext() || {};
   const { deleteQuestionMutation } = useAskMe();
@@ -65,7 +67,7 @@ export default function AskCard({
   return (
     <motion.li
       className='qna_card'
-      variants={fadeIn('up', 0.1)}
+      variants={animation ? fadeIn('up', 0.1) : undefined}
       initial='hidden'
       animate={inView ? 'show' : 'hidden'}
       ref={ref}

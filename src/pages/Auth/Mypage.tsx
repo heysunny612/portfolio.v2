@@ -69,7 +69,7 @@ export default function Mypage() {
 
   return (
     <section className='mypage_container'>
-      <h3 className='common_h3'>프로필 수정</h3>
+      <h3 className='common_h3'>나의 프로필</h3>
       <div className='edit_profile'>
         <div className='image'>
           {user?.photoURL ? (
