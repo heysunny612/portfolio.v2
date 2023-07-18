@@ -1,3 +1,4 @@
+import { IPortfolio } from './Portfolio';
 import { IWriter } from './User';
 
 export interface IComment {
@@ -7,4 +8,8 @@ export interface IComment {
   comment: string;
   createdAt: number;
   writer: IWriter;
+}
+
+export interface IMyComment extends IPortfolio {
+  comment?: IComment[];
 }

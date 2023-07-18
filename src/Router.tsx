@@ -20,6 +20,7 @@ import SearchResult from './pages/Portfolio/SearchResult';
 import Exit from './pages/Auth/Exit';
 import MyHeart from './pages/Auth/MyHeart';
 import MyComments from './pages/Auth/MyComments';
+import MyQnA from './pages/Auth/MyQnA';
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -82,6 +83,14 @@ export default function Router() {
               element: (
                 <ProtectedRoute>
                   <MyComments />
+                </ProtectedRoute>
+              ),
+            },
+            {
+              path: '/auth/myqna',
+              element: (
+                <ProtectedRoute>
+                  <MyQnA />
                 </ProtectedRoute>
               ),
             },

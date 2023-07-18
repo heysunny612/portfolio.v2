@@ -1,0 +1,12 @@
+.empty_state_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 300px;
+  border: 1px solid $lightest-navy;
+  justify-content: center;
+  p {
+    color: $lightest-slate;
+    margin-bottom: 30px;
+  }
+}

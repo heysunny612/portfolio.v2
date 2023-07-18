@@ -7,9 +7,10 @@ import { useUserContext } from '../../context/UserContext';
 const authMenu = [
   { path: '/auth/login', title: '로그인', isAuth: false },
   { path: '/auth/join', title: '계정만들기', isAuth: false },
-  { path: '/auth/mypage', title: '마이페이지', isAuth: true },
-  { path: '/auth/myheart', title: '마이하트', isAuth: true },
-  { path: '/auth/mycomments', title: '마이댓글', isAuth: true },
+  { path: '/auth/mypage', title: '나의 프로필', isAuth: true },
+  { path: '/auth/myheart', title: '관심 프로젝트', isAuth: true },
+  { path: '/auth/mycomments', title: '나의 댓글', isAuth: true },
+  { path: '/auth/myqna', title: '나의 질문', isAuth: true },
   { path: '/auth/exit', title: '계정삭제', isAuth: true },
 ];
 

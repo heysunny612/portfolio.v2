@@ -19,7 +19,7 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const user = useUserContext()?.user;
-  const [isUserMenu, setIsUserMenu] = useState(true);
+  const [isUserMenu, setIsUserMenu] = useState(false);
   const toggleUserMenu = () => setIsUserMenu((userMenu) => !userMenu);
 
   //마우스 다른곳 클릭시, 유저메뉴 닫기
@@ -85,7 +85,9 @@ export default function Header() {
                   <li>
                     <Link to='/auth/mypage'>MY PAGE</Link>
                   </li>
-                  <li onClick={logout}>LOGOUT</li>
+                  <li onClick={logout} role='button'>
+                    LOGOUT
+                  </li>
                 </ul>
               )}
             </div>
