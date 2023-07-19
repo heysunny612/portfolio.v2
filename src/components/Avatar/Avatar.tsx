@@ -1,7 +1,7 @@
 import { useGLTF } from '@react-three/drei';
 
 export default function Model(props: JSX.IntrinsicElements['group']) {
-  const gltfResult = useGLTF('/src/components/Avatar/avatar.glb');
+  const gltfResult = useGLTF('/avatar.glb');
   const { nodes, materials } = gltfResult as any;
 
   return (
