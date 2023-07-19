@@ -1,17 +1,20 @@
 import { FaUserCircle } from 'react-icons/fa';
 import { useUserContext } from '../../context/UserContext';
-import InputLayout from '../../components/UI/InputLayout';
 import { useForm } from 'react-hook-form';
-import Button from '../../components/Button/Button';
 import { useEffect, useState } from 'react';
 import { editProfile } from '../../api/firebase/auth';
 import { FirebaseError } from 'firebase/app';
+import InputLayout from '../../components/UI/InputLayout';
+import Button from '../../components/Button/Button';
 
 const initialEditStatus = {
   isNotEdit: '',
   isEditName: '',
   error: '',
 };
+interface IUpdateData {
+  displayName: string;
+}
 
 export default function Mypage() {
   const { user, refreshUser } = useUserContext() ?? {};

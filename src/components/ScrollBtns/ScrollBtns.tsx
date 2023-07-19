@@ -1,7 +1,6 @@
 import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import fadeIn from '../../utils/fadeIn';
 
 export default function ScrollBtn() {
   const [showButton, setShowButton] = useState(false);

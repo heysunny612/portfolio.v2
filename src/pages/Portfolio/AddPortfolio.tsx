@@ -34,9 +34,11 @@ export default function AddPortfolio() {
       skills: project ? project.skills : [],
     },
   });
-  const [desc, setDesc] = useState<Tag[]>(project ? project.description : []);
+  const [desc, setDesc] = useState<Tag[]>(
+    project && project.description ? project.description : []
+  );
   const [uploadedFiles, setUploadedFiles] = useState<IFilesData[]>(
-    project?.images.map((image) => ({
+    project?.images?.map((image) => ({
       index: image.index,
       imageURL: image.imageURL || '',
     })) || []

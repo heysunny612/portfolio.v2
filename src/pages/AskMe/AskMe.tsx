@@ -2,7 +2,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUserContext } from '../../context/UserContext';
 import { useState } from 'react';
-import AskCard from './AskCard';
 import AddAsk from './AddAsk';
 import SubLayout from '../../components/UI/SubLayout';
 import SearchAsk from './SearchAsk';
