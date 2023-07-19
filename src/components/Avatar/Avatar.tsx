@@ -1,7 +1,8 @@
 import { useGLTF } from '@react-three/drei';
 
-export default function Model(props) {
-  const { nodes, materials } = useGLTF('/src/components/Avatar/avatar.glb');
+export default function Model(props: JSX.IntrinsicElements['group']) {
+  const gltfResult = useGLTF('/src/components/Avatar/avatar.glb');
+  const { nodes, materials } = gltfResult as any;
 
   return (
     <group {...props} dispose={null} rotation={[0.2, -0.3, 0]}>
