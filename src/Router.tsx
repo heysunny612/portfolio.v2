@@ -31,6 +31,7 @@ export default function Router() {
       children: [
         { index: true, element: <Home /> },
         { path: '/about', element: <About /> },
+        { path: '/about/gallery', element: <About /> },
         {
           path: '/portfolio',
           element: <Portfolio />,
