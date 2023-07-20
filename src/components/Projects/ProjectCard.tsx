@@ -13,6 +13,8 @@ export default function ProjectCard({ project }: IProjectProps) {
   const [searchParams] = useSearchParams();
   const paramSkills = searchParams?.get('skills');
   const skillArray = paramSkills?.split(',');
+  const thumbnail = images?.find((image) => image.index === 0);
+
   return (
     <li
       className='project_card'
@@ -20,7 +22,7 @@ export default function ProjectCard({ project }: IProjectProps) {
       onClick={() => navigate(`/portfolio/${id}`)}
     >
       <div className='thum'>
-        {images && <img src={images[0]?.imageURL!} alt={project.title} />}
+        {thumbnail && <img src={thumbnail.imageURL!} alt={project.title} />}
         <div className='project_likes'>
           <LikesButton likes={likes} id={id} />
         </div>
@@ -40,7 +42,7 @@ export default function ProjectCard({ project }: IProjectProps) {
       </div>
       <div className='links'>
         <a
-          href={buildAdress}
+          href={codeAdress}
           target='_blank'
           rel='noopener noreferrer'
           onClick={(e) => e.stopPropagation()}
@@ -48,7 +50,7 @@ export default function ProjectCard({ project }: IProjectProps) {
           <BsGithub />
         </a>
         <a
-          href={codeAdress}
+          href={buildAdress}
           target='_blank'
           rel='noopener noreferrer'
           onClick={(e) => e.stopPropagation()}

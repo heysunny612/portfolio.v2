@@ -10,6 +10,7 @@ import {
   SiJavascript,
   SiStyledcomponents,
   SiAxios,
+  SiTailwindcss,
 } from 'react-icons/si';
 
 export const skillIcons = [
@@ -29,4 +30,5 @@ export const skillIcons = [
   { name: 'PostCss', icon: <SiPostcss /> },
   { name: 'Responsive', icon: <DiResponsive /> },
   { name: 'Styled-components', icon: <SiStyledcomponents /> },
+  { name: 'Tailwindcss', icon: <SiTailwindcss /> },
 ];

@@ -10,9 +10,9 @@ export default function SearchResult() {
   const { isLoading, error, data: projectList } = portfolioQuery;
   const filteredProjects = skills
     ? projectList?.filter((project) =>
-        project?.skills?.some((skill) => skills.includes(skill))
+        project?.skills?.some((skill) => skillArray?.includes(skill))
       )
-    : projectList;
+    : projectList || [];
   return (
     <>
       <h3 className='common_h3'>Projects</h3>
