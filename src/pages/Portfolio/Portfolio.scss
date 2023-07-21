@@ -63,11 +63,17 @@
         transition: $transition;
         background-color: transparent;
         border-radius: 5px;
-        font-size: 15px;
+        font-size: 12px;
+
+        &:hover > div {
+          color: $accent;
+        }
+
         > div {
           display: flex;
           align-items: center;
           gap: 10px;
+          transition: $transition;
           svg {
             font-size: 20px;
           }

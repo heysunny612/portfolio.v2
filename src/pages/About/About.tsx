@@ -1,90 +1,45 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BsSuitHeartFill } from 'react-icons/bs';
+import { educationList } from '../../data/educationList';
+import { motion, useInView } from 'framer-motion';
+import { FaBrain } from 'react-icons/fa';
+import { SiBuymeacoffee } from 'react-icons/si';
+import { IoIosAirplane } from 'react-icons/io';
+import { BsMusicNoteBeamed, BsMusicNote, BsCupStraw } from 'react-icons/bs';
 import SubLayout from '../../components/UI/SubLayout';
 import Gallery from '../../components/Gallery/Gallery';
-
-const educationList = [
-  {
-    id: 'zerobase',
-    logo: '제로베이스',
-    title: '제로베이스',
-    date: '2023.03.01 ~ 2023.08.31',
-    list: ['프론트엔드 스쿨 13기'],
-    activityPhotos: false,
-    graduationPhotos: false,
-  },
-  {
-    id: 'deepdive',
-    logo: 'https://image.yes24.com/goods/92742567/XL',
-    title: '이웅모 저자님과 함께하는 자바스크립트 북스터디',
-    date: '2023.04.20 ~ 2023.06.08',
-    list: [
-      '자바스크립트의 기본 개념과 동작 원리',
-      '모던 자바스크립트 Deep Dive',
-    ],
-    activityPhotos: true,
-    graduationPhotos: false,
-  },
-  {
-    id: 'dreamcoding',
-    logo: 'https://academy.dream-coding.com/logo-long-white.svg',
-    title: '드림코딩아카데미',
-    date: '2023.04.09 ~ ',
-    list: [
-      'Git 마스터과정',
-      '리액트 개념정리 · 클론코딩',
-      '프론트엔드 필수 브라우저101',
-      '자바스크립트 마스터리 (ES6+)',
-    ],
-    activityPhotos: false,
-    graduationPhotos: true,
-  },
-  {
-    id: 'nomard',
-    logo: 'https://nomadcoders.co/m.svg',
-    title: '노마드코더',
-    date: '2023.03.01 ~ 2023.08.31',
-    list: ['React JS 마스터클래스', '트위터 클론코딩'],
-    activityPhotos: false,
-    graduationPhotos: true,
-  },
-  {
-    id: 'korea1',
-    logo: '',
-    title: '근로자직업능력 개발훈련',
-    date: '2015-03-28 ~ 2015-04-19',
-    list: ['자바스크립트 & 제이쿼리 주말반', '반응형웹 HTML5&CSS 3.0 주말반'],
-    activityPhotos: false,
-    graduationPhotos: false,
-  },
-  {
-    id: 'korea2',
-    logo: '',
-    title: '취업성공패키지',
-    date: '2012.08.61 ~ 2013.12.09',
-    list: [
-      '일러스트 백터그래픽',
-      '웹디자이너 취업 기본과정',
-      '웹디자이너 양성과정 1단계(포토샵기초+활용)',
-      '웹표준디자인',
-    ],
-    activityPhotos: false,
-    graduationPhotos: false,
-  },
-];
+import fadeIn from '../../utils/fadeIn';
+import { useRef } from 'react';
+import Button from '../../components/Button/Button';
 
 export default function About() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const gallery = pathname === '/about/gallery';
+  const articleRef = useRef(null);
+  const ulRef = useRef(null);
+  const articleInView = useInView(articleRef, { once: true });
+  const ulInView = useInView(ulRef, { once: true });
 
   return (
     <SubLayout className='about_container' subTitle='about'>
       <>
-        <article className='about_about'>
+        <article className='about_about' ref={articleRef}>
           <h3 className='common_h3'>About Me</h3>
           <div className='about_row'>
-            <div className='about-text_area'>
-              <h1>About.</h1>
+            <motion.div
+              className='about-text_area'
+              variants={fadeIn('right', 0.5)}
+              initial='hidden'
+              animate={articleInView ? 'show' : 'hidden'}
+            >
+              <motion.h1
+                variants={fadeIn('right', 0.7)}
+                initial='hidden'
+                animate={articleInView ? 'show' : 'hidden'}
+              >
+                About.
+              </motion.h1>
               <p className='intro'>
                 안녕하세요! 땡땡땡땡땡 프론트엔드 개발자 황수연입니다.
               </p>
@@ -96,17 +51,47 @@ export default function About() {
                 애플리케이션을 만들기 위해 열심히 노력하고 있어요. 함께 웹을
                 즐겁게 만들어볼까요 (임시문구)
               </p>
-            </div>
-            <div className='about-img_area'></div>
+            </motion.div>
+            <motion.div
+              className='about-img_area'
+              variants={fadeIn('left', 0.5)}
+              initial='hidden'
+              animate={articleInView ? 'show' : 'hidden'}
+            >
+              <img src='/images/profile-pic1.png' alt='' />
+              <img src='/images/profile-pic2.png' alt='' className='shadow' />
+              <BsSuitHeartFill className='heart' />
+            </motion.div>
           </div>
-          <ul className='about-images'>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+          <motion.ul
+            ref={ulRef}
+            className='about-images'
+            variants={fadeIn('left', 0.5)}
+            initial='hidden'
+            animate={ulInView ? 'show' : 'hidden'}
+          >
+            <li>
+              <img src='/images/my_img1.jpg' alt='' />
+            </li>
+            <li>
+              <img
+                src='https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80'
+                alt=''
+              />
+            </li>
+            <li>
+              <img src='/images/my_img3.jpg' alt='' />
+            </li>
+            <li>
+              <img src='/images/my_img4.jpg' alt='' />
+            </li>
+            <li>
+              <img src='/images/my_img5.jpg' alt='' />
+            </li>
+            <li>
+              <img src='/images/my_img6.jpg' alt='' />
+            </li>
+          </motion.ul>
         </article>
         <article className='about_education'>
           <h3 className='common_h3'>Education</h3>
@@ -155,18 +140,122 @@ export default function About() {
             )}
           </ul>
         </article>
-        <article className='about_skills'>
-          <h3 className='common_h3'>My Skills</h3>
-        </article>
         <article className='about_kit'>
-          <h3 className='common_h3'>My dev Kit</h3>
+          <h3 className='common_h3'>
+            My developer Kit
+            <span>저에 대해 더알고싶으다면, 마우스를 올려보세요 :)</span>
+          </h3>
           <div className='kit-hover_area'>
             <ul>
-              <li className='item1'>1</li>
-              <li className='item2'>2</li>
-              <li className='item3'>3</li>
-              <li className='item4'>4</li>
+              <li className='item1'>
+                <span>
+                  <FaBrain />
+                  <b className='accent_brain'>
+                    <FaBrain />
+                  </b>
+                </span>
+
+                <div className='text'>
+                  저는 아이큐가 월등히 높거나, 높은 학력을 가지고 있지는
+                  않습니다. 하지만, 어느 곳에서 일하든 '일머리'가 아주 좋다는
+                  칭찬을 항상 들어왔습니다:)
+                </div>
+              </li>
+              <li className='item2'>
+                {[1, 2, 3].map((index) => (
+                  <motion.span
+                    key={index}
+                    initial={{
+                      y: '0%',
+                    }}
+                    animate={{ y: '20%' }}
+                    exit={{ y: '-20%' }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      repeatType: 'reverse',
+                      delay: index,
+                    }}
+                  >
+                    <IoIosAirplane />
+                  </motion.span>
+                ))}
+                <div className='text'>
+                  제가 열심히 일하고, 공부하는 이유 중 하나는 "여행"입니다.
+                  코로나로 인해 몇년동안 비행기를 타지못했지만, 새로운 사람을
+                  만나고, 색다른 공기를 마실 수 있는 여행을 매우 좋아합니다 :)
+                </div>
+              </li>
+              <li className='item3'>
+                <motion.span
+                  initial={{ y: '0%' }}
+                  animate={{
+                    y: '-20%',
+                    rotate: [0, 15, 0, -15, 0],
+                    transition: { duration: 2, repeat: Infinity },
+                  }}
+                >
+                  <BsCupStraw />
+                </motion.span>
+                <motion.span
+                  initial={{ y: '-20%' }}
+                  animate={{
+                    y: '0%',
+                    rotate: [0, 15, 0, -15, 0],
+                    transition: { duration: 2, repeat: Infinity },
+                  }}
+                >
+                  <SiBuymeacoffee />
+                </motion.span>
+                <div className='text'>
+                  커피는 하루에 10시간 이상 일할 수 있게 해주는 저의 비밀 KIT
+                  입니다! (TMI. 저는 얼죽아입니다 :)
+                </div>
+              </li>
+              <li className='item4'>
+                <motion.span
+                  animate={{
+                    rotate: [0, 10, -10, 10, 0],
+                    transition: {
+                      duration: 1,
+                      repeat: Infinity,
+                      repeatType: 'reverse',
+                    },
+                  }}
+                >
+                  <BsMusicNoteBeamed />
+                </motion.span>
+                <motion.span
+                  animate={{
+                    rotate: [0, 10, -10, 10, 0],
+                    transition: {
+                      duration: 1,
+                      repeat: Infinity,
+                      repeatType: 'reverse',
+                      delay: 0.1,
+                    },
+                  }}
+                >
+                  <BsMusicNote />
+                </motion.span>
+                <div className='text'>
+                  출퇴근 하는 지하철안에서 듣는 음악은 저를 신나게 일할 수
+                  있도록 도와줍니다♬ 저는 걸그룹 노래를 좋아합니다:)
+                </div>
+              </li>
             </ul>
+          </div>
+        </article>
+        <article className='about_bottom'>
+          <h3 className='common_h3'>make somethin' fun together!</h3>
+          <div className='bottom-btns'>
+            <Button large>Resume</Button>
+            <Button filled onClick={() => navigate('/contact')}>
+              Contact
+            </Button>
+            <Button large onClick={() => navigate('/portfolio')}>
+              Portfolio
+            </Button>
           </div>
         </article>
         {gallery ? <Gallery /> : ''}

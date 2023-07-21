@@ -27,8 +27,6 @@
     }
 
     &:hover {
-      transform: translateY(-1%);
-      scale: 1.01;
       h3 {
         color: $accent !important;
       }
@@ -63,6 +61,12 @@
         background-color: $navy;
         border-radius: 10px;
         padding: 5px;
+        z-index: 89;
+        transition: $transition;
+
+        &:hover {
+          transform: scale(1.05);
+        }
         &::before {
           content: '';
           position: absolute;

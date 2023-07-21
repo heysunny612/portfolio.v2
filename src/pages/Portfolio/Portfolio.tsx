@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { skillIcons } from './skillIcons';
+import { skillIcons } from '../../data/skillIcons';
 import { useUserContext } from '../../context/UserContext';
 import { useEffect } from 'react';
 import Button from '../../components/Button/Button';

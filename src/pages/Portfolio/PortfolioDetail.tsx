@@ -4,7 +4,7 @@ import { BiLogoNetlify, BiLogoGithub } from 'react-icons/bi';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import { skillIcons } from './skillIcons';
+import { skillIcons } from '../../data/skillIcons';
 import { deleteImage } from '../../api/firebase/portfolio';
 import { useUserContext } from '../../context/UserContext';
 import Comments from '../../components/Comments/Comments';

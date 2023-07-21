@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import { AiOutlineComment } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
-import { galleryPhotos } from './GalleryPhotos';
+import { galleryPhotos } from '../../data/GalleryPhotos';
 
 export default function Gallery() {
   const navigate = useNavigate();

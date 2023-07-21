@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Tag } from 'react-tag-input';
 import { deleteImage, uploadImage } from '../../api/firebase/portfolio';
-import { skillIcons } from './skillIcons';
+import { skillIcons } from '../../data/skillIcons';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IPortfolio } from '../../interfaces/Portfolio';
 import usePortfolio from '../../hooks/usePortfolio';
