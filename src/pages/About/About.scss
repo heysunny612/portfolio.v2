@@ -29,10 +29,14 @@
     }
     .about-img_area {
       flex: 1 1 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 450px;
       height: 450px;
       text-align: center;
       position: relative;
+
       .heart {
         position: absolute;
         top: 50px;
@@ -58,7 +62,8 @@
   }
 
   .about-images {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     padding: 30px 0;
     margin: 30px 0;
     border-top: 1px solid $lightest-navy;
@@ -98,6 +103,7 @@
       cursor: pointer;
 
       .info {
+        width: 100%;
         .logo {
           display: flex;
           align-items: center;
@@ -278,5 +284,120 @@
     display: flex;
     justify-content: center;
     gap: 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  //About-Education
+  .about_education {
+    .education-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  //About-Kit
+  .about_kit {
+    .kit-hover_area {
+      ul {
+        grid-gap: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  //About-About
+  .about_about {
+    .about_row {
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .about-images {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  //About-Education
+  .about_education {
+    .education-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  //About-Kit
+  .about_kit {
+    .kit-hover_area {
+      ul {
+        grid-template-columns: 40% 1fr;
+        grid-gap: 10px;
+        grid-template-areas:
+          'a a b b'
+          'c c d d';
+        li {
+          &.item1 {
+            svg {
+              font-size: 120px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  //About-About
+  .about_about {
+    .about_row {
+      .about-img_area {
+        width: 100%;
+      }
+    }
+  }
+
+  //About-Kit
+  .about_kit {
+    .kit-hover_area {
+      ul {
+        grid-template-columns: 100%;
+        grid-gap: 10px;
+        grid-template-areas:
+          'a'
+          'b'
+          'c'
+          'd';
+        li {
+          &.item1 {
+            svg {
+              font-size: 120px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  //About-About
+  .about_about {
+    .about-images {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  //About-Education
+  .about_education {
+    .education-list {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  //About-Bottom
+  .about_bottom {
+    .bottom-btns {
+      gap: 10px;
+    }
   }
 }

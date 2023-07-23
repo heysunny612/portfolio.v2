@@ -37,3 +37,11 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .contact_form {
+    .input_area {
+      flex-direction: column;
+    }
+  }
+}

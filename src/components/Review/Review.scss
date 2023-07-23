@@ -87,3 +87,14 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .review_container {
+    .review_row {
+      &::before,
+      &::after {
+        width: 30px;
+      }
+    }
+  }
+}

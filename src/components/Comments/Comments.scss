@@ -126,3 +126,21 @@
     }
   }
 }
+
+@media (max-width: 640px) {
+  .comments_container {
+    padding: 7px;
+
+    .commnets_list {
+      li {
+        padding: 7px;
+        .comment_btn {
+          font-size: 10px;
+        }
+        .text {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}

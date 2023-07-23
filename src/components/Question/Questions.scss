@@ -156,3 +156,41 @@
     right: 0;
   }
 }
+
+@media (max-width: 768px) {
+  //QnA 리스트
+  .qna_list {
+    width: 100%;
+    .qna_card {
+      padding: 15px 0;
+      .qan_info {
+        .badge {
+          font-size: 11px;
+        }
+        .title {
+          font-size: 16px;
+        }
+        .form_edit {
+          input {
+            font-size: 16px;
+          }
+        }
+      }
+      .qna_writer {
+        font-size: 11px;
+        .date {
+          margin-left: 15px;
+          &::before {
+            left: -7px;
+          }
+        }
+        .qna_buttons {
+          margin-left: 5px;
+          button {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+}

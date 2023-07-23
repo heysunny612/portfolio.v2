@@ -136,3 +136,29 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .qna_container {
+    position: relative;
+    //QnA 작성
+    .qna_add_container {
+      .qna_add {
+        width: 94%;
+        padding: 20px;
+
+        .qna_input {
+          input {
+            width: 100%;
+          }
+        }
+      }
+    }
+    //검색
+    .qna_search_form {
+      position: static;
+      top: 0;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+  }
+}

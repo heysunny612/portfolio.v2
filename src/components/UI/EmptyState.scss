@@ -6,7 +6,10 @@
   border: 1px solid $lightest-navy;
   justify-content: center;
   p {
+    padding: 15px;
     color: $lightest-slate;
     margin-bottom: 30px;
+    text-align: center;
+    line-height: 1.2;
   }
 }

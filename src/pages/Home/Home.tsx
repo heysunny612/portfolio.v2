@@ -14,6 +14,8 @@ import {
 import { FaReact, FaSass } from 'react-icons/fa';
 import { BsSuitHeartFill, BsGoogle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { IPortfolio } from '../../interfaces/Portfolio';
 import SendEmail from '../../components/SendEmail/SendEmail';
 import fadeIn from '../../utils/fadeIn';
 import Button from '../../components/Button/Button';
@@ -54,7 +56,29 @@ export default function Home() {
   const navigate = useNavigate();
   const { portfolioQuery } = usePortfolio();
   const { data: projectList } = portfolioQuery;
-  const mainProjectList = projectList?.slice(0, 3);
+  const [mainProjectList, setMainProjectList] = useState<IPortfolio[]>([]);
+
+  //브라우저 크기가 960 이하일때는, 메인프로젝트 = 4개
+  const updateProjectList = () => {
+    if (projectList) {
+      if (window.innerWidth <= 960) {
+        setMainProjectList(projectList?.slice(0, 4));
+      } else {
+        setMainProjectList(projectList?.slice(0, 3));
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateProjectList();
+    const handleResize = () => {
+      updateProjectList();
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [projectList]);
 
   return (
     <main className='main'>
@@ -66,7 +90,7 @@ export default function Home() {
             ))}
           </ul>
         </div>
-        <div className='common_inner'>
+        <div className='common_inner banner_wrap'>
           <div className='banner_text'>
             <motion.div
               variants={fadeIn('right', 0.3)}

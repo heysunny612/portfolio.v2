@@ -19,3 +19,15 @@
     }
   }
 }
+
+@media (max-width: 640px) {
+  .contact_container {
+    //소셜리스트
+    .contact_sns {
+      flex-wrap: wrap;
+      li {
+        margin-bottom: 40px;
+      }
+    }
+  }
+}

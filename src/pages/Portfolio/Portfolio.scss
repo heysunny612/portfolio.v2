@@ -111,22 +111,6 @@
 
 // 포트폴리오 디테일
 .detail_container {
-  .btn_heart {
-    position: absolute;
-    font-size: 50px;
-    top: 30px;
-    right: 30px;
-    display: block;
-    cursor: pointer;
-    z-index: 70;
-    text-align: right;
-    transition: $transition;
-    &:hover {
-      transform: scale(1.2);
-      color: $accent;
-    }
-  }
-
   .detail_images {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -462,6 +446,115 @@
       justify-content: center;
       button {
         margin: 0 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  //포트폴리오 서브페이지
+  .portfolio_container {
+    //사용기술
+    .tech_tags {
+      .tags {
+        padding: 10px;
+
+        label {
+          padding: 7px 10px;
+          margin: 7px;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+
+  //포트폴리오 작성
+  .add_portfolio_container {
+    form {
+      .image_files {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  // 포트폴리오 디테일
+  .detail_container {
+    .detail_images {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    //이전,다음 글 보기버튼
+    .detail_btns {
+      display: none;
+    }
+  }
+
+  //포트폴리오 작성
+  .add_portfolio_container {
+    form {
+      .image_files {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  // 포트폴리오 디테일
+  .detail_container {
+    .detail_images {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  // 포트폴리오 디테일
+  .detail_container {
+    .detail_info {
+      > div {
+        padding: 0px;
+        padding-bottom: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        h4 {
+          margin-top: 30px;
+          margin-bottom: 10px;
+          width: 100%;
+        }
+
+        &.detail_desc {
+          h4 {
+            margin-top: 0;
+          }
+        }
+
+        &.detail_deploy {
+          p {
+            span {
+              margin-right: 10px;
+            }
+
+            a {
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+
+    //댓글보기, 목록보기 버튼
+    .detail_bottom_btns {
+      .bottom_btns {
+        gap: 7px;
+      }
+      button {
+        padding: 5px;
+        font-size: 12px;
+        span {
+          margin: 0 7px;
+        }
+        svg {
+          font-size: 15px;
+        }
       }
     }
   }

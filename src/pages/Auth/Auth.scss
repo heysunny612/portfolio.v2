@@ -164,3 +164,74 @@
     border-bottom: 0 none !important;
   }
 }
+
+@media (max-width: 1024px) {
+  //auth 관련페이지 레이아웃
+  .auth_container {
+    flex-direction: column;
+
+    //메뉴
+    .auth_menu {
+      width: 100%;
+      display: flex;
+
+      li {
+        flex: 1 1 0;
+        text-align: center;
+        a {
+          padding-left: 0;
+        }
+      }
+    }
+    //컨텐츠
+    .auth_contents {
+      padding: 40px 0px;
+      border-left: none;
+      border-top: 1px solid $lightest-navy;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  //auth 관련페이지 레이아웃
+  .auth_container {
+    //메뉴
+    .auth_menu {
+      li {
+        a {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  //로그인&계정만들기
+  .login_form {
+    form {
+      width: 100%;
+    }
+  }
+
+  //프로필 수정
+  .edit_profile {
+    flex-direction: column;
+    .image {
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  //auth 관련페이지 레이아웃
+  .auth_container {
+    //메뉴
+    .auth_menu {
+      li {
+        a {
+          font-size: 11px;
+          letter-spacing: -0.8px;
+        }
+      }
+    }
+  }
+}

@@ -108,7 +108,7 @@
       }
     }
 
-    > div {
+    .banner_wrap {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -120,7 +120,7 @@
     .banner_text {
       position: relative;
       z-index: 10;
-      flex: 1 1 37%;
+      width: 50%;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -157,7 +157,7 @@
 
     //배너아바타
     .banner_avatar {
-      flex: 1 1 auto;
+      width: 50%;
       height: 100%;
       position: relative;
     }
@@ -183,8 +183,48 @@
   .comment_container {
     background-color: $navy;
   }
+}
 
-  //메인 컨택트
-  .contact_container {
+@media (max-width: 1024px) {
+  .main {
+    .banner_container {
+      .banner_wrap {
+        gap: 50px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    .banner_container {
+      height: auto;
+      .banner_wrap {
+        padding: 30px; //배너텍스트
+        .banner_text {
+          width: 100%;
+        } //배너아바타
+        .banner_avatar {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 410px) {
+  .main {
+    .banner_container {
+      .banner_wrap {
+        .banner_buttons {
+          display: flex;
+          flex-direction: column;
+          button {
+            margin-right: 0;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
   }
 }

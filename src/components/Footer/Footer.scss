@@ -29,3 +29,15 @@ footer {
     }
   }
 }
+
+@media (max-width: 768px) {
+  footer {
+    padding: 25px 10px;
+
+    > div {
+      p {
+        font-size: 11px;
+      }
+    }
+  }
+}

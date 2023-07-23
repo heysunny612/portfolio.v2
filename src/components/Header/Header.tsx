@@ -1,12 +1,13 @@
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import Button from '../Button/Button';
 import { motion } from 'framer-motion';
 import { BsSuitHeartFill } from 'react-icons/bs';
-import { useUserContext } from '../../context/UserContext';
 import { FaUserCircle } from 'react-icons/fa';
+import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+import { useUserContext } from '../../context/UserContext';
 import { useState, useEffect } from 'react';
 import { logout } from '../../api/firebase/auth';
 
+import Button from '../Button/Button';
 const navItems = [
   { title: 'About', path: '/about' },
   { title: 'Portfolio', path: '/portfolio' },
@@ -16,11 +17,14 @@ const navItems = [
 ];
 
 export default function Header() {
+  const user = useUserContext()?.user;
   const location = useLocation();
   const navigate = useNavigate();
-  const user = useUserContext()?.user;
   const [isUserMenu, setIsUserMenu] = useState(false);
   const toggleUserMenu = () => setIsUserMenu((userMenu) => !userMenu);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const toggleMobileMenu = () => setMobileMenu(!mobileMenu);
+  const closeMobileMenu = () => setMobileMenu(false);
 
   //마우스 다른곳 클릭시, 유저메뉴 닫기
   useEffect(() => {
@@ -54,49 +58,87 @@ export default function Header() {
             )}
           </Link>
         </h1>
-        <nav className='header_nav'>
-          {navItems.map(({ title, path }, idx) => (
-            <NavLink
-              key={idx}
-              to={path}
-              className={({ isActive }: { isActive: boolean }): string =>
-                isActive ? 'active' : ''
-              }
-            >
-              {title}
-              {location.pathname.includes(path) && (
-                <motion.div layoutId='line' className='nav_effect'>
-                  <BsSuitHeartFill />
-                </motion.div>
-              )}
-            </NavLink>
-          ))}
-        </nav>
-        <div className='header_btns'>
-          {user ? (
-            <div role='button' onClick={toggleUserMenu}>
-              {user.photoURL ? (
-                <img src={user.photoURL} alt='유저이미지' />
-              ) : (
-                <FaUserCircle />
-              )}
-              {isUserMenu && (
-                <ul className='user_menu'>
-                  <li>
-                    <Link to='/auth/mypage'>MY PAGE</Link>
-                  </li>
-                  <li onClick={logout} role='button'>
-                    LOGOUT
-                  </li>
-                </ul>
-              )}
-            </div>
-          ) : (
-            <Button onClick={() => navigate('/auth/login')}>Login</Button>
-          )}
-          <Button filled>Resume</Button>
+        <div className={`header_nav_wrap ${mobileMenu ? 'active' : ''}`}>
+          <nav className='header_nav'>
+            {navItems.map(({ title, path }, idx) => (
+              <NavLink
+                key={idx}
+                to={path}
+                onClick={closeMobileMenu}
+                className={({ isActive }: { isActive: boolean }): string =>
+                  isActive ? 'active' : ''
+                }
+              >
+                {title}
+                {location.pathname.includes(path) && (
+                  <motion.div layoutId='line' className='nav_effect'>
+                    <BsSuitHeartFill />
+                  </motion.div>
+                )}
+              </NavLink>
+            ))}
+          </nav>
+          <div className='header_btns'>
+            {user ? (
+              <>
+                <div
+                  role='button'
+                  onClick={toggleUserMenu}
+                  className='user_menu_wrap'
+                >
+                  {user.photoURL ? (
+                    <img src={user.photoURL} alt='유저이미지' />
+                  ) : (
+                    <FaUserCircle />
+                  )}
+                  {isUserMenu && (
+                    <ul className='user_menu'>
+                      <li>
+                        <Link to='/auth/mypage'>MY PAGE</Link>
+                      </li>
+                      <li onClick={logout} role='button'>
+                        LOGOUT
+                      </li>
+                    </ul>
+                  )}
+                </div>
+                <div className='mobile_mypage_btn'>
+                  <Button
+                    onClick={() => {
+                      navigate('/auth/mypage');
+                      toggleMobileMenu();
+                    }}
+                  >
+                    My Page
+                  </Button>
+                  <Button onClick={logout}>Logout</Button>
+                </div>
+              </>
+            ) : (
+              <div className='mobile_mypage_btn'>
+                <Button
+                  onClick={() => {
+                    navigate('/auth/login');
+                    toggleMobileMenu();
+                  }}
+                >
+                  Login
+                </Button>
+              </div>
+            )}
+            <Button filled>Resume</Button>
+          </div>
         </div>
       </div>
+      {mobileMenu && (
+        <div
+          className={`mobile_bg ${mobileMenu ? 'active' : ''}`}
+          onClick={toggleMobileMenu}
+        ></div>
+      )}
+      <button className='mobile_menu' onClick={toggleMobileMenu}>
+        {mobileMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
+      </button>
     </header>
   );
 }

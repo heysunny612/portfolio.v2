@@ -1,8 +1,8 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import Slider from 'react-slick';
 import { AiOutlineComment } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 import { galleryPhotos } from '../../data/GalleryPhotos';
+import Slider from 'react-slick';
 
 export default function Gallery() {
   const navigate = useNavigate();
@@ -49,13 +49,13 @@ export default function Gallery() {
         <Slider {...settings}>
           {photos.map(({ desc, image }) => (
             <div className='gallery_box'>
+              <img src={image} />
               {desc && (
                 <p className='gallery_desc'>
                   <AiOutlineComment />
                   {desc}
                 </p>
               )}
-              <img src={image} />
             </div>
           ))}
         </Slider>
