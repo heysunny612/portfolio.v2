@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUserContext } from '../../context/UserContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddAsk from './AddAsk';
 import SubLayout from '../../components/UI/SubLayout';
 import SearchAsk from './SearchAsk';
@@ -16,7 +16,8 @@ export default function AskMe() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isLoading, error, data: questions } = useAskMe().questionsQuery;
-  const [loadCount, setLoadCount] = useState(LOAD_COUNT);
+
+  const [loadCount, setLoadCount] = useState(0);
   const questionsCount = questions?.length || 0;
   const { keyword } = useParams<{ keyword: string }>();
   const handleMore = () => {
@@ -30,6 +31,12 @@ export default function AskMe() {
     question.question.includes(keyword!)
   );
   const hasFiltered = filtered?.length! <= 0;
+  const initialCount =
+    questions && questions?.length <= 5 ? questions?.length : LOAD_COUNT;
+  useEffect(() => {
+    setLoadCount(initialCount);
+  }, [initialCount]);
+
   return (
     <>
       <SubLayout className='qna_container' subTitle='ask me'>
@@ -62,7 +69,7 @@ export default function AskMe() {
                       onClick={handleMore}
                       disabled={loadCount === questionsCount}
                     >
-                      Show More <span>{loadCount}</span> / {questionsCount}
+                      Show More <span>{initialCount}</span> / {questionsCount}
                     </Button>
                   ) : (
                     <Button filled large onClick={() => navigate('/askme')}>
