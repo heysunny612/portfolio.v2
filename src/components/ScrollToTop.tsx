@@ -12,6 +12,7 @@ export default function ScrollToTop() {
       '/auth/login',
       '/portfolio/search',
       '/portfolio',
+      '/about/gallery',
     ];
     if (excludePaths.includes(pathname)) return;
     window.scrollTo(0, 0);

@@ -153,3 +153,25 @@ button {
 input[readonly] {
   cursor: not-allowed;
 }
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #8f54a0 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $dark-slate;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $accent;
+  border-radius: 10px;
+  border: 1px solid $navy;
+}

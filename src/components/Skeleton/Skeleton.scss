@@ -1,0 +1,17 @@
+.projects_skeleton {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 960px) {
+  .projects_skeleton {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .projects_skeleton {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

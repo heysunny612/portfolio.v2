@@ -3,6 +3,7 @@ import { AiOutlineComment } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 import { galleryPhotos } from '../../data/GalleryPhotos';
 import Slider from 'react-slick';
+import useLockScroll from '../../hooks/useLockScroll';
 
 export default function Gallery() {
   const navigate = useNavigate();
@@ -36,15 +37,16 @@ export default function Gallery() {
     slidesToScroll: 1,
     adaptiveHeight: true,
   };
-
+  //갤러리가 팝업되었을때, 스크롤 잠금
+  useLockScroll();
   //bg누르면 갤러리 닫는 함수, UI 불편하여 주석처리
-  // const handleBgClick = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   const target = e.target as HTMLElement;
-  //   if (target.className !== 'gallery') return;
-  //   navigate(-1);
-  // };
+  const handleBgClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.className !== 'gallery') return;
+    navigate(-1);
+  };
   return (
-    <section className='gallery_container'>
+    <section className='gallery_container' onClick={handleBgClick}>
       <div className='gallery'>
         <Slider {...settings}>
           {photos.map(({ desc, image }) => (

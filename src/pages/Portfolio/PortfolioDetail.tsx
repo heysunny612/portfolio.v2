@@ -13,13 +13,14 @@ import usePortfolio from '../../hooks/usePortfolio';
 import LikesButton from '../../components/LikesButton';
 import useComment from '../../hooks/useComment';
 import useReply from '../../hooks/useReply';
+import ProjectsSkeleton from '../../components/Skeleton/ProjectsSkeleton';
 
 export default function PortfolioDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext() || {};
   const {
-    portfolioQuery: { data: projectList },
+    portfolioQuery: { isLoading, error, data: projectList },
     deletePortfolioMutation,
   } = usePortfolio();
   const project = projectList?.find((project) => project.id === id) || {};
@@ -29,7 +30,7 @@ export default function PortfolioDetail() {
   const sortedImg = images?.sort((a, b) => a.index - b.index);
 
   //댓글 불러오기
-  const { isLoading, error, data: commentsList } = useComment().commentsQuery;
+  const { data: commentsList } = useComment().commentsQuery;
   const comments = commentsList?.filter((data) => data.pageId === id);
   const commentsId = comments?.map((comment) => comment.id);
 
@@ -114,6 +115,8 @@ export default function PortfolioDetail() {
           {title}
           <span>맘에 드신다면 하단에 있는 좋아요를 눌러주세요❤️</span>
         </h3>
+        {error ? <p>ERROR! 잠시 후 다시 시도해주세요 :)</p> : null}
+        {isLoading && <ProjectsSkeleton count={6} height={250} />}
         {projectList && project && (
           <>
             <ul className='detail_images'>
@@ -225,8 +228,7 @@ export default function PortfolioDetail() {
                 <h3 className='common_h3'>
                   Comments <span>첫 댓글의 주인공이 되어보세요!</span>
                 </h3>
-                {isLoading && <p>댓글로딩중</p>}
-                {error ? <p>댓글 불러오는 도중 오류</p> : null}
+
                 {id && comments && <Comments pageId={id} comments={comments} />}
               </div>
             )}

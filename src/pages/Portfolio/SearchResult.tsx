@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import Projects from '../../components/Projects/Projects';
 import usePortfolio from '../../hooks/usePortfolio';
+import ProjectsSkeleton from '../../components/Skeleton/ProjectsSkeleton';
 
 export default function SearchResult() {
   const [searchParams] = useSearchParams();
@@ -30,7 +31,7 @@ export default function SearchResult() {
           </p>
         </div>
       )}
-      {isLoading && <p>로딩중입니다</p>}
+      {isLoading && <ProjectsSkeleton count={9} />}
       {error && <p>Something is wrong 😥 Try Again</p>}
       {filteredProjects && filteredProjects?.length > 0 ? (
         <Projects projectList={filteredProjects} />

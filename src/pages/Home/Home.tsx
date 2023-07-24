@@ -23,6 +23,7 @@ import Projects from '../../components/Projects/Projects';
 import Review from '../../components/Review/Review';
 import Avatar from '../../components/Avatar/Avatar';
 import usePortfolio from '../../hooks/usePortfolio';
+import ProjectsSkeleton from '../../components/Skeleton/ProjectsSkeleton';
 
 const typeAni = [
   '안녕하세요',
@@ -55,7 +56,7 @@ const bgIcons = [
 export default function Home() {
   const navigate = useNavigate();
   const { portfolioQuery } = usePortfolio();
-  const { data: projectList } = portfolioQuery;
+  const { isLoading, error, data: projectList } = portfolioQuery;
   const [mainProjectList, setMainProjectList] = useState<IPortfolio[]>([]);
 
   //브라우저 크기가 960 이하일때는, 메인프로젝트 = 4개
@@ -166,6 +167,8 @@ export default function Home() {
             Some of my latest work
             <span>최근 작업한 프로젝트를 소개합니다!</span>
           </h2>
+          {isLoading && <ProjectsSkeleton />}
+          {error ? <p>잠시 후 다시 시도해주세요!</p> : null}
           {mainProjectList && <Projects projectList={mainProjectList} />}
           <div className='btn_view_all'>
             <Button large onClick={() => navigate('/portfolio')}>
