@@ -42,7 +42,7 @@
       box-shadow: 5px 5px 0px 0px $navy-shadow;
       background-color: $lightest-navy;
       min-width: 300px;
-      height: 150px;
+      height: 170px;
       border-radius: 5px;
       display: flex;
       flex-direction: column;
@@ -56,11 +56,24 @@
       &:hover {
         background-color: $dark-slate;
       }
-
+      .review_from {
+        font-size: 12px;
+        span {
+          color: $accent;
+          opacity: 0.8;
+        }
+      }
       .review_comment {
-        font-size: 18px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
         line-height: 1.5;
         color: $lightest-slate;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
       }
     }
 

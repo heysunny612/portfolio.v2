@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { skillIcons } from '../../data/skillIcons';
 import { useUserContext } from '../../context/UserContext';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Button from '../../components/Button/Button';
 import SubLayout from '../../components/UI/SubLayout';
 
@@ -23,11 +23,21 @@ export default function Portfolio() {
   const selectedSkills = watch('skills') || [];
   const skillsLength = selectedSkills.length;
   const isSkillsOutOfRange = skillsLength > MAX_COUNT || skillsLength === 0;
+  const projectRef = useRef<HTMLDivElement>(null);
 
   const onSearch = (data: IFormData) => {
     if (isSkillsOutOfRange) return;
     const skillsQueryParam = data.skills.join(',');
     navigate(`/portfolio/search?skills=${skillsQueryParam}`);
+
+    if (projectRef.current) {
+      const yOffset = -50;
+      const y =
+        projectRef?.current?.getBoundingClientRect()?.top +
+        window.scrollY +
+        yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   };
 
   const handleReset = () => {
@@ -87,6 +97,7 @@ export default function Portfolio() {
             )}
           </div>
         </form>
+        <div ref={projectRef}></div>
         <Outlet />
         {user?.isAdmin && (
           <div className='btn_write'>

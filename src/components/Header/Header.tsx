@@ -115,7 +115,7 @@ export default function Header() {
                 </div>
               </>
             ) : (
-              <div className='mobile_mypage_btn'>
+              <>
                 <Button
                   onClick={() => {
                     navigate('/auth/login');
@@ -124,9 +124,11 @@ export default function Header() {
                 >
                   Login
                 </Button>
-              </div>
+              </>
             )}
-            <Button filled>Resume</Button>
+            <div className='mobile_resume'>
+              <Button filled>Resume</Button>
+            </div>
           </div>
         </div>
       </div>

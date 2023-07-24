@@ -41,15 +41,23 @@ export default function About() {
                 About.
               </motion.h1>
               <p className='intro'>
-                안녕하세요! 땡땡땡땡땡 프론트엔드 개발자 황수연입니다.
+                디자인과 코드의 아름다운 조화, <br /> 멋진 상호작용을 구현하는
+                <br />
+                프론트엔드 개발자 황수연입니다.
               </p>
               <p className='desc'>
-                웹 개발의 매력에 빠져있는 프론트엔드 개발자입니다. 코드를 짜는
-                것을 좋아하고, 웹사이트를 개발함으로써 사람들에게 긍정적인
-                영향을 줄 수 있다는 것을 믿어요 웹의 세계로 여러분을 초대합니다!
-                저는 프론트엔드 개발자로서 사용자들의 요구에 부응하는 멋진 웹
-                애플리케이션을 만들기 위해 열심히 노력하고 있어요. 함께 웹을
-                즐겁게 만들어볼까요 (임시문구)
+                저는 약 3년 동안 웹 에이전시에서 웹 퍼블리셔로 근무한 경험이
+                있습니다. 디자인과 개발 사이의 중간 단계인 '퍼블리싱'을
+                담당하며, 수백 개의 웹사이트를 만들고 고객사와 직접 소통하여
+                프로젝트를 성공적으로 마무리하는 역할을 수행했습니다. 이 경험을
+                바탕으로 더 많은 도전을 즐기며 웹 개발 분야에서 더 큰 성장을
+                꿈꾸고 있습니다!
+                <br />
+                <br /> "코드러버써니"라는 제 포트폴리오는 리액트와
+                타입스크립트를 활용해 만들었고, 인터랙티브한 웹 개발에 관심이
+                많아요! 웹 사용자들과 상호작용할 수 있는 멋진 경험을 만들어내는
+                걸 즐기고 있어요. 계속해서 더 재미있고 발전하는 프로젝트로 더욱
+                성장하고 싶어요 :)
               </p>
             </motion.div>
             <motion.div
@@ -94,7 +102,9 @@ export default function About() {
           </motion.ul>
         </article>
         <article className='about_education'>
-          <h3 className='common_h3'>Education</h3>
+          <h3 className='common_h3'>
+            Education <span>활동사진 또는 수료증을 볼 수 있어요!</span>
+          </h3>
           <ul className='education-list'>
             {educationList.map(
               ({
@@ -117,24 +127,26 @@ export default function About() {
                     ))}
                   </div>
                   <p className='date'>{date}</p>
-                  <div className='education-hover_btns'>
-                    <div>
-                      {activityPhotos && (
-                        <button
-                          onClick={() => navigate(`gallery?activity=${id}`)}
-                        >
-                          활동 사진 보기
-                        </button>
-                      )}
-                      {graduationPhotos && (
-                        <button
-                          onClick={() => navigate(`gallery?graduation=${id}`)}
-                        >
-                          수료증 보기
-                        </button>
-                      )}
+                  {(activityPhotos || graduationPhotos) && (
+                    <div className='education-hover_btns'>
+                      <div>
+                        {activityPhotos && (
+                          <button
+                            onClick={() => navigate(`gallery?activity=${id}`)}
+                          >
+                            활동 사진 보기
+                          </button>
+                        )}
+                        {graduationPhotos && (
+                          <button
+                            onClick={() => navigate(`gallery?graduation=${id}`)}
+                          >
+                            수료증 보기
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </li>
               )
             )}
@@ -142,7 +154,7 @@ export default function About() {
         </article>
         <article className='about_kit'>
           <h3 className='common_h3'>
-            My developer Kit
+            My Developer Kit
             <span>저에 대해 더알고싶으다면, 마우스를 올려보세요 :)</span>
           </h3>
           <div className='kit-hover_area'>
@@ -154,11 +166,11 @@ export default function About() {
                     <FaBrain />
                   </b>
                 </span>
-
                 <div className='text'>
                   저는 아이큐가 월등히 높거나, 높은 학력을 가지고 있지는
                   않습니다. 하지만, 어느 곳에서 일하든 '일머리'가 아주 좋다는
-                  칭찬을 항상 들어왔습니다:)
+                  칭찬을 항상 들어왔습니다:) 어떤 일을 하든 열심히 하고,
+                  노력하는 모습을 소중히 여기며 앞으로도 발전하고 싶어요!
                 </div>
               </li>
               <li className='item2'>
@@ -182,7 +194,7 @@ export default function About() {
                 ))}
                 <div className='text'>
                   제가 열심히 일하고, 공부하는 이유 중 하나는 "여행"입니다.
-                  코로나로 인해 몇년동안 비행기를 타지못했지만, 새로운 사람을
+                  코로나로 인해 몇 년 동안 비행기를 타지 못했지만, 새로운 사람을
                   만나고, 색다른 공기를 마실 수 있는 여행을 매우 좋아합니다 :)
                 </div>
               </li>
@@ -208,8 +220,8 @@ export default function About() {
                   <SiBuymeacoffee />
                 </motion.span>
                 <div className='text'>
-                  커피는 하루에 10시간 이상 일할 수 있게 해주는 저의 비밀 KIT
-                  입니다! (TMI. 저는 얼죽아입니다 :)
+                  아메리카노는 하루에 10시간 이상 일할 수 있게 해주는 저의 비밀
+                  키트입니다! (TMI. 저는 얼죽아입니다 :)
                 </div>
               </li>
               <li className='item4'>
@@ -239,8 +251,8 @@ export default function About() {
                   <BsMusicNote />
                 </motion.span>
                 <div className='text'>
-                  출퇴근 하는 지하철안에서 듣는 음악은 저를 신나게 일할 수
-                  있도록 도와줍니다♬ 저는 걸그룹 노래를 좋아합니다:)
+                  출퇴근하는 지하철 안에서 듣는 음악은 매일매일 신나게 일할 수
+                  있도록 도와줍니다♬ 저는 K-pop 걸그룹 노래를 좋아합니다:)
                 </div>
               </li>
             </ul>

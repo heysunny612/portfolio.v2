@@ -10,7 +10,8 @@ export default function ScrollToTop() {
       '/askme/write',
       '/auth/join',
       '/auth/login',
-      '/portfolio/search/:keyword',
+      '/portfolio/search',
+      '/portfolio',
     ];
     if (excludePaths.includes(pathname)) return;
     window.scrollTo(0, 0);

@@ -110,20 +110,19 @@ export default function Home() {
               initial='hidden'
               whileInView='show'
             >
-              저는 <span>황수연</span>입니다
+              저는 <span>황수연</span>입니다.
             </motion.h2>
             <motion.p
               variants={fadeIn('right', 0.7)}
               initial='hidden'
               whileInView='show'
             >
-              제가 여행으로 다녀온 일부 나라의 인사말입니다. 누군가에게는 가장
-              익숙하고 쉬운 말이지만, 또 누군가에게는 처음 보는 이상한(?) 언어일
-              수 도있습니다. 내게 익숙하지 않은 것들은 개발자에게는 언제나
-              일어나는 일상이라고 생각합니다. 알고 나면 별거 아닌 걸수도 있는
-              것들을 지나치지 않고 새로운 언어와 기술에 호기심을 갖고
-              <span>새로운 도전을 통해 성장하고자 하는 열정적인 개발자</span>가
-              되겠습니다✨ (임시문구)
+              "제가 여행으로 다녀온 몇몇 나라들의 인사말을 소개해요!
+              누군가에게는 친숙하고 쉬운 말이지만, 또 누군가에게는 처음 보는
+              이상한(?) 언어가 될 수 있어요. 하지만 이런 익숙하지 않은 것들은
+              개발자에게는 언제나 일상이죠! 저는 호기심을 갖고 새로운 언어와
+              기술에 도전하는 열정적인 개발자입니다!&nbsp;
+              <span>함께 성장하고 싶으시다면, 주저말고 연락주세요! ✨</span>"
             </motion.p>
             <motion.div
               className='banner_buttons'
@@ -165,7 +164,7 @@ export default function Home() {
         <div className='common_inner'>
           <h2 className='common_h2'>
             Some of my latest work
-            <span>최근 작업한 프로젝트</span>
+            <span>최근 작업한 프로젝트를 소개합니다!</span>
           </h2>
           {mainProjectList && <Projects projectList={mainProjectList} />}
           <div className='btn_view_all'>
@@ -178,7 +177,7 @@ export default function Home() {
       <section className='comment_container'>
         <h2 className='common_h2'>
           What people are saying
-          <span>프로젝트에 달린 댓글들</span>
+          <span>프로젝트에 달린 소중한 댓글들을 소개합니다!</span>
         </h2>
         <Review />
       </section>
@@ -186,7 +185,7 @@ export default function Home() {
         <div className='common_inner'>
           <h2 className='common_h2'>
             Get In Touch
-            <span>heysunny612@gamil.com로 메일 전송</span>
+            <span>heysunny612@gamil.com로 메일이 전송됩니다✨</span>
           </h2>
           <SendEmail />
         </div>

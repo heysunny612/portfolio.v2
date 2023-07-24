@@ -20,7 +20,7 @@ export default function Reply({ commentId }: IReplyProps) {
         {data &&
           replyList &&
           replyList.map((reply) => (
-            <ReplyCard reply={reply} commentId={commentId} />
+            <ReplyCard key={commentId} reply={reply} commentId={commentId} />
           ))}
       </ul>
     </>

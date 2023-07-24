@@ -110,7 +110,7 @@
           justify-content: center;
           height: 100px;
           overflow: hidden;
-          padding: 50px;
+          padding: 15px;
           width: 100%;
           border-radius: 10px;
           background-color: $navy;
@@ -119,6 +119,7 @@
           img,
           svg {
             width: 100%;
+            border-radius: 10px;
           }
         }
         h4 {

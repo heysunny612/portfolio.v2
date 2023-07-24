@@ -38,14 +38,14 @@ export const educationList = [
     id: 'nomard',
     logo: 'https://nomadcoders.co/m.svg',
     title: '노마드코더',
-    date: '2023.03.01 ~ 2023.08.31',
+    date: '2023.06.06 ~ ',
     list: ['React JS 마스터클래스', '트위터 클론코딩'],
     activityPhotos: false,
     graduationPhotos: true,
   },
   {
     id: 'korea1',
-    logo: '/images/logo_work.gif',
+    logo: '/images/logo_korea.jpg',
     title: '근로자직업능력 개발훈련',
     date: '2015-03-28 ~ 2015-04-19',
     list: ['자바스크립트 & 제이쿼리 주말반', '반응형웹 HTML5&CSS 3.0 주말반'],
@@ -54,7 +54,7 @@ export const educationList = [
   },
   {
     id: 'korea2',
-    logo: '/images/logo_work.gif',
+    logo: '/images/logo_korea.jpg',
     title: '취업성공패키지',
     date: '2012.08.61 ~ 2013.12.09',
     list: [

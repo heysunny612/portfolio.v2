@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BiLogoNetlify, BiLogoGithub } from 'react-icons/bi';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
@@ -92,6 +92,21 @@ export default function PortfolioDetail() {
     }
   };
 
+  //메인페이지에서 댓글을 눌렀다면 코멘트를 볼수있도록 스크롤 이벤트
+  const { scollId } = useLocation().state || {};
+  const commentRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (scollId && commentRef.current) {
+      setToggle(true);
+      setTimeout(() => {
+        commentRef?.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }, 500);
+    }
+  }, [scollId]);
+
   return (
     <SubLayout className='detail_container' subTitle='portfolio'>
       <>
@@ -165,7 +180,7 @@ export default function PortfolioDetail() {
                 </p>
               </div>
             </div>
-            <div className='detail_bottom_btns'>
+            <div className='detail_bottom_btns' ref={commentRef}>
               <div className='bottom_btns'>
                 <LikesButton id={id} likes={likes} />
                 <button
