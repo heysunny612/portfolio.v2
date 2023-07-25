@@ -118,7 +118,7 @@ export default function Header() {
                   <Button
                     onClick={() => {
                       navigate('/auth/mypage');
-                      toggleMobileMenu();
+                      closeMobileMenu();
                     }}
                   >
                     My Page
@@ -131,7 +131,7 @@ export default function Header() {
                 <Button
                   onClick={() => {
                     navigate('/auth/login');
-                    toggleMobileMenu();
+                    closeMobileMenu();
                   }}
                 >
                   Login

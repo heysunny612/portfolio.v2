@@ -4,6 +4,7 @@ import Tags from '../../components/Tags/Tags';
 import ReactQuill from 'react-quill';
 import useBlog from '../../hooks/useBlog';
 import 'react-quill/dist/quill.snow.css';
+import './QuillCustom.scss';
 import { deleteImage, uploadImage } from '../../api/firebase/blog';
 import { IBlog } from '../../interfaces/Blog';
 import { useUserContext } from '../../context/UserContext';
@@ -24,7 +25,9 @@ export default function AddBlog() {
   };
   const [state, setState] = useState(initialState);
   const { title, category, blogTags, content } = state;
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [uploadedImages, setUploadedImages] = useState<string[]>(
+    blog?.thumbnail || []
+  );
   const quillRef = useRef<ReactQuill>(null);
   const { addBlogMutation, updateBlogMutation } = useBlog();
   const navigate = useNavigate();
@@ -97,12 +100,9 @@ export default function AddBlog() {
     event.preventDefault();
     setState(initialState);
 
-    //에디터의 이미지 URL을 가져온 후, 첫번째이미지를 썸네일로등록
-    const editorImageUrls = imageUrlsFromContent(state.content);
-    const thumbnail =
-      uploadedImages.find((image) => editorImageUrls.includes(image)) || '';
     //만약 파이어베이스에 업로드된 이미지가 에디터에서 삭제되었다면,
     //파이어베이스에서도 함께 삭제될 수 있도록 처리
+    const editorImageUrls = imageUrlsFromContent(state.content);
     const imagesToDelete = uploadedImages.filter(
       (image) => !editorImageUrls.includes(image)
     );
@@ -115,7 +115,7 @@ export default function AddBlog() {
       category,
       content,
       createdAt: Date.now(),
-      thumbnail,
+      thumbnail: uploadedImages,
       writer: {
         uid: user?.uid!,
         displayName: user?.displayName!,
@@ -133,7 +133,7 @@ export default function AddBlog() {
         blogTags,
         category,
         content,
-        thumbnail,
+        thumbnail: uploadedImages,
       },
     };
 

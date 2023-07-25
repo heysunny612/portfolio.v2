@@ -1,0 +1,36 @@
+.ql-editor {
+  background-color: #0a192f;
+
+  h1 {
+    font-size: 30px !important;
+    color: #ccd6f6 !important;
+    strong {
+      color: inherit !important;
+    }
+  }
+
+  h2 {
+    font-size: 24px !important;
+    color: #ccd6f6 !important;
+    strong {
+      color: inherit !important;
+    }
+  }
+
+  h3 {
+    font-size: 18px !important;
+    color: #ccd6f6 !important;
+    strong {
+      color: inherit !important;
+    }
+    u {
+      color: inherit !important;
+    }
+  }
+
+  p {
+    font-size: 15px;
+    color: #a8b2d1;
+    line-height: 1.6;
+  }
+}

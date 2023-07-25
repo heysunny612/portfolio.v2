@@ -8,7 +8,7 @@ export interface IBlog {
   category: string;
   content: string;
   createdAt: number;
-  thumbnail: string;
+  thumbnail: string[];
   writer?: IWriter;
 }
 
@@ -19,6 +19,6 @@ export interface IUpdateBlog {
     blogTags: Tag[];
     category: string;
     content: string;
-    thumbnail: string;
+    thumbnail: string[];
   };
 }

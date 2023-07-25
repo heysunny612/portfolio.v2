@@ -42,7 +42,7 @@ export default function BlogCard({
     <li onClick={handleClick} role='button'>
       <div className='thumb_area'>
         {thumbnail ? (
-          <img src={thumbnail} alt='블로그 썸네일 이미지' />
+          <img src={thumbnail[0]} alt='블로그 썸네일 이미지' />
         ) : (
           <p>
             CODE LOVER <br /> SUNNY

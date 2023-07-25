@@ -1,12 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IBlog } from '../../interfaces/Blog';
 import { formatDate } from '../../utils/formatDate';
+import { useUserContext } from '../../context/UserContext';
+import 'react-quill/dist/quill.snow.css';
+import './QuillCustom.scss';
 import RecentBlogList from './RecentBlogList';
 import Profile from '../../components/Profile/Profile';
 import SubLayout from '../../components/UI/SubLayout';
-import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
-import { useUserContext } from '../../context/UserContext';
 import useBlog from '../../hooks/useBlog';
 
 const modules = {

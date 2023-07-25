@@ -17,6 +17,7 @@
 
       .thumb_area {
         flex: 1 1 1;
+        flex-shrink: 0;
         overflow: hidden;
         width: 350px;
         height: 200px;
@@ -54,7 +55,9 @@
         }
         h4 {
           margin-top: 10px;
-          font-size: 24px;
+          font-size: 20px;
+          line-height: 1.2;
+          color: $lightest-slate;
         }
         .text_area_bottom {
           span {
@@ -62,6 +65,7 @@
           }
           p {
             margin-bottom: 7px;
+            font-size: 12px;
           }
         }
       }

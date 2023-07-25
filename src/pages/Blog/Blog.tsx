@@ -6,6 +6,7 @@ import SubLayout from '../../components/UI/SubLayout';
 import BlogCard from './BlogCard';
 import useBlog from '../../hooks/useBlog';
 import BlogSkeleton from '../../components/Skeleton/BlogSkeleton';
+import EmptyState from '../../components/UI/EmptyState';
 
 export default function Blog() {
   const navigate = useNavigate();
@@ -18,9 +19,13 @@ export default function Blog() {
     <SubLayout className='blog_container' subTitle='blog'>
       <>
         {error ? <p>ERROR! 잠시 후 재시도 부탁드립니다.</p> : null}
-        <h3 className='common_h3'>My Stroy</h3>
+        <h3 className='common_h3'>My Story</h3>
         {isLoading && <BlogSkeleton />}
-        <Slider myStoryList={myStoryList || []} />
+        {myStoryList && myStoryList?.length > 0 ? (
+          <Slider myStoryList={myStoryList || []} />
+        ) : (
+          <EmptyState text='등록된 My Story가 없습니다'></EmptyState>
+        )}
         <h3 className='common_h3'>전체보기</h3>
         {blogItems && (
           <ul className='blog_list'>

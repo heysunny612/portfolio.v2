@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 interface IEmptyStateProps {
   text: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function EmptyState({ text, children }: IEmptyStateProps) {
