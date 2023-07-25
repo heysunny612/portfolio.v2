@@ -56,14 +56,14 @@ export default function Header() {
     <header>
       <div className='header_container common_inner'>
         <h1 className='header_logo'>
-          <Link to='/'>
+          <Link to='/main'>
             <span className='logo_text'>
               <b>CODE</b> LOVER <br /> SUNNY
             </span>
             <div className='logo_icon'>
               <BsSuitHeartFill />
             </div>
-            {location.pathname === '/' && (
+            {location.pathname === '/main' && (
               <motion.div layoutId='line' className='nav_effect'>
                 <BsSuitHeartFill />
               </motion.div>

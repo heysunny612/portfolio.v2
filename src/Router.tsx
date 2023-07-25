@@ -30,6 +30,7 @@ export default function Router() {
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
+        { path: '/main', element: <Home /> },
         { path: '/about', element: <About /> },
         { path: '/about/gallery', element: <About /> },
         {

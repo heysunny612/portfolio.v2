@@ -16,7 +16,10 @@ export default function SearchResult() {
     : projectList || [];
   return (
     <>
-      <h3 className='common_h3'>Projects</h3>
+      <h3 className='common_h3'>
+        Projects
+        <span>로그인하시면, 프로젝트에 좋아요를 누를 수 있어요! ☺️</span>
+      </h3>
       {skills && (
         <div className='search_result'>
           <ul>
