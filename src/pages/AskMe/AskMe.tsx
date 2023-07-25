@@ -8,6 +8,7 @@ import SearchAsk from './SearchAsk';
 import Button from '../../components/Button/Button';
 import useAskMe from '../../hooks/useAskMe';
 import Questions from '../../components/Question/Questions';
+import AskMeSkeleton from '../../components/Skeleton/AskMeSkeleton';
 
 const LOAD_COUNT = 5;
 
@@ -45,8 +46,8 @@ export default function AskMe() {
             Ask me <span>무엇이든 편하게 질문주세요 ☺️</span>
           </h3>
           <>
-            {isLoading && <p>로딩중입니다</p>}
-            {error && <p>썸띵이즈롱</p>}
+            {isLoading && <AskMeSkeleton />}
+            {error ? <p>ERROR! 잠시 후 재시도 부탁드립니다.</p> : null}
             {questions && (
               <div className='qna_wrap'>
                 <SearchAsk />

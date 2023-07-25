@@ -4,8 +4,35 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+.review_skeleton {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(5, 1fr);
+}
+.blog_skeleton {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.askme_skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 @media (max-width: 960px) {
   .projects_skeleton {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .review_skeleton {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .blog_skeleton {
+    display: grid;
+    gap: 30px;
     grid-template-columns: repeat(2, 1fr);
   }
 }

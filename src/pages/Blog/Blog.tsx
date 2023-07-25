@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../context/UserContext';
 import Button from '../../components/Button/Button';
 import Slider from '../../components/Slider/Slider';
 import SubLayout from '../../components/UI/SubLayout';
 import BlogCard from './BlogCard';
 import useBlog from '../../hooks/useBlog';
-import { useUserContext } from '../../context/UserContext';
+
+import BlogSkeleton from '../../components/Skeleton/BlogSkeleton';
 
 export default function Blog() {
   const navigate = useNavigate();
@@ -16,9 +18,9 @@ export default function Blog() {
   return (
     <SubLayout className='blog_container' subTitle='blog'>
       <>
-        {isLoading && <p>로딩중입니다</p>}
-        {error && <p>썸딩이즈롱</p>}
+        {error ? <p>ERROR! 잠시 후 재시도 부탁드립니다.</p> : null}
         <h3 className='common_h3'>My Stroy</h3>
+        {isLoading && <BlogSkeleton />}
         <Slider myStoryList={myStoryList || []} />
         <h3 className='common_h3'>전체보기</h3>
         {blogItems && (

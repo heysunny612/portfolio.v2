@@ -1,6 +1,7 @@
 import ReviewCard from './ReviewCard';
 import ReviewRow from './ReviewRow';
 import useComment from '../../hooks/useComment';
+import ReviewSkeleton from '../Skeleton/ReviewSkeleton';
 
 export default function Review() {
   const {
@@ -9,8 +10,8 @@ export default function Review() {
 
   return (
     <section className='review_container'>
-      {isLoading && <p>로딩중입니다</p>}
-      {error ? <p>썸띵이즈롱</p> : null}
+      {isLoading && <ReviewSkeleton />}
+      {error ? <p>ERROR! 잠시 후 재시도 부탁드립니다</p> : null}
       {comments && (
         <ReviewRow speed={50}>
           {comments.map((comment) => (
