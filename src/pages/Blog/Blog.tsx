@@ -5,7 +5,6 @@ import Slider from '../../components/Slider/Slider';
 import SubLayout from '../../components/UI/SubLayout';
 import BlogCard from './BlogCard';
 import useBlog from '../../hooks/useBlog';
-
 import BlogSkeleton from '../../components/Skeleton/BlogSkeleton';
 
 export default function Blog() {

@@ -5,7 +5,7 @@ export const educationList = [
     title: '제로베이스',
     date: '2023.03.01 ~ 2023.08.31',
     list: ['프론트엔드 스쿨 13기'],
-    activityPhotos: false,
+    activityPhotos: true,
     graduationPhotos: false,
   },
   {

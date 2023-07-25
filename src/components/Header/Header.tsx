@@ -40,6 +40,18 @@ export default function Header() {
     };
   }, [isUserMenu]);
 
+  // 사용자가 반응형 모바일 메뉴를 누른후, 브라우저 사이즈를 키웠을때
+  const handleResize = () => {
+    if (window.innerWidth >= 960) {
+      setMobileMenu(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <header>
       <div className='header_container common_inner'>

@@ -23,7 +23,7 @@ export default function BlogSkeleton() {
   }, []);
   return (
     <SkeletonTheme baseColor='#495670' highlightColor='#8892b0'>
-      <div className='projects_skeleton'>
+      <div className='blog_skeleton'>
         {Array.from({ length: skeletonCount }).map((_, index) => (
           <Skeleton key={index} count={1} height={250} />
         ))}

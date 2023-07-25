@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { IBlog } from '../../interfaces/Blog';
 import { formatDate } from '../../utils/formatDate';
 import useBlog from '../../hooks/useBlog';
+import { useUserContext } from '../../context/UserContext';
 
 interface IBlogCardPrps {
   blog: IBlog;
@@ -15,6 +16,7 @@ export default function BlogCard({
   index,
   blogItems,
 }: IBlogCardPrps) {
+  const { user } = useUserContext() || {};
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/blog/${id}`, { state: { blog, index, blogItems } });
@@ -61,10 +63,12 @@ export default function BlogCard({
             blogTags.map((tag, index) => <span key={index}>#{tag.text}</span>)}
         </div>
       </div>
-      <div className='blog_card_btns'>
-        <button onClick={handleEdit}>수정</button>
-        <button onClick={handleDelete}>삭제</button>
-      </div>
+      {user && user.isAdmin && (
+        <div className='blog_card_btns'>
+          <button onClick={handleEdit}>수정</button>
+          <button onClick={handleDelete}>삭제</button>
+        </div>
+      )}
     </li>
   );
 }
