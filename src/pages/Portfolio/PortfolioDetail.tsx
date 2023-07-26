@@ -196,6 +196,12 @@ export default function PortfolioDetail() {
                 </p>
               </div>
             </div>
+            {user && user?.isAdmin && (
+              <div className='admin_btns'>
+                <button onClick={handleEdit}>수정</button>
+                <button onClick={handleDelete}>삭제</button>
+              </div>
+            )}
             <div className='detail_bottom_btns' ref={commentRef}>
               <div className='bottom_btns'>
                 <div
@@ -226,12 +232,7 @@ export default function PortfolioDetail() {
                 </button>
               </div>
             </div>
-            {user && user?.isAdmin && (
-              <div className='admin_btns'>
-                <button onClick={handleEdit}>수정</button>
-                <button onClick={handleDelete}>삭제</button>
-              </div>
-            )}
+
             <div className='detail_btns'>
               {!firstPage && (
                 <button className='prev' onClick={handlePrev}>

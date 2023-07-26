@@ -314,12 +314,12 @@
   }
 
   .admin_btns {
-    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: flex-end;
     button {
       border-radius: 5px;
-      margin-left: 10px;
+      margin-left: 15px;
       padding: 10px;
       background-color: $lightest-navy;
     }

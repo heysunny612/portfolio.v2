@@ -42,6 +42,7 @@ export default function Slider({ myStoryList }: ISliderProps) {
       state: { blog: myStory, index, myStoryList },
     });
   };
+
   return (
     <div className='slider_container'>
       <BlogSlider {...settings}>
@@ -53,7 +54,7 @@ export default function Slider({ myStoryList }: ISliderProps) {
             key={myStory.id}
           >
             {myStory.thumbnail && (
-              <img src={myStory.thumbnail} alt='마이스토리 썸네일' />
+              <img src={myStory.thumbnail[0]} alt='마이스토리 썸네일' />
             )}
             <div className='slider_tags'>
               {myStory.blogTags.map((tag, index) => (
