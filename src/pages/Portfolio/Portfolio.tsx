@@ -3,8 +3,11 @@ import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { skillIcons } from '../../data/skillIcons';
 import { useUserContext } from '../../context/UserContext';
 import { useEffect, useRef } from 'react';
+import { AiOutlineFolder } from 'react-icons/ai';
+import { FiGithub } from 'react-icons/fi';
 import Button from '../../components/Button/Button';
 import SubLayout from '../../components/UI/SubLayout';
+import { toyProjects } from '../../data/toyProjects';
 
 const MAX_COUNT = 3;
 interface IFormData {
@@ -106,6 +109,28 @@ export default function Portfolio() {
             </Button>
           </div>
         )}
+
+        <h3 className='common_h3 mt80'>Toy Projects</h3>
+        <ul className='toy_projects'>
+          {toyProjects.map(({ title, desc, link }, index) => (
+            <li key={index}>
+              <a href={link} rel='noopener noreferrer' target='_blank'>
+                <div className='top'>
+                  <span className='folder'>
+                    <AiOutlineFolder />
+                  </span>
+                  <span>
+                    <FiGithub />
+                  </span>
+                </div>
+                <div className='text'>
+                  <h4>{title}</h4>
+                  <p>{desc}</p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
       </>
     </SubLayout>
   );

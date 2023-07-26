@@ -32,5 +32,10 @@
     font-size: 15px;
     color: #a8b2d1;
     line-height: 1.6;
+    span,
+    strong {
+      font: inherit;
+      color: inherit !important;
+    }
   }
 }

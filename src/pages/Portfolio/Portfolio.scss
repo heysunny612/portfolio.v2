@@ -451,6 +451,63 @@
   }
 }
 
+//토이프로젝트
+.toy_projects {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+
+  li {
+    background-color: $lightest-navy;
+    border-radius: 0 15px 0 15px;
+    a {
+      padding: 15px;
+      display: block;
+      border: 2px dotted transparent;
+      border-radius: 0 15px 0 15px;
+      transition: $transition;
+      height: 100%;
+
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: $accent;
+        .top {
+          span {
+            color: $accent;
+          }
+        }
+      }
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 22px;
+        &.folder {
+          font-size: 36px;
+          color: $accent;
+        }
+      }
+    }
+    .text {
+      h4 {
+        margin: 15px 0 5px 0;
+        font-size: 15px;
+        font-weight: bold;
+        color: $lightest-slate;
+        line-height: 1.2;
+      }
+      p {
+        font-size: 13px;
+        line-height: 1.4;
+        letter-spacing: -0.5px;
+      }
+    }
+  }
+}
+
 @media (max-width: 1024px) {
   //포트폴리오 서브페이지
   .portfolio_container {
@@ -476,6 +533,11 @@
       }
     }
   }
+
+  //토이프로젝트
+  .toy_projects {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -497,6 +559,11 @@
         grid-template-columns: repeat(1, 1fr);
       }
     }
+  }
+
+  //토이프로젝트
+  .toy_projects {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -557,5 +624,10 @@
         }
       }
     }
+  }
+
+  //토이프로젝트
+  .toy_projects {
+    gap: 15px;
   }
 }
