@@ -20,7 +20,7 @@ export default function usePortfolio() {
     onSuccess: () => queryClient.invalidateQueries([CACHE_NAME]),
   });
 
-  const updateBlogMutation = useMutation(
+  const updatePortfolioMutation = useMutation(
     ({ id, updateData }: { id: string; updateData: IPortfolio }) =>
       updatePortfolio(id, updateData),
     {
@@ -35,7 +35,7 @@ export default function usePortfolio() {
   return {
     portfolioQuery,
     addPortfolioMutation,
-    updateBlogMutation,
+    updatePortfolioMutation,
     deletePortfolioMutation,
   };
 }

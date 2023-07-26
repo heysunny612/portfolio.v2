@@ -13,6 +13,11 @@ export interface IPortfolio {
   }[];
   createdAt?: number;
   likes?: {
-    [uid: string]: boolean;
+    [uid: string]: {
+      displayName: string | null;
+      email: string | null;
+      like: boolean;
+      photoURL: string | null;
+    };
   };
 }

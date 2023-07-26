@@ -84,17 +84,24 @@
           background-color: $accent;
         }
         button {
-          font-size: 20px;
-          color: $pink;
           display: flex;
           align-items: center;
           justify-content: center;
-          span {
-            position: relative;
-            top: -2px;
-            font-size: 12px;
-            margin-left: 5px;
-            color: $navy;
+          color: $navy;
+          font-size: 14px;
+
+          font-weight: bold;
+          letter-spacing: -0.5px;
+          svg {
+            margin-right: 5px;
+            font-size: 20px;
+            color: $pink;
+          }
+          b {
+            padding-left: 5px;
+            font: inherit;
+            font-size: 13px;
+            color: $pink;
           }
         }
       }
@@ -107,7 +114,7 @@
 
       h3 {
         margin: 15px 0;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 600;
         color: $lightest-slate;
         transition: $transition;
@@ -119,7 +126,7 @@
       flex-wrap: wrap;
 
       li {
-        font-size: 14px;
+        font-size: 13px;
         margin-right: 15px;
         line-height: 1.5;
         &.active {

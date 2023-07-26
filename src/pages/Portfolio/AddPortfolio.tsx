@@ -44,7 +44,7 @@ export default function AddPortfolio() {
     })) || []
   );
   const [isUploding, setIsUploding] = useState(false);
-  const { addPortfolioMutation, updateBlogMutation } = usePortfolio();
+  const { addPortfolioMutation, updatePortfolioMutation } = usePortfolio();
 
   // 기존에 등록된 이미지 URL 리스트
   const existingImages = project?.images?.map((image) => image.imageURL);
@@ -90,7 +90,7 @@ export default function AddPortfolio() {
       };
 
       if (id && project) {
-        updateBlogMutation.mutate(
+        updatePortfolioMutation.mutate(
           { id, updateData: portfolioData },
           {
             onSuccess: () => {

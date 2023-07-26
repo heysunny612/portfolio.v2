@@ -260,30 +260,68 @@
   .detail_bottom_btns {
     display: flex;
     justify-content: space-between;
+
     .bottom_btns {
       display: flex;
       gap: 10px;
-    }
-    button {
-      display: flex;
       align-items: center;
-      justify-items: center;
-      background-color: $lightest-navy;
-      color: $accent;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 15px;
-      border: 1px solid transparent;
 
-      &.active {
-        border-color: $accent;
+      .bottom_btn_wrap {
+        display: flex;
+        align-items: center;
+        background-color: $lightest-navy;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        cursor: pointer;
+        &.active {
+          border-color: $accent;
+          .btn_toggle {
+            color: $accent;
+          }
+        }
+        .btn_toggle {
+          border-left: 1px solid $dark-slate;
+          padding: 0 10px;
+          &:hover {
+            color: $accent;
+          }
+        }
       }
-      span {
-        margin: 0 10px;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        background-color: $lightest-navy;
+        height: 35px;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 13px;
+        line-height: 40px;
+        border: 1px solid transparent;
+
+        b {
+          color: $accent;
+          padding: 0 5px;
+        }
+        svg {
+          margin-right: 10px;
+          font-size: 18px;
+          color: $accent;
+        }
       }
-      svg {
-        font-size: 18px;
-      }
+    }
+  }
+
+  .admin_btns {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    button {
+      border-radius: 5px;
+      margin-left: 10px;
+      padding: 10px;
+      background-color: $lightest-navy;
     }
   }
 
@@ -313,6 +351,26 @@
 
   .detail_comments {
     margin-top: 50px;
+  }
+}
+
+//라이크(LIKE) 리스트
+.like_list {
+  margin-top: 50px;
+  ul {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    border: 1px solid $lightest-navy;
+    flex-wrap: wrap;
+  }
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    font-size: 13px;
+    border: 1px solid $lightest-navy;
   }
 }
 
@@ -494,7 +552,7 @@
     .text {
       h4 {
         margin: 15px 0 5px 0;
-        font-size: 15px;
+        font-size: detail_bottom_btns 15px;
         font-weight: bold;
         color: $lightest-slate;
         line-height: 1.2;
@@ -611,16 +669,19 @@
     //댓글보기, 목록보기 버튼
     .detail_bottom_btns {
       .bottom_btns {
-        gap: 7px;
-      }
-      button {
-        padding: 5px;
-        font-size: 12px;
-        span {
-          margin: 0 7px;
+        .bottom_btn_wrap {
+          .btn_toggle {
+            padding: 0 3px;
+          }
         }
-        svg {
-          font-size: 15px;
+
+        button {
+          padding: 7px;
+          font-size: 11px;
+          svg {
+            margin-right: 5px;
+            font-size: 16px;
+          }
         }
       }
     }

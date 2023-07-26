@@ -10,10 +10,10 @@ interface ILikesButtonProps {
 export default function LikesButton({ likes, id }: ILikesButtonProps) {
   const { user } = useUserContext() ?? {};
   const uid = user?.uid;
-  const { updateBlogMutation } = usePortfolio();
-  const isLikedByCurrentUser = uid && likes && likes[uid];
+  const { updatePortfolioMutation } = usePortfolio();
+  const isLikedByCurrentUser = uid && likes && likes[uid]?.like;
   const isLikedCount =
-    likes && Object.values(likes).filter((value) => value === true).length;
+    likes && Object.values(likes).filter((value) => value.like === true).length;
 
   const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -23,23 +23,21 @@ export default function LikesButton({ likes, id }: ILikesButtonProps) {
     }
 
     const toggleLike = {
-      [`likes.${uid}`]: !isLikedByCurrentUser,
+      [`likes.${uid}`]: {
+        like: !isLikedByCurrentUser,
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      },
     };
 
-    updateBlogMutation.mutate(
-      { id: id ?? '', updateData: toggleLike },
-      {
-        onSuccess: () => {
-          console.log('성공');
-        },
-      }
-    );
+    updatePortfolioMutation.mutate({ id: id ?? '', updateData: toggleLike });
   };
 
   return (
     <button onClick={handleLike}>
       {isLikedByCurrentUser ? <BsSuitHeartFill /> : <BsSuitHeart />}
-      <span>좋아요 {isLikedCount}</span>
+      Like <b>{isLikedCount}</b>
     </button>
   );
 }

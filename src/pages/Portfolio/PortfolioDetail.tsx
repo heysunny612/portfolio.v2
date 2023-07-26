@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BiLogoNetlify, BiLogoGithub } from 'react-icons/bi';
 import { MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
-import { AiOutlineUnorderedList } from 'react-icons/ai';
+import { AiOutlineUnorderedList, AiOutlineComment } from 'react-icons/ai';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { skillIcons } from '../../data/skillIcons';
 import { deleteImage } from '../../api/firebase/portfolio';
@@ -14,11 +14,13 @@ import LikesButton from '../../components/LikesButton';
 import useComment from '../../hooks/useComment';
 import useReply from '../../hooks/useReply';
 import ProjectsSkeleton from '../../components/Skeleton/ProjectsSkeleton';
+import Profile from '../../components/Profile/Profile';
 
 export default function PortfolioDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext() || {};
+
   const {
     portfolioQuery: { isLoading, error, data: projectList },
     deletePortfolioMutation,
@@ -41,15 +43,20 @@ export default function PortfolioDetail() {
   );
   const totalComments = comments && reply ? comments.length + reply.length : 0;
 
-  //prev,next 페이지 적용
-  const currentIndex =
-    projectList?.findIndex((project) => project.id === id) || 0;
-  const firstPage = currentIndex === 0;
-  const lastPage = currentIndex === (projectList?.length || 0) - 1;
-
   //댓글 토글
-  const [toggle, setToggle] = useState(false);
-  const handleToggle = () => setToggle((toggle) => !toggle);
+  const [commentToggle, setCommentToggle] = useState(false);
+  const [likeToggle, setLikeToggle] = useState(false);
+  const handleCommentToggle = () => {
+    setCommentToggle((prev) => !prev);
+    if (likeToggle) setLikeToggle(false);
+  };
+  const handleLikeToggle = () => {
+    setLikeToggle((prev) => !prev);
+    if (commentToggle) setCommentToggle(false);
+  };
+
+  //라이크리스트
+  const likeList = likes && Object.values(likes);
 
   //이미지 및 프로젝트삭제
   const handleDelete = async () => {
@@ -75,6 +82,12 @@ export default function PortfolioDetail() {
     navigate(`/portfolio/write/${id}`, { state: { project } });
   };
 
+  //prev,next 페이지 적용
+  const currentIndex =
+    projectList?.findIndex((project) => project.id === id) || 0;
+  const firstPage = currentIndex === 0;
+  const lastPage = currentIndex === (projectList?.length || 0) - 1;
+
   //이전페이지
   const handlePrev = () => {
     if (!firstPage) {
@@ -98,7 +111,7 @@ export default function PortfolioDetail() {
   const commentRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (scollId && commentRef.current) {
-      setToggle(true);
+      setCommentToggle(true);
       setTimeout(() => {
         commentRef?.current?.scrollIntoView({
           behavior: 'smooth',
@@ -185,32 +198,40 @@ export default function PortfolioDetail() {
             </div>
             <div className='detail_bottom_btns' ref={commentRef}>
               <div className='bottom_btns'>
-                <LikesButton id={id} likes={likes} />
-                <button
-                  onClick={handleToggle}
-                  className={`${toggle ? 'active' : ''}`}
+                <div
+                  className={`bottom_btn_wrap ${likeToggle ? 'active' : ''}`}
                 >
-                  {toggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  <span>댓글 보기 {totalComments}</span>
-                </button>
+                  <LikesButton id={id} likes={likes} />
+                  <div onClick={handleLikeToggle} className='btn_toggle'>
+                    {likeToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  </div>
+                </div>
+                <div
+                  className={`bottom_btn_wrap ${commentToggle ? 'active' : ''}`}
+                  onClick={handleCommentToggle}
+                >
+                  <button>
+                    <AiOutlineComment />
+                    댓글 보기 <b>{totalComments}</b>
+                  </button>
+                  <div className='btn_toggle'>
+                    {commentToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  </div>
+                </div>
               </div>
               <div className='bottom_btns'>
-                {user && user?.isAdmin && (
-                  <>
-                    <button onClick={handleEdit}>
-                      <span>수정</span>
-                    </button>
-                    <button onClick={handleDelete}>
-                      <span>삭제</span>
-                    </button>
-                  </>
-                )}
                 <button onClick={() => navigate('/portfolio')}>
                   <AiOutlineUnorderedList />
-                  <span>목록 보기</span>
+                  목록 보기
                 </button>
               </div>
             </div>
+            {user && user?.isAdmin && (
+              <div className='admin_btns'>
+                <button onClick={handleEdit}>수정</button>
+                <button onClick={handleDelete}>삭제</button>
+              </div>
+            )}
             <div className='detail_btns'>
               {!firstPage && (
                 <button className='prev' onClick={handlePrev}>
@@ -223,13 +244,36 @@ export default function PortfolioDetail() {
                 </button>
               )}
             </div>
-            {toggle && (
+            {commentToggle && (
               <div className='detail_comments'>
                 <h3 className='common_h3'>
-                  Comments <span>첫 댓글의 주인공이 되어보세요!</span>
+                  Comments <span>댓글의 주인공이 되어보세요!</span>
                 </h3>
-
                 {id && comments && <Comments pageId={id} comments={comments} />}
+              </div>
+            )}
+            {likeToggle && (
+              <div className='like_list'>
+                <h3 className='common_h3'>
+                  Like List <span>이 프로젝트에 Like를 누른 코드러버님들 </span>
+                </h3>
+                {likeList && likeList?.length > 0 ? (
+                  <ul>
+                    {likeList
+                      .filter((like) => like.like)
+                      .map(({ displayName, email, photoURL }, index) => (
+                        <li key={index}>
+                          <Profile
+                            displayName={displayName || ''}
+                            email={email || ''}
+                            photoURL={photoURL || ''}
+                          />
+                        </li>
+                      ))}
+                  </ul>
+                ) : (
+                  <p>좋아요를 누른 코드러버님이 없습니다.</p>
+                )}
               </div>
             )}
           </>
