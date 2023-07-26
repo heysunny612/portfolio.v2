@@ -1,9 +1,9 @@
+import { useUserContext } from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 import Projects from '../../components/Projects/Projects';
 import EmptyState from '../../components/UI/EmptyState';
 import usePortfolio from '../../hooks/usePortfolio';
-import { useUserContext } from '../../context/UserContext';
-import Button from '../../components/Button/Button';
-import { useNavigate } from 'react-router-dom';
 
 export default function MyHeart() {
   const { user } = useUserContext() || {};
@@ -12,7 +12,7 @@ export default function MyHeart() {
   const { data: projectList } = portfolioQuery;
   const likedProjects = projectList?.filter((project) => {
     if (project.likes && uid) {
-      return project.likes[uid] === true;
+      return project.likes[uid]?.like === true;
     }
   });
   const hasLikedProjects = likedProjects && likedProjects?.length > 0;
