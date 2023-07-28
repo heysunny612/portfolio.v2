@@ -15,6 +15,10 @@ export default function Blog() {
     blogItems && blogItems.filter((item) => item.category === '나의 스토리');
   const { user } = useUserContext() || {};
 
+  const date2 = new Date('2023-07-27T20:55:00');
+  const milliseconds2 = date2.getTime();
+  console.log(milliseconds2); // 변경된 결과 출력
+
   return (
     <SubLayout className='blog_container' subTitle='blog'>
       <>

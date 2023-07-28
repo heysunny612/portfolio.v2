@@ -5,11 +5,11 @@ import { motion, useInView } from 'framer-motion';
 import { FaBrain } from 'react-icons/fa';
 import { SiBuymeacoffee } from 'react-icons/si';
 import { IoIosAirplane } from 'react-icons/io';
+import { useRef } from 'react';
 import { BsMusicNoteBeamed, BsMusicNote, BsCupStraw } from 'react-icons/bs';
 import SubLayout from '../../components/UI/SubLayout';
 import Gallery from '../../components/Gallery/Gallery';
 import fadeIn from '../../utils/fadeIn';
-import { useRef } from 'react';
 import Button from '../../components/Button/Button';
 
 export default function About() {
@@ -55,9 +55,9 @@ export default function About() {
                 <br />
                 <br /> "코드러버써니"라는 제 포트폴리오는 리액트와
                 타입스크립트를 활용해 만들었고, 인터랙티브한 웹 개발에 관심이
-                많아요! 웹 사용자들과 상호작용할 수 있는 멋진 경험을 만들어내는
-                걸 즐기고 있어요. 계속해서 더 재미있고 발전하는 프로젝트로 더욱
-                성장하고 싶어요 :)
+                많습니다! 웹 사용자들과 상호작용할 수 있는 멋진 경험을
+                만들어내는 걸 좋아합니다. 계속해서 더 재미있고 발전하는
+                프로젝트로 더욱 성장하고 싶습니다! :)
               </p>
             </motion.div>
             <motion.div

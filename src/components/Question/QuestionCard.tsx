@@ -97,13 +97,15 @@ export default function QuestionCard({
         />
       )}
       <div className='qna_writer'>
-        <Profile
-          inline
-          displayName={writer?.displayName}
-          photoURL={writer?.photoURL}
-          email={writer?.email}
-        />
-        <span className='date'>작성일 : {formatDate(createAt)}</span>
+        <div className='qna_writer_wrap'>
+          <Profile
+            inline
+            displayName={writer?.displayName}
+            photoURL={writer?.photoURL}
+            email={writer?.email}
+          />
+          <span className='date'>작성일 : {formatDate(createAt)}</span>
+        </div>
         {user && (
           <div className='qna_buttons'>
             {(user?.uid === writer?.uid || user?.isAdmin) && (

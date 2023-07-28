@@ -110,7 +110,12 @@ export default function Portfolio() {
           </div>
         )}
 
-        <h3 className='common_h3 mt80'>Toy Projects</h3>
+        <h3 className='common_h3 mt80'>
+          Toy Projects{' '}
+          <span>
+            클릭 후, 깃허브로 이동하시면 더 자세히 확인 할 수 있습니다:)
+          </span>
+        </h3>
         <ul className='toy_projects'>
           {toyProjects.map(({ title, desc, link }, index) => (
             <li key={index}>

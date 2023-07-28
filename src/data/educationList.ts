@@ -41,7 +41,7 @@ export const educationList = [
     date: '2023.06.06 ~ ',
     list: ['React JS 마스터클래스', '트위터 클론코딩'],
     activityPhotos: false,
-    graduationPhotos: true,
+    graduationPhotos: false,
   },
   {
     id: 'korea1',

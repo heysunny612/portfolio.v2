@@ -1,5 +1,4 @@
-import { FaGithub } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
+import { AiOutlineGoogle, AiOutlineGithub } from 'react-icons/ai';
 import { socialLogin } from '../../api/firebase/auth';
 import { useState } from 'react';
 
@@ -16,12 +15,12 @@ export default function SocialLogin() {
           <button
             onClick={() => socialLogin({ type: 'google' }, setSocialError)}
           >
-            <FcGoogle />
+            <AiOutlineGoogle />
           </button>
           <button
             onClick={() => socialLogin({ type: 'github' }, setSocialError)}
           >
-            <FaGithub />
+            <AiOutlineGithub />
           </button>
         </div>
       </div>
