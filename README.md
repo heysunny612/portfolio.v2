@@ -89,14 +89,71 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/heysunny612/portfolio.v2/assets/127499117/1d9a6d77-71f0-4fe1-8662-727a2e2fc155" alt="이미지" />
+  <img src="https://github.com/heysunny612/portfolio.v2/assets/127499117/6b271f9f-f047-4c80-b824-a3f7fea815f2" alt="이미지" />
 </p>
+
 
 * 로그인을 한 회원이라면 공개, 비공개 선택하여 질문 작성 가능
 * 비공개로 작성된 질문은 Admin과 작성자만 질문, 답변 확인 가능 
 * Show More 버튼으로 5개씩 볼 수 있도록 구현 
 * Search Keyword에 Keyword를 입력하면 질문 내용으로 검색될 수 있도록 구현 
 * 답변이 작성된 질문은 삭제되지 못하도록 구현 
+
+<br/>
+<br/>
+
+## 4. 로그인 & 회원가입 
+
+<p align="center">
+  <img src="https://github.com/heysunny612/portfolio.v2/assets/127499117/ed315742-80a3-4202-85bd-46b3b4509aea" alt="이미지" />
+</p>
+
+
+* 파이어 베이스 Authentication 연결하여, 로그인 및 회원가입 구현   
+* 기업회원으로 가입한다면, 파이어 베이스 실시간 데이터에 해당 uid 등록하여, 따로 관리될 수 있게 구현
+* 기업회원으로 로그인한다면, 상단 이력서 다운로드하기 가능 
+* 구글 및 깃허브 로그인 연동
+  
+
+<br/>
+<br/>
+
+## 5. 마이페이지 구현
+
+<div align="center">
+  <img src="https://github.com/heysunny612/portfolio.v2/assets/127499117/68b51d81-a434-4097-b205-78631b31dbd1" alt="이미지" />
+</div>
+
+<div align="center">
+  <img src="https://github.com/heysunny612/portfolio.v2/assets/127499117/787e066f-e74a-48d7-b982-0f3a1e459acb" alt="이미지" />
+</div>
+
+​
+
+* "나의 프로필" 페이지에서 닉네임 또는 회사명 수정 가능하도록 구현 
+* 좋아요를 누른 프로젝트가 있다면, "관심 프로젝트"에서 해당 프로젝트 리스트 확인할 수 있도록 구현 
+* 프로젝트에 댓글을 달았다면, "나의 댓글" 페이지에서 어떤 프로젝트에 댓글을 달았는지 확인이 가능하며, 해당 페이지에서 삭제 또는 수정이 가능하도록 구현  
+* AskMe 페이지에 남긴 질문이 있다면 "나의 질문"페이지에서 한눈에 확인이 가능하며, 나의 댓글과 마찬가지로 해당 페이지에서 삭제 또는 수정이 가능하도록 구현
+* 파이어 베이스 계정 탈퇴 구현 
+
+
+<br/>
+<br/>
+
+## 6. 그 외 로그인 관련 로직
+
+<p align="center">
+  <img src="https://github.com/heysunny612/portfolio.v2/assets/127499117/a02a748b-f855-45b8-b6ca-156bc25ca017" alt="이미지" />
+</p>
+
+
+* 로그인하지 않는 상태임에도 불구하고, 주소창에 mypage 등의 로그인이 필요한 페이지를  직접 입력하여 접근이 안되도록  ProtectedRoute 컴포넌트를 추가하여, 로그인 페이지로 redirect 구현 
+* 이 외, 파이어 베이스 실시간 데이터에 admins 사용자의 uid를 등록하여, 해당 uid로 로그인한 사용자는 admin 권한이 부여될 수 있도록 구현 
+
+
+
+
+
 
 
 
