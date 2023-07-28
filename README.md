@@ -6,7 +6,10 @@
 | --- | --- |
 | 사이트명 | 코드러버써니 |
 | 기획 기간 | 2023.06.28 ~ 2023.07.01 |
-| 개발 기간  | 2023.07.02 ~ 2023.07.26 기능 구형 완료. 버그 발견 즉시 수정 중 |
+| 개발 기간  | 2023.07.02 ~ 2023.07.26 기능 구현 완료. 버그 발견 즉시 수정 중 |
+| 기술 스택  | HTML&CSS, REACT, TYPESCRIPT |
+| 데이터베이스  | FIREBASE |
+| 라이브러리 |  axios, emailjs-com, framer-motion, react-hook-form, react-intersection-observer, <br/> react-loading-skeleton, react-query, react-quill, react-router-dom, react-slick, react-tag-input, <br/> react-type-animation, scss, slick-carousel, three|
 | 배포 주소  | [Netlify https://sunny-trello.netlify.app/](https://codeloversunny.netlify.app/) |
 | 소스 코드  | [Github https://github.com/heysunny612/ts-trello](https://github.com/heysunny612/portfolio.v2) |
 
