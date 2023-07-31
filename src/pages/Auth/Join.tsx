@@ -1,14 +1,13 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../components/Button/Button';
-import InputLayout from '../../components/UI/InputLayout';
 import { useForm } from 'react-hook-form';
 import { joinWithEmail } from '../../api/firebase/auth';
-import { useEffect, useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
-import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import { GoCodeReview } from 'react-icons/go';
 import { MdBusiness } from 'react-icons/md';
-
+import Button from '../../components/Button/Button';
+import InputLayout from '../../components/UI/InputLayout';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 interface IJoinForm {
   email: string;
   password: string;
@@ -66,7 +65,7 @@ export default function Join() {
         <form onSubmit={handleSubmit(onVaild)}>
           {error && <p className='error_message'>{error}</p>}
           <div className='login_radio'>
-            <label>
+            <label className={userType === 'Individual' ? 'active' : ''}>
               <input
                 type='radio'
                 {...register('userType')}
@@ -74,7 +73,7 @@ export default function Join() {
               />
               동료 회원 <GoCodeReview />
             </label>
-            <label>
+            <label className={userType === 'Business' ? 'active' : ''}>
               <input type='radio' {...register('userType')} value='Business' />
               기업 회원 <MdBusiness />
             </label>

@@ -6,8 +6,8 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useUserContext } from '../../context/UserContext';
 import { useState, useEffect } from 'react';
 import { logout } from '../../api/firebase/auth';
-
 import Button from '../Button/Button';
+
 const navItems = [
   { title: 'About', path: '/about' },
   { title: 'Portfolio', path: '/portfolio' },
@@ -25,6 +25,13 @@ export default function Header() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const toggleMobileMenu = () => setMobileMenu(!mobileMenu);
   const closeMobileMenu = () => setMobileMenu(false);
+  const handleClickResume = () => {
+    if (!user) {
+      alert('기업회원으로 가입 후, 다운로드 가능합니다.');
+    } else if (user && !user.isBusinessUser && !user.isAdmin) {
+      alert('기업회원만 다운로드가 가능합니다.');
+    }
+  };
 
   //마우스 다른곳 클릭시, 유저메뉴 닫기
   useEffect(() => {
@@ -139,7 +146,9 @@ export default function Header() {
               </>
             )}
             <div className='mobile_resume'>
-              <Button filled>Resume</Button>
+              <Button filled onClick={handleClickResume}>
+                Resume
+              </Button>
             </div>
           </div>
         </div>

@@ -69,13 +69,20 @@
       gap: 30px;
       align-items: center;
       justify-content: space-evenly;
-      margin-bottom: 50px;
-      font-size: 22px;
 
+      margin-bottom: 50px;
+      font-size: 20px;
+
+      padding: 15px 0;
       label {
         color: $lightest-slate;
+        cursor: pointer;
+
         input[type='radio'] {
           margin-right: 10px;
+        }
+        &.active {
+          color: $accent;
         }
       }
     }
