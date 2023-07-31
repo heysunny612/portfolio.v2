@@ -1,4 +1,4 @@
-import { BsGithub, BsTwitter } from 'react-icons/bs';
+import { BsGithub } from 'react-icons/bs';
 import { SiNaver } from 'react-icons/si';
 import { FaYoutube } from 'react-icons/fa';
 import SendEmail from '../../components/SendEmail/SendEmail';
