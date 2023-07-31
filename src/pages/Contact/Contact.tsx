@@ -18,7 +18,11 @@ export default function Contact() {
         <h3 className='common_h3'>SNS</h3>
         <ul className='contact_sns'>
           <li>
-            <a href='/'>
+            <a
+              href='https://github.com/heysunny612'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               <Button large>
                 <BsGithub />
               </Button>
@@ -26,7 +30,11 @@ export default function Contact() {
             </a>
           </li>
           <li>
-            <a href='/'>
+            <a
+              href='https://blog.naver.com/heysunny0612'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               <Button large>
                 <SiNaver />
               </Button>
@@ -34,19 +42,15 @@ export default function Contact() {
             </a>
           </li>
           <li>
-            <a href='/'>
+            <a
+              href='https://www.youtube.com/watch?v=qy5weglCYB0'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               <Button large>
                 <FaYoutube />
               </Button>
               <span>Youtube</span>
-            </a>
-          </li>
-          <li>
-            <a href='/'>
-              <Button large>
-                <BsTwitter />
-              </Button>
-              <span>Twitter</span>
             </a>
           </li>
         </ul>
