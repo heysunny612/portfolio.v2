@@ -145,7 +145,8 @@ export default function QuestionCard({
               exit='leaving'
             >
               <p>
-                {isPublic || (!isPublic && writer.uid === user?.uid)
+                {isPublic ||
+                (!isPublic && (writer.uid === user?.uid || user?.isAdmin))
                   ? answer.content
                   : `작성자 ${writer.displayName}님만 열람이 가능합니다.`}
               </p>
