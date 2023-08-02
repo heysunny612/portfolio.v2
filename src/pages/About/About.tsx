@@ -41,7 +41,8 @@ export default function About() {
                 About.
               </motion.h1>
               <p className='intro'>
-                디자인과 코드의 아름다운 조화, <br /> 멋진 상호작용을 구현하는
+                오늘 최선을 다하는 개발자
+                <br /> 그러나, 내일 더 성장하는 개발자
                 <br />
                 프론트엔드 개발자 황수연입니다.
               </p>
